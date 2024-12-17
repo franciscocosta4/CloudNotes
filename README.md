@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # CloudNotes
 
 O CloudNotes é uma plataforma inovadora que facilita a gestão e partilha de anotações de forma rápida e segura. Com uma interface intuitiva e moderna, pode organizar as suas ideias, colaborar com colegas e aceder às suas notas em qualquer lugar. Seja estudante, profissional ou alguém que procura melhorar a organização, o CloudNotes é a solução ideal para aumentar a sua produtividade.
@@ -16,7 +15,6 @@ Pesquisa Avançada: Localize anotações de forma rápida utilizando filtros com
 Guardar Anotações: Guarde as suas anotações favoritas para consultas futuras.
 
 Sistema de Pontos: Ganhe pontos ao partilhar conteúdos e suba de nível na aplicação.
-=======
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -83,4 +81,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
->>>>>>> 2914686 (Primeiro commit)
+
