@@ -27,7 +27,7 @@
             from {
                 opacity: 0;
             }
-            to {
+            to {     
                 opacity: 1;
             }
         }
