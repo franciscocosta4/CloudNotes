@@ -7,6 +7,11 @@
         <p class="mt-1 text-sm text-gray-600">
             {{ __("Atualize os seus dados.") }}
         </p>
+        <br>
+        <a href="{{ route('dashboard') }}" 
+        style=" border-radius:6.5px; padding:9px 6px ;background-color: #0F044C; color: white; border: none;">
+                    {{ __('Voltar à dashboard') }}
+</a>
     </header>
 
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
@@ -30,7 +35,7 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
-                    <p class="text-sm mt-2 text-gray-800">  
+                    <p class="text-sm mt-2 text-gray-800">
                         {{ __('Your email address is unverified.') }}
 
                         <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -45,6 +50,38 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <!-- Ano Escolar -->
+        <div>
+            <x-input-label for="school_year" :value="__('Ano Escolar')" />
+            <select id="school_year" name="school_year" class="block mt-1 w-full" required>
+                <option value="" disabled>{{ __('Selecione o Ano Escolar') }}</option>
+                @for ($i = 7; $i <= 12; $i++)
+                    <option value="{{ $i }}" {{ old('school_year', $user->school_year) == $i ? 'selected' : '' }}>{{ $i }}</option>
+                @endfor
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('school_year')" />
+        </div>
+
+        <!-- Disciplinas de Interesse -->
+        <div>
+            <x-input-label for="subjects_of_interest" :value="__('Disciplinas de Interesse')" />
+            <select id="subjects_of_interest" name="subjects_of_interest[]" class="block mt-1 w-full" multiple>
+                @php
+                    $subjects = ['Matemática', 'Física', 'Química', 'Biologia', 'Português', 'História', 'Geografia', 'Inglês'];
+                @endphp
+
+                @foreach ($subjects as $subject)
+                    <option value="{{ $subject }}" {{ collect(old('subjects_of_interest', json_decode($user->subjects_of_interest, true)))->contains($subject) ? 'selected' : '' }}>
+                        {{ $subject }}
+                    </option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('subjects_of_interest')" />
+            <p class="text-sm text-gray-600 mt-2">
+                {{ __('Segure a tecla Ctrl ou Command para selecionar várias disciplinas.') }}
+            </p>
         </div>
 
         <div class="flex items-center gap-4">

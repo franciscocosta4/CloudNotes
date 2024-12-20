@@ -26,16 +26,28 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user = $request->user();
+    
+        //* PERMITE ATUALIZAR O ANO ESCOLAR E AS DISCIPLINAS 
+        $user->fill(array_merge(
+            //! Ver ProfileUpdateRequest.php caso queira editar
+            $request->validated(),
+            [
+                'school_year' => $request->input('school_year'),
+                'subjects_of_interest' => json_encode($request->input('subjects_of_interest')),
+            ]
+        ));
+    
+        //* Verifique se o e-mail foi alterado e limpe a verificação se necessário
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
-
-        $request->user()->save();
-
+    
+        $user->save();
+    
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
+    
 
     /**
      * Delete the user's account.
