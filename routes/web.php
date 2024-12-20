@@ -17,18 +17,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 use App\Http\Controllers\Admin\AuthController;
 
-
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [App\Http\Controllers\Admin\AuthController::class, 'login']);
-    Route::post('logout', [App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
+    // Login e Logout
+    Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
+    // Dashboard protegido por auth:admin
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', function () {
-            return view('admin.dashboard'); // Aponta para a view que criamos
+            return view('admin.dashboard');
         })->name('dashboard');
     });
 });

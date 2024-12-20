@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'school_year', // Certifique-se de incluir este campo
+        'subjects_of_interest', // Certifique-se de incluir este campo
+        'points',
     ];
 
     /**

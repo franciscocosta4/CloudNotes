@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name'); // Nome do utilizador
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->smallInteger('school_year')->nullable(); // Alterado para smallInteger para armazenar anos escolares (7 a 12)
+            $table->json('subjects_of_interest')->nullable(); // Alterado para json para armazenar lista de disciplinas
+            $table->integer('points')->default(0); // Pontuação do utilizador
             $table->rememberToken();
             $table->timestamps();
         });
