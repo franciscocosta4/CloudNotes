@@ -24,13 +24,13 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
+    //? Ver ProfileUpdateRequest.php caso queira editar
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
     
         //* PERMITE ATUALIZAR O ANO ESCOLAR E AS DISCIPLINAS 
         $user->fill(array_merge(
-            //! Ver ProfileUpdateRequest.php caso queira editar
             $request->validated(),
             [
                 'school_year' => $request->input('school_year'),

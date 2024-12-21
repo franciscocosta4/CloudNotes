@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <x-app-layout>
     <div class="user-level-container">
@@ -23,11 +24,6 @@
             <li><a href="#">Anotação 5</a></li>
         </ul>
     </div>
-
-
-    <!-- Incluindo o CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
     <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
