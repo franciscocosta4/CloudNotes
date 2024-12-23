@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Note;
@@ -8,21 +8,20 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    // Dashboard - Exibe usuários e anotações
-    public function dashboard()
+
+    public function dashboard() 
     {
-        $users = User::all(); // Pega todos os usuários
+        $users = User::all(); // Pega todos os utilizadors
         $notes = Note::all(); // Pega todas as anotações
         return view('admin.dashboard', compact('users', 'notes'));
     }
 
-    // Formulário de criação de usuário
+    //* CRIAÇÃO DE UTILIZADOR 
     public function createUser()
     {
-        return view('admin.users.create'); // Formulário para criar um usuário
+        return view('admin.users.create'); // Formulário para criar um utilizador
     }
 
-    // Salvar novo usuário
     public function storeUser(Request $request)
     {
         // Validação dos dados de entrada
@@ -32,7 +31,7 @@ class AdminController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Criação do novo usuário
+        // Criação do novo utilizador
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -40,16 +39,14 @@ class AdminController extends Controller
         ]);
 
         // Redireciona para o dashboard com uma mensagem de sucesso
-        return redirect()->route('admin.dashboard')->with('success', 'Usuário criado com sucesso!');
+        return redirect()->route('admin.dashboard')->with('success', 'utilizador criado com sucesso!');
     }
 
-    // Formulário de edição de usuário
+    //* edição de utilizador
     public function editUser(User $user)
     {
-        return view('admin.users.edit', compact('user')); // Formulário para editar um usuário
+        return view('admin.users.edit', compact('user')); // Formulário para editar um utilizador
     }
-
-    // Atualizar usuário
     public function updateUser(Request $request, User $user)
     {
         // Validação dos dados de entrada
@@ -59,37 +56,36 @@ class AdminController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
-        // Atualiza o usuário
+        // Atualiza o utilizador
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password ? bcrypt($request->password) : $user->password,
         ]);
 
-        return redirect()->route('admin.dashboard')->with('success', 'Usuário atualizado com sucesso!');
+        return redirect()->route('admin.dashboard')->with('success', 'utilizador atualizado com sucesso!');
     }
 
-    // Excluir usuário
+    //* Excluir utilizador
     public function destroyUser(User $user)
     {
-        // Exclui o usuário
+        // Exclui o utilizador
         $user->delete();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Usuário excluído com sucesso!');
+        return redirect()->route('admin.dashboard')->with('success', 'utilizador excluído com sucesso!');
     }
 
-    // Formulário de criação de anotação
+
+    //*criação de anotação
     public function createNote()
     {
         return view('admin.notes.create'); // Formulário para criar uma anotação
     }
-
-    // Salvar nova anotação
     public function storeNote(Request $request)
     {
         // Validação dos dados de entrada
         $request->validate([
-            'user_id' => 'required|exists:users,id', // O usuário precisa existir
+            'user_id' => 'required|exists:users,id', // O utilizador precisa existir
             'title' => 'required|string|max:255',
             'subject' => 'required|string|max:255',
             'topic_difficulty' => 'required|string|max:255',
@@ -111,13 +107,11 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Anotação criada com sucesso!');
     }
 
-    // Formulário de edição de anotação
+    //* edição de anotação
     public function editNote(Note $note)
     {
         return view('admin.notes.edit', compact('note')); // Formulário para editar uma anotação
     }
-
-    // Atualizar anotação
     public function updateNote(Request $request, Note $note)
     {
         // Validação dos dados de entrada
@@ -141,7 +135,7 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Anotação atualizada com sucesso!');
     }
 
-    // Excluir anotação
+    //* Excluir anotação
     public function destroyNote(Note $note)
     {
         // Exclui a anotação
