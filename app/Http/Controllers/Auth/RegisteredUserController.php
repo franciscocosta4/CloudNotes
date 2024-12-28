@@ -27,13 +27,16 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+
+    //* ESTA É A FUNÇAO QUE REGISTA O UTILIZADOR E OS SEUS DADOS
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'school_year' => ['nullable', 'integer', 'between:7,12'], // Validar como número inteiro entre 7 e 12
+            'school_year' => ['nullable', 'integer', 'between:7,12'], //  número inteiro entre 7 e 12
             'subjects_of_interest' => ['nullable', 'array'], // Validar como um array
             'subjects_of_interest.*' => ['string', 'in:Matemática,Física,Química,Biologia,Português,História,Geografia,Inglês'], // Validar que cada disciplina seja uma das opções válidas
         ]);

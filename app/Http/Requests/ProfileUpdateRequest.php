@@ -25,7 +25,7 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
-            //? FOI ADICIONADO PARA QUE SEJA POSSIVEL ATUALIZAR O PERFIL
+            //? FOI ADICIONADO PARA QUE SEJA POSSIVEL ATUALIZAR OS DADOS DO  PERFIL
             'school_year' => ['nullable', 'integer', 'between:7,12'],
             'subjects_of_interest' => ['nullable', 'array'],
             'subjects_of_interest.*' => ['string', 'in:Matemática,Física,Química,Biologia,Português,História,Geografia,Inglês'],

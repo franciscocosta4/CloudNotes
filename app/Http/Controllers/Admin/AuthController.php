@@ -16,11 +16,10 @@ class AuthController extends Controller
     
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            // Redirecione para o painel de administradores
+            //* Redireciona para o painel de administradores
             return redirect()->route('admin.dashboard');
         }
-    
-        // Retorna um erro se o login falhar
+
         return back()->withErrors([
             'email' => 'As credenciais fornecidas não são válidas.',
         ]);
@@ -29,7 +28,6 @@ class AuthController extends Controller
 
     public function showLoginForm()
     {
-        // Retorna a view de login específica para admin
         return view('admin.auth.login');
     }
 

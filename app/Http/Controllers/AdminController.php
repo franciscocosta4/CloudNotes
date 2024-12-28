@@ -24,21 +24,18 @@ class AdminController extends Controller
 
     public function storeUser(Request $request)
     {
-        // Validação dos dados de entrada
+        // Validação dos dados 
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Criação do novo utilizador
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password), // Senha criptografada
+            'password' => bcrypt($request->password), 
         ]);
-
-        // Redireciona para o dashboard com uma mensagem de sucesso
         return redirect()->route('admin.dashboard')->with('success', 'utilizador criado com sucesso!');
     }
 
@@ -55,8 +52,6 @@ class AdminController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
         ]);
-
-        // Atualiza o utilizador
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -69,9 +64,7 @@ class AdminController extends Controller
     //* Excluir utilizador
     public function destroyUser(User $user)
     {
-        // Exclui o utilizador
         $user->delete();
-
         return redirect()->route('admin.dashboard')->with('success', 'utilizador excluído com sucesso!');
     }
 
@@ -79,11 +72,10 @@ class AdminController extends Controller
     //*criação de anotação
     public function createNote()
     {
-        return view('admin.notes.create'); // Formulário para criar uma anotação
+        return view('admin.notes.create'); 
     }
     public function storeNote(Request $request)
     {
-        // Validação dos dados de entrada
         $request->validate([
             'user_id' => 'required|exists:users,id', // O utilizador precisa existir
             'title' => 'required|string|max:255',
@@ -92,8 +84,6 @@ class AdminController extends Controller
             'content' => 'required|string',
             'file_path' => 'nullable|string', // Arquivo é opcional
         ]);
-
-        // Criação da nova anotação
         Note::create([
             'user_id' => $request->user_id,
             'title' => $request->title,
@@ -102,8 +92,6 @@ class AdminController extends Controller
             'content' => $request->content,
             'file_path' => $request->file_path,
         ]);
-
-        // Redireciona para o dashboard com uma mensagem de sucesso
         return redirect()->route('admin.dashboard')->with('success', 'Anotação criada com sucesso!');
     }
 
@@ -114,16 +102,13 @@ class AdminController extends Controller
     }
     public function updateNote(Request $request, Note $note)
     {
-        // Validação dos dados de entrada
         $request->validate([
             'title' => 'required|string|max:255',
             'subject' => 'required|string|max:255',
             'topic_difficulty' => 'required|string|max:255',
             'content' => 'required|string',
-            'file_path' => 'nullable|string', // Arquivo é opcional
+            'file_path' => 'nullable|string', 
         ]);
-
-        // Atualiza a anotação
         $note->update([
             'title' => $request->title,
             'subject' => $request->subject,
@@ -138,9 +123,7 @@ class AdminController extends Controller
     //* Excluir anotação
     public function destroyNote(Note $note)
     {
-        // Exclui a anotação
         $note->delete();
-
         return redirect()->route('admin.dashboard')->with('success', 'Anotação excluída com sucesso!');
     }
 }
