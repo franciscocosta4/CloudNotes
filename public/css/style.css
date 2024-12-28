@@ -341,7 +341,7 @@ p {
 }
 
 .search-container button {
-    background-color: #141E61; /* Fundo escuro */
+    background-color: #0F044C; /* Fundo escuro */
     border: none;
     padding: 8px;
     cursor: pointer;
@@ -373,9 +373,23 @@ p {
 }
 
 .sharenotesbutton:hover {
-    background-color: #141E61;
+    background-color: #0F044C;
     transform: scale(1.05);
 }
+
+
+#back-button {
+    background-color: #0F044C; /* Cor de fundo */
+    color: white; /* Texto branco */
+    border: none;
+    padding: 6px 9px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+
 
 /* Responsividade */
 @media (max-width: 768px) {
