@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
-    // Define os campos que podem ser preenchidos em massa (mass assignment)
+    //* NECESSÁRIO PARA O SCOUT
+    use Searchable;
+
     protected $fillable = [
         'user_id', 
         'title', 
