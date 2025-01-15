@@ -359,6 +359,20 @@ p {
 .search-container button:hover { 
     background-color: #0F044C; /* Realce leve */
 }
+/* Search Bar */
+.share-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.share-button {
+    background-color: #0F044C; /* Fundo escuro */
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
 
 /* Botão de Compartilhar Notas */
 .sharenotesbutton {
@@ -389,6 +403,41 @@ p {
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
+form {
+    display: flex;
+    align-items: center; /* Alinha o conteúdo verticalmente */
+}
+
+#search-input {
+    width: 90%;
+    height: 10%;
+    max-width: 600px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 2px solid #0F044C;
+    border-radius: 16px;
+    background-color: #fff;
+    color: #444;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* Estilo para o ícone dentro do botão */
+ svg {
+    width: 24px; /* Largura do ícone */
+    height: 24px; /* Altura do ícone */
+    fill: #0F044C; /* Cor do ícone */
+    transition: fill 0.3s; /* Transição suave para a cor do ícone */
+}
+
+
+/* Efeito de foco no input */
+#search-input:focus {
+    border-color: #141E61;
+    box-shadow: 0 0 8px rgba(15, 4, 76, 0.3);
+}
+
 
 
 

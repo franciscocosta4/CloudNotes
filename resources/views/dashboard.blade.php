@@ -87,30 +87,42 @@
                     </button>
                 </div>
             </aside>
-
-            <!-- Main Content -->
-            <main class="main">
-                <div class="main-content" id="search-container">
-                    <h2 id="search-title">Procurar por uma Anotação</h2>
-                    <form action="{{ route('search') }}" method="GET">
-    <input type="text" name="query" id="search-input" placeholder="Entre palavras-chave para pesquisar..." value="{{ old('query', $query ?? '') }}">
+<!-- Main Content -->
+<main class="main">
+    <div class="main-content" id="search-container">
+        <h2 id="search-title">Procurar por uma Anotação</h2>
+<!-- Formulário de pesquisa -->
+<form action="{{ route('search') }}" method="GET">
+    <input  type="text" name="query" id="search-input" placeholder="Entre palavras-chave para pesquisar..." value="{{ old('query', $query ?? '') }}">
     <button type="submit">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 9.5 5 13 7.01 13 9.5 10.99 14 9.5 14z"/>
         </svg>
     </button>
 </form>
+</div>
 
-                    <button id="back-button" class="btn btn-secondary" style="display: {{ request('query') ? 'inline-block' : 'none' }};" onclick="window.location.href='{{ url('/dashboard') }}'">Voltar</button>
-                </div>
-                @if(isset($query) && !empty($query))
-        <h2>Resultados para: <strong>{{ $query }}</strong></h2>
-    @endif
-                <div class="main-content" id="search-results" style="display: block;">
+<!-- Div de compartilhar -->
+<div id="share-container" class="main-content" style="display: {{ request('query') ? 'none' : 'block' }}">
+<h2 id="search-title" >Partilhar  uma Anotação</h2>
+<p style="margin-bottom:10px;">clique para começar a partilhar</p>
+<button id="share-button" style="margin:auto;background-color:#0F044C; color:white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s, transform 0.3s;">
+    Partilhar
+</button>
+
+</div>
+
+<!-- Exibição de resultados -->
+@if(isset($query) && !empty($query))
+    <h2>Resultados para: <strong>{{ $query }}</strong></h2>
+@endif
+
+<div id="search-results" style="display: {{ isset($query) && !empty($query) ? 'block' : 'none' }};">
     @if(isset($results) && $results->isEmpty())
         <p>Nenhum resultado encontrado.</p>
     @elseif(isset($results))
-        <ul>
+    <div class="main-content">
+    <ul>
             @foreach ($results as $note)
                 <li>
                     <h2>{{ $note->title }}</h2>
@@ -118,15 +130,19 @@
                     <p><strong>Utilizador:</strong> {{ $note->user->name }}</p> 
                     <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
                     <p><strong>Conteúdo:</strong> {{ $note->content }}</p>
-                    
                 </li>
             @endforeach
         </ul>
+    </div>
+       
     @endif
-</div>
 
 
-            </main>
+<!-- Botão para voltar -->
+<button id="back-button" class="btn btn-secondary" style="display: {{ request('query') ? 'inline-block' : 'none' }};" onclick="window.location.href='{{ url('/dashboard') }}'">Voltar</button>
+
+</main>
+
         </div>
     </x-app-layout>
 </body>
@@ -134,32 +150,38 @@
 
 
 <script>
-        // Função para alternar entre a pesquisa e a página principal
-        function executeSearch() {
-            const query = document.getElementById('search-input').value.trim();
-            if (query) {
-                // Esconde o container de compartilhar anotação, exibe o container de pesquisa e esconde resultados
-                document.getElementById('share-container').style.display = 'none';
-                document.getElementById('search-container').style.display = 'block';
-                document.getElementById('search-results').style.display = 'block';
+// Função para alternar entre a pesquisa e a página principal
+function executeSearch() {
+    const query = document.getElementById('search-input').value.trim();
+    if (query) {
+        // Esconde o container de compartilhar anotação, exibe o container de pesquisa e resultados
+        document.getElementById('share-container').style.display = 'none';
+        document.getElementById('search-container').style.display = 'none';
+        document.getElementById('search-results').style.display = 'block';
 
-                // Esconde o título de pesquisa e exibe o botão de voltar
-                document.getElementById('search-title').style.display = 'none';
-                document.getElementById('back-button').style.display = 'block';
-                
-            } else {
-                alert('Por favor, insira palavras-chave para pesquisar.');
-            }
-        }
+        // Esconde o título de pesquisa e exibe o botão de voltar
+        document.getElementById('search-title').style.display = 'none';
+        document.getElementById('back-button').style.display = 'block';
 
-        // Função para voltar à dashboard
-        function backToDashboard() {
-            document.getElementById('share-container').style.display = 'block';
-            document.getElementById('search-container').style.display = 'block';
-            document.getElementById('search-results').style.display = 'none';
+        return true; // Permite o envio do formulário
+    } else {
+        alert('Por favor, insira palavras-chave para pesquisar.');
+        return false; // Não permite o envio do formulário
+    }
+}
 
-            // Exibe o título de pesquisa novamente e esconde o botão de voltar
-            document.getElementById('search-title').style.display = 'block';
-            document.getElementById('back-button').style.display = 'none';
-        }
+// Função para voltar à dashboard
+function backToDashboard() {
+    // Exibe o container de compartilhar anotação, oculta o container de pesquisa e resultados
+    document.getElementById('share-container').style.display = 'block';
+    document.getElementById('search-container').style.display = 'block';
+    document.getElementById('search-results').style.display = 'none';
+
+    // Exibe o título de pesquisa novamente e esconde o botão de voltar
+    document.getElementById('search-title').style.display = 'block';
+    document.getElementById('back-button').style.display = 'none';
+}
+
     </script>   
+
+    
