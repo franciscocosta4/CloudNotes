@@ -49,4 +49,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
+use App\Http\Controllers\SearchController;
+
+Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');
+
 require __DIR__.'/auth.php';

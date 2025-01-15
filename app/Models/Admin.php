@@ -17,3 +17,4 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 }
+  

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+  //* NECESSÁRIO PARA O SCOUT
+  use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
@@ -16,27 +18,24 @@ class Note extends Model
     ];
 
 
-    // Relacionamento com o modelo User
+    // Relacionamento com o model User
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    //* NECESSÁRIO PARA O SCOUT
-    use Laravel\Scout\Searchable;
-
     use Searchable;
-
     public function toSearchableArray()
     {
         return [
-            'user_name' => $this->user->name,
+            'user_id' => $this->user_id,  // Referência ao id do usuário
             'title' => $this->title,
-            'subject'=>$this->subject,
-            'topic_difficulty'=>$this->topic_difficulty,
+            'subject' => $this->subject,
+            'topic_difficulty' => $this->topic_difficulty,
             'content' => $this->content,
-            'file_path'=> $this->file_path,
+            'file_path' => $this->file_path,
         ];
     }
+    
 
 }
