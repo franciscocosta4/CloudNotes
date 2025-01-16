@@ -40,7 +40,7 @@
             <!-- Sidebar -->
             <aside class="sidebar" id="sidebar">
                 <div class="sidebar-header">
-                    <h2 class="CloudNotestitle">CloudNotes</h2>
+                    <h2 class="CloudNotestitle"><a href="/dashboard">CloudNotes</a></h2>
                 </div>
                 <nav class="sidebar-nav">
                     <ul>
@@ -106,13 +106,11 @@
 <div id="share-container" class="main-content" style="display: {{ request('query') ? 'none' : 'block' }}">
 <h2 id="search-title" >Partilhar  uma Anotação</h2>
 <p style="margin-bottom:10px;">clique para começar a partilhar</p>
-<button id="share-button" style="margin:auto;background-color:#0F044C; color:white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s, transform 0.3s;">
+<button id="share-button" style="margin:auto;background-color:#0F044C; color:white; border: none; padding: 8px 21px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s, transform 0.3s;">
     Partilhar
 </button>
 
 </div>
-
-<!-- Exibição de resultados -->
 @if(isset($query) && !empty($query))
     <h2>Resultados para: <strong>{{ $query }}</strong></h2>
 @endif
@@ -121,26 +119,41 @@
     @if(isset($results) && $results->isEmpty())
         <p>Nenhum resultado encontrado.</p>
     @elseif(isset($results))
-    <div class="main-content">
-    <ul>
+        <ul>
             @foreach ($results as $note)
-                <li>
-                    <h2>{{ $note->title }}</h2>
-                    <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
-                    <p><strong>Utilizador:</strong> {{ $note->user->name }}</p> 
-                    <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
-                    <p><strong>Conteúdo:</strong> {{ $note->content }}</p>
-                </li>
+                <div class="main-content">
+                <button onclick="toggleNoteDetails('{{ $note->id }}')">
+                    <li>
+                        <div id="note-summary-{{ $note->id }}" class="note-summary" style="width: 600px;">
+                            <h2>{{ $note->title }}</h2>
+                            <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
+                            <p><strong>Utilizador:</strong> {{ $note->user->name }}</p>
+                            <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
+                        </div>
+
+                        <!-- Se não houver conteúdo, exibe o link para o arquivo -->
+                        @if(empty($note->content))
+                            <!-- <p><strong>Conteúdo:</strong> Nenhum conteúdo disponível.</p> -->
+                            <a  style="color:#007bff;" href="{{ asset('path/to/notes/' . $note->file_path) }}" download>Transferir Anotação</a>
+                        @else
+                                <!-- Detalhes escondidos -->
+                                <div id="note-details-{{ $note->id }}" class="note-details" style="display: none; margin-top: 10px;">
+                                    <p style="padding:10px 30px; font-size:14px;"><strong>Conteúdo:</strong> {{ $note->content }}</p>
+                                    <a href="{{ asset('path/to/notes/' . $note->file_path) }}" download>Transferir Anotação</a>
+                                </div>
+                            </button>
+                        @endif
+                    </li>
+                </div>
             @endforeach
         </ul>
-    </div>
-       
     @endif
+</div>
+
 
 
 <!-- Botão para voltar -->
 <button id="back-button" class="btn btn-secondary" style="display: {{ request('query') ? 'inline-block' : 'none' }};" onclick="window.location.href='{{ url('/dashboard') }}'">Voltar</button>
-
 </main>
 
         </div>
@@ -149,37 +162,30 @@
 </html>
 
 
-<script>
-// Função para alternar entre a pesquisa e a página principal
-function executeSearch() {
-    const query = document.getElementById('search-input').value.trim();
-    if (query) {
-        // Esconde o container de compartilhar anotação, exibe o container de pesquisa e resultados
-        document.getElementById('share-container').style.display = 'none';
-        document.getElementById('search-container').style.display = 'none';
-        document.getElementById('search-results').style.display = 'block';
+<script>let lastOpenedNoteId = null;
 
-        // Esconde o título de pesquisa e exibe o botão de voltar
-        document.getElementById('search-title').style.display = 'none';
-        document.getElementById('back-button').style.display = 'block';
+function toggleNoteDetails(noteId) {
+    const summaryDiv = document.getElementById(`note-summary-${noteId}`);
+    const detailsDiv = document.getElementById(`note-details-${noteId}`);
 
-        return true; // Permite o envio do formulário
-    } else {
-        alert('Por favor, insira palavras-chave para pesquisar.');
-        return false; // Não permite o envio do formulário
+    // Verifica se já existe uma anotação aberta
+    if (lastOpenedNoteId !== null && lastOpenedNoteId !== noteId) {
+        const lastSummaryDiv = document.getElementById(`note-summary-${lastOpenedNoteId}`);
+        const lastDetailsDiv = document.getElementById(`note-details-${lastOpenedNoteId}`);
+        lastSummaryDiv.classList.remove('expanded'); // Remove a classe para voltar à largura original
+        lastDetailsDiv.style.display = 'none';
     }
-}
 
-// Função para voltar à dashboard
-function backToDashboard() {
-    // Exibe o container de compartilhar anotação, oculta o container de pesquisa e resultados
-    document.getElementById('share-container').style.display = 'block';
-    document.getElementById('search-container').style.display = 'block';
-    document.getElementById('search-results').style.display = 'none';
-
-    // Exibe o título de pesquisa novamente e esconde o botão de voltar
-    document.getElementById('search-title').style.display = 'block';
-    document.getElementById('back-button').style.display = 'none';
+    // Alterna o estado da anotação clicada
+    if (detailsDiv.style.display === 'none' || detailsDiv.style.display === '') {
+        summaryDiv.classList.add('expanded'); // Adiciona a classe para aumentar a largura
+        detailsDiv.style.display = 'block';
+        lastOpenedNoteId = noteId;
+    } else {
+        summaryDiv.classList.remove('expanded'); // Remove a classe para voltar à largura original
+        detailsDiv.style.display = 'none';
+        lastOpenedNoteId = null;
+    }
 }
 
     </script>   
