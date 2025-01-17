@@ -36,6 +36,21 @@ class Note extends Model
             'file_path' => $this->file_path,
         ];
     }
-    
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($note) {
+            if (empty($note->slug)) {
+                $note->slug = Str::slug($note->title);
+            }
+        });
+
+        static::updating(function ($note) {
+            if (empty($note->slug)) {
+                $note->slug = Str::slug($note->title);
+            }
+        });
+    }
 
 }

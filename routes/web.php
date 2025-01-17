@@ -50,7 +50,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\NotesController;
 
 Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');
 
+use App\Models\Note;
+
+Route::get('note/{slug}', [NotesController::class, 'show'])->name('notes.show');
 require __DIR__.'/auth.php';

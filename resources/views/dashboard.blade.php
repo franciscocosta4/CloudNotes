@@ -11,15 +11,15 @@
     <x-app-layout>
         <div class="user-level-container">
             <div class="user-level">
-            @php
-    $points = Auth::user()->points;
-    $level = floor($points / 1000); // Calcula o nível
-    $pointsForNextLevel = 1000 - ($points % 1000); // Calcula os pontos restantes para o próximo nível
-@endphp
-<h1>{{ __('Você está no nível ') . $level }}</h1>
-@if ($pointsForNextLevel < 1000)
-    <p>{{ __('Faltam ') . $pointsForNextLevel . __(' pontos para o próximo nível.') }}</p>
-@endif
+                @php
+                    $points = Auth::user()->points;
+                    $level = floor($points / 1000); // Calcula o nível
+                    $pointsForNextLevel = 1000 - ($points % 1000); // Calcula os pontos restantes para o próximo nível
+                @endphp
+                <h1>{{ __('Você está no nível ') . $level }}</h1>
+                @if ($pointsForNextLevel < 1000)
+                    <p>{{ __('Faltam ') . $pointsForNextLevel . __(' pontos para o próximo nível.') }}</p>
+                @endif
             </div>
             <h3>Como aumentar o nível?</h3>
             <p>O seu nível aumenta à medida que partilha anotações com outras pessoas. <br>Para alcançar o próximo nível, continue a compartilhar as suas anotações!</p>
@@ -87,107 +87,71 @@
                     </button>
                 </div>
             </aside>
-<!-- Main Content -->
-<main class="main">
-    <div class="main-content" id="search-container">
-        <h2 id="search-title">Procurar por uma Anotação</h2>
-<!-- Formulário de pesquisa -->
-<form action="{{ route('search') }}" method="GET">
-    <input  type="text" name="query" id="search-input" placeholder="Entre palavras-chave para pesquisar..." value="{{ old('query', $query ?? '') }}">
-    <button type="submit">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 9.5 5 13 7.01 13 9.5 10.99 14 9.5 14z"/>
-        </svg>
-    </button>
-</form>
-</div>
 
-<!-- Div de compartilhar -->
-<div id="share-container" class="main-content" style="display: {{ request('query') ? 'none' : 'block' }}">
-<h2 id="search-title" >Partilhar  uma Anotação</h2>
-<p style="margin-bottom:10px;">clique para começar a partilhar</p>
-<button id="share-button" style="margin:auto;background-color:#0F044C; color:white; border: none; padding: 8px 21px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s, transform 0.3s;">
-    Partilhar
-</button>
-
-</div>
-@if(isset($query) && !empty($query))
-    <h2>Resultados para: <strong>{{ $query }}</strong></h2>
-@endif
-
-<div id="search-results" style="display: {{ isset($query) && !empty($query) ? 'block' : 'none' }};">
-    @if(isset($results) && $results->isEmpty())
-        <p>Nenhum resultado encontrado.</p>
-    @elseif(isset($results))
-        <ul>
-            @foreach ($results as $note)
-                <div class="main-content">
-                <button onclick="toggleNoteDetails('{{ $note->id }}')">
-                    <li>
-                        <div id="note-summary-{{ $note->id }}" class="note-summary" style="width: 600px;">
-                            <h2>{{ $note->title }}</h2>
-                            <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
-                            <p><strong>Utilizador:</strong> {{ $note->user->name }}</p>
-                            <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
-                        </div>
-
-                        <!-- Se não houver conteúdo, exibe o link para o arquivo -->
-                        @if(empty($note->content))
-                            <!-- <p><strong>Conteúdo:</strong> Nenhum conteúdo disponível.</p> -->
-                            <a  style="color:#007bff;" href="{{ asset('path/to/notes/' . $note->file_path) }}" download>Transferir Anotação</a>
-                        @else
-                                <!-- Detalhes escondidos -->
-                                <div id="note-details-{{ $note->id }}" class="note-details" style="display: none; margin-top: 10px;">
-                                    <p style="padding:10px 30px; font-size:14px;"><strong>Conteúdo:</strong> {{ $note->content }}</p>
-                                    <a href="{{ asset('path/to/notes/' . $note->file_path) }}" download>Transferir Anotação</a>
-                                </div>
-                            </button>
-                        @endif
-                    </li>
+            <!-- Main Content -->
+            <main class="main">
+                <div class="main-content" id="search-container">
+                    <h2 id="search-title">Procurar por uma Anotação</h2>
+                    <!-- Formulário de pesquisa -->
+                    <form action="{{ route('search') }}" method="GET">
+                        <input type="text" name="query" id="search-input" placeholder="Entre palavras-chave para pesquisar..." value="{{ old('query', $query ?? '') }}">
+                        <button type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 9.5 5 13 7.01 13 9.5 10.99 14 9.5 14z"/>
+                            </svg>
+                        </button>
+                    </form>
                 </div>
-            @endforeach
-        </ul>
-    @endif
-</div>
 
+                <!-- Div de compartilhar -->
+                <div id="share-container" class="main-content" style="display: {{ request('query') ? 'none' : 'block' }}">
+                    <h2 id="search-title">Partilhar uma Anotação</h2>
+                    <p style="margin-bottom:10px;">Clique para começar a partilhar</p>
+                    <button id="share-button" style="margin:auto;background-color:#0F044C; color:white; border: none; padding: 8px 21px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s, transform 0.3s;">
+                        Partilhar
+                    </button>
+                </div>
 
+                @if(isset($query) && !empty($query))
+                    <h2>Resultados para: <strong>{{ $query }}</strong></h2>
+                @endif
 
-<!-- Botão para voltar -->
-<button id="back-button" class="btn btn-secondary" style="display: {{ request('query') ? 'inline-block' : 'none' }};" onclick="window.location.href='{{ url('/dashboard') }}'">Voltar</button>
-</main>
+                <div id="search-results" style="display: {{ isset($query) && !empty($query) ? 'block' : 'none' }};">
+                    @if(isset($results) && $results->isEmpty())
+                        <p>Nenhum resultado encontrado.</p>
+                    @elseif(isset($results))
+                    <ul>
+    @foreach ($results as $note)
+        <div class="main-content">
+            <button onclick="toggleNoteDetails('{{ $note->id }}')">
+                <li>
+                    <div id="note-summary-{{ $note->id }}" class="note-summary" style="width: 600px;">
+                        <!-- Link correto para o slug -->
+                        <h2><a href="{{ url('note/' . $note->slug) }}">{{ $note->title }}</a></h2>
+                        <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
+                        <p><strong>Utilizador:</strong> {{ $note->user->name }}</p>
+                        <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
+                    </div>
 
+         
+                </li>
+            </button>
+        </div>
+    @endforeach
+</ul>
+
+                    @endif
+                </div>
+
+                <!-- Botão para voltar -->
+                <button id="back-button" class="btn btn-secondary" style="display: {{ request('query') ? 'inline-block' : 'none' }};" onclick="window.location.href='{{ url('/dashboard') }}'">Voltar</button>
+            </main>
         </div>
     </x-app-layout>
 </body>
 </html>
 
 
-<script>let lastOpenedNoteId = null;
 
-function toggleNoteDetails(noteId) {
-    const summaryDiv = document.getElementById(`note-summary-${noteId}`);
-    const detailsDiv = document.getElementById(`note-details-${noteId}`);
-
-    // Verifica se já existe uma anotação aberta
-    if (lastOpenedNoteId !== null && lastOpenedNoteId !== noteId) {
-        const lastSummaryDiv = document.getElementById(`note-summary-${lastOpenedNoteId}`);
-        const lastDetailsDiv = document.getElementById(`note-details-${lastOpenedNoteId}`);
-        lastSummaryDiv.classList.remove('expanded'); // Remove a classe para voltar à largura original
-        lastDetailsDiv.style.display = 'none';
-    }
-
-    // Alterna o estado da anotação clicada
-    if (detailsDiv.style.display === 'none' || detailsDiv.style.display === '') {
-        summaryDiv.classList.add('expanded'); // Adiciona a classe para aumentar a largura
-        detailsDiv.style.display = 'block';
-        lastOpenedNoteId = noteId;
-    } else {
-        summaryDiv.classList.remove('expanded'); // Remove a classe para voltar à largura original
-        detailsDiv.style.display = 'none';
-        lastOpenedNoteId = null;
-    }
-}
-
-    </script>   
 
     
