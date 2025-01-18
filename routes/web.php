@@ -49,12 +49,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
+//* ROTAS PARA PESQUISA E NOTA INDIVIDUAL 
+
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\NotesController;
-
-Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');
-
 use App\Models\Note;
 
-Route::get('note/{slug}', [NotesController::class, 'show'])->name('notes.show');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');    
+    Route::get('note/{slug}', [NotesController::class, 'show'])->name('notes.show');
+});
+
+
 require __DIR__.'/auth.php';

@@ -35,7 +35,7 @@
                 <li><a href="#">Anotação 5</a></li>
             </ul>
         </div>
-
+        
         <div class="container">
             <!-- Sidebar -->
             <aside class="sidebar" id="sidebar">
@@ -125,13 +125,15 @@
         <div class="main-content">
             <button onclick="toggleNoteDetails('{{ $note->id }}')">
                 <li>
+                <a id="link-note" href="{{ url('note/' . $note->slug) }}">
                     <div id="note-summary-{{ $note->id }}" class="note-summary" style="width: 600px;">
                         <!-- Link correto para o slug -->
-                        <h2><a href="{{ url('note/' . $note->slug) }}">{{ $note->title }}</a></h2>
+                        <h2>{{ $note->title }}</h2>
                         <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
                         <p><strong>Utilizador:</strong> {{ $note->user->name }}</p>
                         <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
                     </div>
+                    </a>
 
          
                 </li>

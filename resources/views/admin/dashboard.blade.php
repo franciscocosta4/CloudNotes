@@ -1,4 +1,9 @@
-
+<style>
+    body{
+        background-color:#1a1b1c;
+        color:white;
+    }
+</style>
 <div class="container">
     <h1>Dashboard</h1>
 

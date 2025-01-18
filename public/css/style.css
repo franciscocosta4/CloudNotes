@@ -311,6 +311,10 @@ p {
     background-color: #FFFFFF;
     margin-bottom: 1.5rem;
 }
+.main-content:hover {
+    transform: scale(1.005);
+    background-color: #F8F9FA;
+}
 
 .main-content h2 {
     font-size: 1.4rem;
@@ -432,16 +436,20 @@ form {
 }
 
 
+
 /* Efeito de foco no input */
 #search-input:focus {
     border-color: #141E61;
     box-shadow: 0 0 8px rgba(15, 4, 76, 0.3);
 }
 
+
+
 .note-summary {
     width: auto; /* Remova a largura fixa */
     transition: width 0.3s ease-in-out; /* Adiciona transição suave */
 }
+
 /* Classe para expandir a largura da nota */
 .note-summary.expanded {
     width: 800px; /* Largura aumentada para a anotação clicada */
@@ -480,17 +488,49 @@ form {
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .sidebar {
-        width: 200px;
+    .published-notes-container{
+        width: 180px; /* Reduz a largura */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease; 
+        visibility: hidden;
     }
 
-    .main {
-        padding: 70px 1rem 1rem;
+    .user-level-container{
+        width: 180px; /* Reduz a largura */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease; 
+        visibility: hidden;
+
     }
+
+    .sidebar {
+        width: 180px; /* Reduz a largura */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease; /* Suave ao abrir/fechar */
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    #menu-button {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        display: none; /* Esconde o botão em telas maiores */
+    }
+    
+    @media (max-width: 768px) {
+        #menu-button {
+            display: block;
+        }
+    }
+    
 }
 
 @media (max-width: 480px) {
     .sidebar {
-        width: 180px;
+        width: 150px; /* Ainda menor em telas muito pequenas */
     }
 }
