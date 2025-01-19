@@ -16,7 +16,11 @@
 
     <div>
         <h2>Conteúdo da Anotação</h2>
-        <p>{{ $note->content }}</p>
+        @if (!empty($note->content))
+            <p>{{ $note->content }}</p>
+        @else
+            <p>Não há conteúdo disponível para esta anotação.</p>
+        @endif
     </div>
 
     <a href="{{ asset('path/to/notes/' . $note->file_path) }}" download>Transferir Anotação</a>

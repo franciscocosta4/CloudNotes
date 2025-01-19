@@ -1,11 +1,21 @@
+<!-- Preload do estilo local -->
+<link rel="preload" href="{{ asset('css/style.css') }}" as="style" onload="this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</noscript>
+
+<!-- Preload do Google Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" as="style" onload="this.rel='stylesheet'">
+<noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</noscript>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CloudNotes</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+   
 </head>
 <body>
     <x-app-layout>
@@ -13,8 +23,8 @@
             <div class="user-level">
                 @php
                     $points = Auth::user()->points;
-                    $level = floor($points / 1000); // Calcula o nível
-                    $pointsForNextLevel = 1000 - ($points % 1000); // Calcula os pontos restantes para o próximo nível
+                    $level = floor($points / 1000); //* Calcula o nível
+                    $pointsForNextLevel = 1000 - ($points % 1000); //* Calcula os pontos restantes para o próximo nível
                 @endphp
                 <h1>{{ __('Você está no nível ') . $level }}</h1>
                 @if ($pointsForNextLevel < 1000)
@@ -68,7 +78,6 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-
                     <button class="action-btn" onclick="location.href='/help'">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 8px;">
                             <path d="M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10zm0 16c-1.7 0-3-1.3-3-3h6c0 1.7-1.3 3-3 3zm1-4h-2v-2h2v2zm1-6c0-.6-.4-1-1-1s-1 .4-1 1v2h-2v-2c0-.6-.4-1-1-1s-1 .4-1 1v5h2v-3h2v3h2v-5z"/>
