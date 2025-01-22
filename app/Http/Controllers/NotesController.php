@@ -26,39 +26,37 @@ class NotesController extends Controller
      * Armazenar uma nova anotação.
      */
     public function storeNote(Request $request)
-{
-    $request->validate([
-        'user_id' => 'required|exists:users,id', // O utilizador precisa existir
-        'title' => 'required|string|max:255',
-        'subject' => 'required|string|max:255',
-        'topic_difficulty' => 'required|string|max:255',
-        'content' => 'nullable|string', // Conteúdo é opcional
-        'file_path' => 'nullable|file', // Arquivo é opcional
-    ], [
-        'content.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
-        'file_path.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
-    ]);
-
-    // Se um dos dois estiver preenchido, o resto pode ser tratado normalmente.
-    $filePath = null;
-    if ($request->hasFile('file_path')) {
-        // Salve o arquivo e obtenha o caminho
-        $filePath = $request->file('file_path')->store('notes', 'public');
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
+            'topic_difficulty' => 'required|string|max:255',
+            'content' => 'nullable|string', // Conteúdo é opcional
+            'file_path' => 'nullable|file', // Arquivo é opcional
+        ], [
+            'content.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
+            'file_path.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
+        ]);
+    
+        $filePath = null;
+        if ($request->hasFile('file_path')) {
+            // Salve o arquivo e obtenha o caminho
+            $filePath = $request->file('file_path')->store('notes', 'public');
+        }
+    
+        // Criação da nota
+        Note::create([
+            'user_id' => auth()->id(), // Associando ao usuário autenticado
+            'title' => $request->title,
+            'subject' => $request->subject,
+            'topic_difficulty' => $request->topic_difficulty,
+            'content' => $request->content,
+            'file_path' => $filePath,
+        ]);
+    
+        return redirect()->route('dashboard')->with('success', 'Anotação criada com sucesso!');
     }
-
-    // Criação da nota
-    Note::create([
-        'user_id' => $request->user_id,
-        'title' => $request->title,
-        'subject' => $request->subject,
-        'topic_difficulty' => $request->topic_difficulty,
-        'content' => $request->content,
-        'file_path' => $filePath,
-    ]);
-
-    return redirect()->route('dashboard')->with('success', 'Anotação criada com sucesso!');
-}
-
+    
     
 
     /**
