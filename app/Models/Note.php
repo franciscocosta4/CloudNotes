@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Support\Str; // Adicione esta linha
   //* NECESSÁRIO PARA O SCOUT
   use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;

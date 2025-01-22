@@ -116,9 +116,9 @@
                 <div id="share-container" class="main-content" style="display: {{ request('query') ? 'none' : 'block' }}">
                     <h2 id="search-title">Partilhar uma Anotação</h2>
                     <p style="margin-bottom:10px;">Clique para começar a partilhar</p>
-                    <button id="share-button" style="margin:auto;background-color:#0F044C; color:white; border: none; padding: 8px 21px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s, transform 0.3s;">
+                    <a  href="{{ route('notes.create')}}" id="share-button" style="margin:auto;background-color:#0F044C; color:white; border: none; padding: 8px 21px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s, transform 0.3s;">
                         Partilhar
-                    </button>
+</a>
                 </div>
 
                 @if(isset($query) && !empty($query))

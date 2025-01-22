@@ -60,6 +60,15 @@ use App\Models\Note;
 Route::middleware('auth')->group(function () {
     Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');    
     Route::get('note/{slug}', [NotesController::class, 'show'])->name('notes.show');
+
+    // Route::get('/notes/create', [NotesController::class, 'createNote'])->name('notes.create');
+    Route::post('/notes', [NotesController::class, 'storeNote'])->name('notes.store');
+    Route::match(['get', 'post'],'/notes/create', [NotesController::class, 'createNote'])->name('notes.create');
+    Route::match(['get', 'post'],'/notes', [NotesController::class, 'storeNote'])->name('notes.store');
+
+    // Route::get('/notes/{note}/edit', [NotesController::class, 'editNote'])->name('notes.edit');
+    // Route::patch('/notes/{note}', [NotesController::class, 'updateNote'])->name('notes.update');
+    Route::delete('/notes/{note}', [NotesController::class, 'destroyNote'])->name('notes.destroy');
 });
 
 

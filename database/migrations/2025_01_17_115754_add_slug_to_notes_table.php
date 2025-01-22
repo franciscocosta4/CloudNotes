@@ -26,3 +26,4 @@ class AddSlugToNotesTable extends Migration
         });
     }
 }
+
