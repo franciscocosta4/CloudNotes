@@ -1,4 +1,16 @@
 
+<!-- Preload do estilo local -->
+<link rel="preload" href="{{ asset('css/style.css') }}" as="style" onload="this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</noscript>
+
+<!-- Preload do Google Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" as="style" onload="this.rel='stylesheet'">
+<noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</noscript>
+
 <div class="container">
     <h1>Editar Nota</h1>
 
