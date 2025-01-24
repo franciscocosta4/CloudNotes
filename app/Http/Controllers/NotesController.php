@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class NotesController extends Controller
 {
     public function show($slug)
@@ -46,7 +48,7 @@ class NotesController extends Controller
         
         //* Criação da nota
         Note::create([
-            'user_id'          => auth()->id(), //* Associando ao usuário autenticado
+            'user_id'          => auth()->id(), //* Associando ao user autenticado
             'title'            => $request->title,
             'subject'          => $request->subject,
             'topic_difficulty' => $request->topic_difficulty,
@@ -57,7 +59,7 @@ class NotesController extends Controller
         $userId = auth()->id(); //* Obtém o ID do user autenticado
         if ($userId) {
             $user = User::find($userId);
-            $user->points += 1000; //* Soma 1000 aos pontos existentes
+            $user->points += 500; //* Soma 1000 aos pontos existentes
             $user->save();
         }
         
@@ -65,13 +67,13 @@ class NotesController extends Controller
         return redirect()->route('dashboard')->with('success', 'Anotação criada com sucesso!');
     }
 
-    // //* EXIBIR  A VIEW DE EDIÇAO 
+    //* EXIBIR  A VIEW DE EDIÇAO 
     // public function editNote(Note $note)
     // {
     //     return view('notes.edit', compact('note'));
     // }
 
-    // //*EDITAR UMA ANOTAÇAO 
+    //*EDITAR UMA ANOTAÇAO 
     // public function updateNote(Request $request, Note $note)
     // {
     //     $request->validate([
@@ -103,7 +105,6 @@ class NotesController extends Controller
     public function destroyNote(Note $note)
     {
         $note->delete();
-
         return redirect()->route('dashboard')->with('success', 'Anotação excluída com sucesso!');
     }
 

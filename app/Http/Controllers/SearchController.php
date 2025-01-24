@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Note;
@@ -23,13 +22,26 @@ class SearchController extends Controller
         // Captura o termo de busca
         $query = $request->input('query');
 
-        // Realiza a pesquisa usando Laravel Scout
-        $results = Note::search($query)->get();
+        // Inicializa os resultados com a pesquisa básica
+        $results = Note::search($query);
 
-        // Retorna a view com os resultados
+        // Captura o filtro de disciplina, se fornecido
+        $disciplina = $request->input('disciplina');
+
+        if (!empty($disciplina)) {
+            // Aplica o filtro de disciplina
+            $results->where('subject', $disciplina);
+        }
+
+        // Executa a consulta e obtém os resultados
+        $results = $results->get();
+
+        // Retorna a view com os resultados e os parâmetros usados
         return view('dashboard', [
             'results' => $results,
             'query' => $query,
+            'disciplina' => $disciplina, // Isso será `null` se `disciplina` não for fornecida
         ]);
     }
 }
+

@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CloudNotes</title>
-   
+
 </head>
 <body>
     <x-app-layout>
@@ -45,7 +45,7 @@
                 <li><a href="#">Anotação 5</a></li>
             </ul>
         </div>
-        
+
         <div class="container">
             <!-- Sidebar -->
             <aside class="sidebar" id="sidebar">
@@ -85,7 +85,7 @@
                         Ajuda
                     </button>
                 </div>
-                
+
                 <!-- Profile Info -->
                 <div class="profile-info">
                     <span id="username">{{ Auth::user()->name }}</span>
@@ -99,18 +99,42 @@
 
             <!-- Main Content -->
             <main class="main">
-                <div class="main-content" id="search-container">
-                    <h2 id="search-title">Procurar por uma Anotação</h2>
-                    <!-- Formulário de pesquisa -->
-                    <form action="{{ route('search') }}" method="GET">
-                        <input type="text" name="query" id="search-input" placeholder="Entre palavras-chave para pesquisar..." value="{{ old('query', $query ?? '') }}">
-                        <button type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 9.5 5 13 7.01 13 9.5 10.99 14 9.5 14z"/>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
+        <div class="main-content" id="search-container">
+    <h2 id="search-title">Procurar por uma Anotação</h2>
+    <!-- Formulário de pesquisa -->
+        <form action="{{ route('search') }}" method="GET" id="search-form">
+        <div class="search-container" id="input-search-container">
+        <input 
+            type="text" 
+            name="query" 
+            id="search-input" 
+            placeholder="Entre palavras-chave para pesquisar..." 
+            value="{{ old('query', $query ?? '') }}"
+        >
+        <button type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 9.5 5 13 7.01 13 9.5 10.99 14 9.5 14z"/>
+            </svg>
+        </button>
+        </div>
+        <select name="disciplina" id="disciplina-select">
+            <option value="">Todas as disciplinas</option>
+            <option value="matematica" {{ request('disciplina') == 'matematica' ? 'selected' : '' }}>Matemática</option>
+            <option value="fisica" {{ request('disciplina') == 'fisica' ? 'selected' : '' }}>Física</option>
+            <option value="quimica" {{ request('disciplina') == 'quimica' ? 'selected' : '' }}>Química</option>
+        </select>
+    </form>
+
+</div>
+<script>
+    document.getElementById('search-form').addEventListener('submit', function (e) {
+        const disciplinaSelect = document.getElementById('disciplina-select');
+        // Se o valor da disciplina estiver vazio, remove o parâmetro da URL
+        if (disciplinaSelect.value === "") {
+            disciplinaSelect.removeAttribute('name');
+        }
+    });
+</script> 
 
                 <!-- Div de compartilhar -->
                 <div id="share-container" class="main-content" style="display: {{ request('query') ? 'none' : 'block' }}">
@@ -144,7 +168,7 @@
                     </div>
                     </a>
 
-         
+
                 </li>
             </button>
         </div>
@@ -161,8 +185,3 @@
     </x-app-layout>
 </body>
 </html>
-
-
-
-
-    
