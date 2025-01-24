@@ -15,7 +15,6 @@
     margin-bottom: 1.5rem;
 }
 </style>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +30,7 @@
     <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
     <br>
     <div>
-    <h1>{{ $note->title }}</h1>
+    <h1>{{ $note->title }}</h1> 
     <br>
         @if (!empty($note->content))
             <p>{{ $note->content }}</p>
