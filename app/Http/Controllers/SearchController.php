@@ -14,24 +14,33 @@ class SearchController extends Controller
      */
     public function searchNotes(Request $request)
     {
-        // Validação para garantir que um termo foi fornecido
-        $request->validate([
-            'query' => 'required|string|min:1',
-        ]);
-
         // Captura o termo de busca
         $query = $request->input('query');
 
-        // Inicializa os resultados com a pesquisa básica
-        $results = Note::search($query);
-
         // Captura o filtro de disciplina, se fornecido
         $disciplina = $request->input('disciplina');
+        
+        
+        // Captura o filtro de dificuldade, se fornecido
+        $dificuldade = $request->input('dificuldade');
+
+        // Inicializa a query do modelo Note
+        $results = Note::query();
+
+        if (!empty($query)) {
+            // Aplica a busca pelo termo, caso fornecido
+            $results->where('content', 'like', "%{$query}%"); // Altere 'content' para o campo desejado
+        }
 
         if (!empty($disciplina)) {
             // Aplica o filtro de disciplina
             $results->where('subject', $disciplina);
         }
+        if (!empty($dificuldade)) {
+            // Aplica o filtro de disciplina
+            $results->where('topic_difficulty', $dificuldade);
+        }
+
 
         // Executa a consulta e obtém os resultados
         $results = $results->get();
@@ -41,7 +50,7 @@ class SearchController extends Controller
             'results' => $results,
             'query' => $query,
             'disciplina' => $disciplina, // Isso será `null` se `disciplina` não for fornecida
+            'dificuldade' =>$dificuldade,
         ]);
     }
 }
-

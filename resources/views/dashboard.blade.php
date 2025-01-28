@@ -117,23 +117,51 @@
             </svg>
         </button>
         </div>
+        <div class="search-container" id="filters-search-container">
         <select name="disciplina" id="disciplina-select">
             <option value="">Todas as disciplinas</option>
             <option value="matematica" {{ request('disciplina') == 'matematica' ? 'selected' : '' }}>Matemática</option>
             <option value="fisica" {{ request('disciplina') == 'fisica' ? 'selected' : '' }}>Física</option>
             <option value="quimica" {{ request('disciplina') == 'quimica' ? 'selected' : '' }}>Química</option>
+            <option value="geografia" {{ request('disciplina') == 'geografia' ? 'selected' : '' }}>Geografia</option>
         </select>
+        <select name="dificuldade" id="dificuldade-select">
+            <option value="">Todas as dificuldades</option>
+            <option value="facil" {{ request('dificuldade') == 'facil' ? 'selected' : '' }}>Fácil</option>
+            <option value="moderada" {{ request('dificuldade') == 'moderada' ? 'selected' : '' }}>Moderada</option>
+            <option value="dificil" {{ request('dificuldade') == 'dificil' ? 'selected' : '' }}>Difícil</option>
+        </select>
+        </div>
     </form>
 
 </div>
 <script>
-    document.getElementById('search-form').addEventListener('submit', function (e) {
-        const disciplinaSelect = document.getElementById('disciplina-select');
-        // Se o valor da disciplina estiver vazio, remove o parâmetro da URL
-        if (disciplinaSelect.value === "") {
-            disciplinaSelect.removeAttribute('name');
-        }
-    });
+   document.getElementById('search-form').addEventListener('submit', function (e) {
+    e.preventDefault(); // Impede o comportamento padrão do formulário (envio e recarregamento da página)
+    
+    const disciplinaSelect = document.getElementById('disciplina-select');
+    const dificuldadeSelect = document.getElementById('dificuldade-select');
+    const searchInput = document.getElementById('search-input');
+
+    // Se o valor da disciplina estiver vazio, remove o parâmetro da URL
+    if (disciplinaSelect.value === "") {
+        disciplinaSelect.removeAttribute('name');
+    }
+
+    if (dificuldadeSelect.value === "") {
+        dificuldadeSelect.removeAttribute('name');
+    }
+
+    // Verifica se o campo de busca está vazio e exibe o alerta
+    if (searchInput.value === "") {
+        alert("Insira alguma palavra antes de pesquisar");
+        return; // Para a execução aqui e não envia o formulário
+    }
+
+    // Se chegou aqui, o formulário será enviado manualmente
+    this.submit(); // Envia o formulário caso os campos estejam válidos
+});
+
 </script> 
 
                 <!-- Div de compartilhar -->
