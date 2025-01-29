@@ -20,7 +20,7 @@ class SearchController extends Controller
         // Captura o filtro de disciplina, se fornecido
         $disciplina = $request->input('disciplina');
         
-        
+
         // Captura o filtro de dificuldade, se fornecido
         $dificuldade = $request->input('dificuldade');
 

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->smallInteger('school_year')->nullable(); // Alterado para smallInteger para armazenar anos escolares (7 a 12)
-            $table->json('subjects_of_interest')->nullable(); // Alterado para json para armazenar lista de disciplinas
+            $table->smallInteger('school_year')->nullable(); // Armazena anos escolares (7 a 12)
+            $table->json('subjects_of_interest')->nullable(); // Lista de disciplinas de interesse
             $table->integer('points')->default(0); // Pontuação do utilizador
+            $table->enum('role', ['user', 'admin'])->default('user'); // Define o tipo de utilizador
             $table->rememberToken();
             $table->timestamps();
         });

@@ -135,35 +135,6 @@
     </form>
 
 </div>
-<script>
-   document.getElementById('search-form').addEventListener('submit', function (e) {
-    e.preventDefault(); // Impede o comportamento padrão do formulário (envio e recarregamento da página)
-    
-    const disciplinaSelect = document.getElementById('disciplina-select');
-    const dificuldadeSelect = document.getElementById('dificuldade-select');
-    const searchInput = document.getElementById('search-input');
-
-    // Se o valor da disciplina estiver vazio, remove o parâmetro da URL
-    if (disciplinaSelect.value === "") {
-        disciplinaSelect.removeAttribute('name');
-    }
-
-    if (dificuldadeSelect.value === "") {
-        dificuldadeSelect.removeAttribute('name');
-    }
-
-    // Verifica se o campo de busca está vazio e exibe o alerta
-    if (searchInput.value === "") {
-        alert("Insira alguma palavra antes de pesquisar");
-        return; // Para a execução aqui e não envia o formulário
-    }
-
-    // Se chegou aqui, o formulário será enviado manualmente
-    this.submit(); // Envia o formulário caso os campos estejam válidos
-});
-
-</script> 
-
                 <!-- Div de compartilhar -->
                 <div id="share-container" class="main-content" style="display: {{ request('query') ? 'none' : 'block' }}">
                     <h2 id="search-title">Partilhar uma Anotação</h2>
@@ -213,3 +184,31 @@
     </x-app-layout>
 </body>
 </html>
+<script>
+   document.getElementById('search-form').addEventListener('submit', function (e) {
+    e.preventDefault(); // Impede o comportamento padrão do formulário (envio e recarregamento da página)
+    
+    const disciplinaSelect = document.getElementById('disciplina-select');
+    const dificuldadeSelect = document.getElementById('dificuldade-select');
+    const searchInput = document.getElementById('search-input');
+
+    // Se o valor da disciplina estiver vazio, remove o parâmetro da URL
+    if (disciplinaSelect.value === "") {
+        disciplinaSelect.removeAttribute('name');
+    }
+
+    if (dificuldadeSelect.value === "") {
+        dificuldadeSelect.removeAttribute('name');
+    }
+
+    // Verifica se o campo de busca está vazio e exibe o alerta
+    if (searchInput.value === "") {
+        alert("Insira alguma palavra antes de pesquisar");
+        return; // Para a execução aqui e não envia o formulário
+    }
+
+    // Se chegou aqui, o formulário será enviado manualmente
+    this.submit(); // Envia o formulário caso os campos estejam válidos
+});
+
+</script> 
