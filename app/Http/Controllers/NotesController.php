@@ -1,12 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Note; 
-use App\Models\User; 
+use App\Models\Note;
+use App\Models\User;
+use App\Models\Point; // Importamos o modelo de pontos
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
 
 class NotesController extends Controller
 {
@@ -24,9 +23,7 @@ class NotesController extends Controller
         return view('notes.create');
     }
     
-
-   //* Armazenar uma nova anotação e atribuir pontos ao user.
-
+    //* Armazenar uma nova anotação e atribuir pontos ao user
     public function storeNote(Request $request)
     {
         $request->validate([
@@ -47,7 +44,7 @@ class NotesController extends Controller
         }
         
         //* Criação da nota
-        Note::create([
+        $note = Note::create([
             'user_id'          => auth()->id(), //* Associando ao user autenticado
             'title'            => $request->title,
             'subject'          => $request->subject,
@@ -56,48 +53,24 @@ class NotesController extends Controller
             'file_path'        => $filePath,
         ]);
 
-        $userId = auth()->id(); //* Obtém o ID do user autenticado
-        if ($userId) {
-            $user = User::find($userId);
-            $user->points += 500; //* Soma 1000 aos pontos existentes
-            $user->save();
+        //* Adicionar pontos ao user
+        $user = Auth::user();
+        if ($user) {
+            $pointsEarned = 500; // Definição de pontos por publicação
+
+            //* Registra os pontos na tabela 'points'
+            Point::create([
+                'user_id' => $user->id,
+                'points'  => $pointsEarned,
+                'type'    => 'upload',
+            ]);
+
+            //* Atualiza a pontuação total do user na tabela 'users'
+            $user->increment('points', $pointsEarned);
         }
-        
 
         return redirect()->route('dashboard')->with('success', 'Anotação criada com sucesso!');
     }
-
-    //* EXIBIR  A VIEW DE EDIÇAO 
-    // public function editNote(Note $note)
-    // {
-    //     return view('notes.edit', compact('note'));
-    // }
-
-    //*EDITAR UMA ANOTAÇAO 
-    // public function updateNote(Request $request, Note $note)
-    // {
-    //     $request->validate([
-    //         'title'            => 'required|string|max:255',
-    //         'subject'          => 'required|string|max:255',
-    //         'topic_difficulty' => 'required|string|max:255',
-    //         'content'          => 'nullable|string',
-    //         'file_path'        => 'nullable|file',
-    //     ]);
-
-    //     $filePath = $request->file('file_path')
-    //     ? $request->file('file_path')->store('notes', 'public')
-    //     : null;
-
-    //     $note->update([
-    //         'title'            => $request->title,
-    //         'subject'          => $request->subject,
-    //         'topic_difficulty' => $request->topic_difficulty,
-    //         'content'          => $request->content,
-    //         'file_path'        => $filePath,
-    //     ]);
-
-    //     return redirect()->route('dashboard')->with('success', 'Anotação atualizada com sucesso!');
-    // }
 
     /**
      * Excluir uma anotação.
@@ -107,5 +80,4 @@ class NotesController extends Controller
         $note->delete();
         return redirect()->route('dashboard')->with('success', 'Anotação excluída com sucesso!');
     }
-
 }

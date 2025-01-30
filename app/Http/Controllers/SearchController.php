@@ -29,7 +29,10 @@ class SearchController extends Controller
 
         if (!empty($query)) {
             // Aplica a busca pelo termo, caso fornecido
-            $results->where('content', 'like', "%{$query}%"); // Altere 'content' para o campo desejado
+            $results->where(function ($q) use ($query) {
+                $q->where('title', 'like', "%{$query}%")
+                  ->orWhere('content', 'like', "%{$query}%");
+            });
         }
 
         if (!empty($disciplina)) {
