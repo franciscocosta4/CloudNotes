@@ -48,11 +48,10 @@ class SearchController extends Controller
         // Executa a consulta e obtém os resultados
         $results = $results->get();
 
-        // Retorna a view com os resultados e os parâmetros usados
         return view('dashboard', [
             'results' => $results,
             'query' => $query,
-            'disciplina' => $disciplina, // Isso será `null` se `disciplina` não for fornecida
+            'disciplina' => $disciplina, 
             'dificuldade' =>$dificuldade,
         ]);
     }
