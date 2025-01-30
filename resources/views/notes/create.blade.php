@@ -57,14 +57,18 @@
             display: block;
             width: 130px;
         }
+        #content{
+            border: solid rgb(159, 159, 159);
+        }
+
 
         .form-control {
             width: 95%;
             padding: 0.75rem;
             font-size: 1rem;
-            border: 2px solid #DDD;
+            border: 2px solid #0F044C;
             border-radius: 8px;
-            background-color: #F8F9FA;
+            /* background-color: #F8F9FA; */
             color: #444;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -81,6 +85,7 @@
         }
 
         .btn {
+            font-family: 'Poppins', sans-serif;
             background-color: #0F044C;
             color: white;
             padding: 0.75rem 1.5rem;
@@ -92,17 +97,12 @@
         }
 
         .btn:hover {
-            background-color: #141E61;
             transform: scale(1.05);
         }
 
         #back-button {
             margin-top: 1rem;
-            background-color: #6c757d;
-        }
-
-        #back-button:hover {
-            background-color: #5a6268;
+            background-color: #0F044C;
         }
     </style>
 </head>
@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="content" class="form-label">Conteúdo</label>
+                <label for="content" class="form-label" >Conteúdo</label>
                 <p>
             Escreva aqui o conteúdo a seu resumo:
         </p>
