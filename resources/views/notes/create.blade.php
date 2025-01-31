@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Partilhar Anotação</title>
     <!-- Preload do Google Fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" as="style" onload="this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" as="style" onload="this.rel='stylesheet'">
     <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     </noscript>
     <style>
         body, html {
             font-family: 'Poppins', sans-serif;
             background-color: #F8F9FA;
             color: #444;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         /* Estilos específicos para a página de partilha */
@@ -29,8 +29,8 @@
             text-align: left;
         }
 
-        .container h1 {
-            font-size: 1.8rem;
+        .container h2 {
+            font-size: 1.7rem;
             color: #0F044C;
             margin-bottom: 1.5rem;
         }
@@ -58,10 +58,8 @@
             width: 130px;
         }
         #content{
-            border: solid rgb(159, 159, 159);
+            border: 2px solid rgb(159, 159, 159);
         }
-
-
         .form-control {
             width: 95%;
             padding: 0.75rem;
@@ -108,7 +106,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Partilhar Anotação</h1>
+        <h2>Partilhar Anotação</h2>
         <p>
             Insira os dados do seu resumo:
         </p>
@@ -146,7 +144,8 @@
                 <p>
             Escreva aqui o conteúdo a seu resumo:
         </p>
-                <textarea name="content" id="content" class="form-control" rows="30" required></textarea>
+                <textarea name="content" id="content" class="form-control" rows="30" required style="resize: vertical;
+  overflow-y: hidden;"></textarea>
                 @if ($errors->has('content') || $errors->has('file_path'))
                     <div class="text-danger">
                         @foreach ($errors->get('content') as $message)

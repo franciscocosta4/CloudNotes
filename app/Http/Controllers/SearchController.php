@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {
@@ -14,14 +15,9 @@ class SearchController extends Controller
      */
     public function searchNotes(Request $request)
     {
-        // Captura o termo de busca
+        // Captura a query e os filtros
         $query = $request->input('query');
-
-        // Captura o filtro de disciplina, se fornecido
         $disciplina = $request->input('disciplina');
-        
-
-        // Captura o filtro de dificuldade, se fornecido
         $dificuldade = $request->input('dificuldade');
 
         // Inicializa a query do modelo Note
@@ -36,20 +32,22 @@ class SearchController extends Controller
         }
 
         if (!empty($disciplina)) {
-            // Aplica o filtro de disciplina
             $results->where('subject', $disciplina);
         }
         if (!empty($dificuldade)) {
-            // Aplica o filtro de disciplina
             $results->where('topic_difficulty', $dificuldade);
         }
 
-
-        // Executa a consulta e obtém os resultados
+        //* Executa a consulta e obtém os resultados
         $results = $results->get();
+
+        //? Recupera as anotações publicadas pelo user (PARA GARANTIR QUE AS ANOTAÇÕES DA SIDEBAR AINDA FICAM LÁ ) 
+        $notes = Note::where('user_id', Auth::id())->get();
+
 
         return view('dashboard', [
             'results' => $results,
+            'notes' => $notes,
             'query' => $query,
             'disciplina' => $disciplina, 
             'dificuldade' =>$dificuldade,

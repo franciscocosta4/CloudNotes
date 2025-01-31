@@ -97,6 +97,8 @@ p {
 
 .sidebar-nav ul li {
     margin-bottom: 1rem;
+    /* border: 1px solid #d1d1d1; */
+    border-radius: 10px;
 }
 
 .sidebar-nav ul li a {
@@ -127,7 +129,7 @@ p {
 }
 
 .sidebar-nav button:hover {
-    background-color: #0c175f; /* Realce mais escuro */
+    transform: scale(1.01);
 }
 
 /* Profile Info */
@@ -237,10 +239,12 @@ p {
 
 .published-notes-container ul li {
     margin-bottom: 10px;
+    width: 210px;
 }
 
 /* Estilo dos links das anotações (mesmo estilo da sidebar) */
 .published-notes-container ul li a {
+    border: 1px solid #DDD;
     color: #444;
     text-decoration: none;
     font-size: 1rem;
@@ -311,10 +315,10 @@ p {
     background-color: #FFFFFF;
     margin-bottom: 1.5rem;
 }
-.main-content:hover {
+/* .main-content:hover {
     transform: scale(1.005);
     background-color: #F8F9FA;
-}
+} */
 
 .main-content h2 {
     font-size: 1.4rem;
@@ -408,7 +412,7 @@ p {
     width: 175px; /* Ocupa o mesmo espaço do input */
     padding: 12px 16px;
     font-size: 1rem;
-    border: 2px solid #0F044C;
+    border: 1px solid #d1d1d1;
     border-radius: 16px;
     background-color: #fff;
     color: #444;
@@ -431,7 +435,7 @@ p {
     width: 176px; /* Ocupa o mesmo espaço do input */
     padding: 12px 16px;
     font-size: 1rem;
-    border: 2px solid #0F044C;
+    border: 1px solid #d1d1d1;
     border-radius: 16px;
     background-color: #fff;
     color: #444;
@@ -479,7 +483,7 @@ p {
 }
 
 .sharenotesbutton:hover {
-    background-color: #0F044C;
+    /* background-color: #0F044C; */
     transform: scale(1.05);
 }
 

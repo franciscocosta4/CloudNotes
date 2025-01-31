@@ -9,7 +9,7 @@
         </p>
         <br>
         <a href="{{ route('dashboard') }}" 
-           style="border-radius:6.5px; padding:9px 6px; background-color: #0F044C; color: white; border: none;">
+           style="border-radius:6.5px; padding:8px 6px; background-color: #0F044C; color: white; border: none;">
             {{ __('Voltar à dashboard') }}
         </a>
     </header>

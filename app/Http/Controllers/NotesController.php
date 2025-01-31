@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\User;
-use App\Models\Point; // Importamos o modelo de pontos
+use App\Models\Point; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,16 +14,33 @@ class NotesController extends Controller
         //* Encontrar a nota pelo slug
         $note = Note::where('slug', $slug)->firstOrFail();
 
+
         //* Retorna a visão de show passando a nota
         return view('notes.show', compact('note'));
     }
+
+    public function index()
+    {
+        // Verifica se o usuário está logado
+        if (Auth::check()) {
+            // Recupera todas as anotações do usuário logado
+            $notes = Note::where('user_id', Auth::id())->get();
+        } else {
+            // Caso não esteja logado, retorna para a página de login (se necessário)
+            return redirect()->route('login');
+        }
+    
+        // Passa a variável $notes para a view
+        return view('dashboard', compact('notes'));
+    }
+    
 
     public function createNote()
     {
         return view('notes.create');
     }
     
-    //* Armazenar uma nova anotação e atribuir pontos ao user
+    //? Armazenar uma nova anotação e atribuir pontos ao user
     public function storeNote(Request $request)
     {
         $request->validate([
@@ -56,7 +73,7 @@ class NotesController extends Controller
         //* Adicionar pontos ao user
         $user = Auth::user();
         if ($user) {
-            $pointsEarned = 500; // Definição de pontos por publicação
+            $pointsEarned = 500; // Aqui são definidos os pontos q cada publicação dá
 
             //* Registra os pontos na tabela 'points'
             Point::create([
@@ -72,9 +89,6 @@ class NotesController extends Controller
         return redirect()->route('dashboard')->with('success', 'Anotação criada com sucesso!');
     }
 
-    /**
-     * Excluir uma anotação.
-     */
     public function destroyNote(Note $note)
     {
         $note->delete();

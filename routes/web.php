@@ -48,12 +48,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::patch('/notes/{note}', [AdminController::class, 'updateNote'])->name('notes.update');
     Route::delete('/notes/{note}', [AdminController::class, 'destroyNote'])->name('notes.destroy');
 });
+
+
 //* ROTAS PARA PESQUISA E NOTA INDIVIDUAL (para usuários comuns)
 Route::middleware('auth')->group(function () {
-    Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');    
+    // para mostrar as anotações publicadas pelo user
+    Route::get('/dashboard', [NotesController::class, 'index'])->name('dashboard');
+
+    // para pesquisar
+    Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');   
+
+    //para mostrar o conteudo da anotação
     Route::get('note/{slug}', [NotesController::class, 'show'])->name('notes.show');
-    
+
+    //para armazenar a anotação
     Route::post('/notes', [NotesController::class, 'storeNote'])->name('notes.store');
+    
+    //para redirecionar para a página de criação
     Route::match(['get', 'post'],'/notes/create', [NotesController::class, 'createNote'])->name('notes.create');
     
     Route::delete('/notes/{note}', [NotesController::class, 'destroyNote'])->name('notes.destroy');

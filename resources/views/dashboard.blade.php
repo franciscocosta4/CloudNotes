@@ -27,24 +27,32 @@
                     $pointsForNextLevel = 1000 - ($points % 1000); //* Calcula os pontos restantes para o próximo nível
                 @endphp
                 <h1>{{ __('Você está no nível ') . $level }}</h1>
-                @if ($pointsForNextLevel < 1000)
-                    <p>{{ __('Faltam ') . $pointsForNextLevel . __(' pontos para o próximo nível.') }}</p>
-                @endif
+                <p>{{ __('Faltam ') . $pointsForNextLevel . __(' pontos para o próximo nível.') }}</p>
             </div>
             <h3>Como aumentar o nível?</h3>
             <p>O seu nível aumenta à medida que partilha anotações com outras pessoas. <br>Para alcançar o próximo nível, continue a compartilhar as suas anotações!</p>
         </div>
 
-        <div class="published-notes-container">
-            <h3>Anotações Publicadas Por Você</h3>
+        {{-- Verificação para garantir que $notes sempre seja definida --}}
+<div class="published-notes-container">
+    <h3>Anotações Publicadas Por Você</h3>
+    {{-- Exibe as anotações publicadas --}}
+    @isset($notes)
+        @if($notes->isEmpty())
+            <p>Você não publicou nenhuma anotação.</p>
+        @else
             <ul>
-                <li><a href="#">Anotação 1</a></li>
-                <li><a href="#">Anotação 2</a></li>
-                <li><a href="#">Anotação 3</a></li>
-                <li><a href="#">Anotação 4</a></li>
-                <li><a href="#">Anotação 5</a></li>
+                @foreach($notes as $note)
+                    <li>
+                        <a href="{{ url('/note/' . $note->slug) }}">{{ $note->title }}</a>
+                    </li>
+                @endforeach
             </ul>
-        </div>
+        @endif
+    @else
+        <p>Não foi possível carregar as suas anotações.</p>
+    @endisset
+</div>
 
         <div class="container">
             <!-- Sidebar -->
@@ -124,6 +132,9 @@
             <option value="fisica" {{ request('disciplina') == 'fisica' ? 'selected' : '' }}>Física</option>
             <option value="quimica" {{ request('disciplina') == 'quimica' ? 'selected' : '' }}>Química</option>
             <option value="geografia" {{ request('disciplina') == 'geografia' ? 'selected' : '' }}>Geografia</option>
+            <option value="portugues" {{ request('disciplina') == 'portugues' ? 'selected' : '' }}>Português</option>
+            <option value="ingles" {{ request('disciplina') == 'ingles' ? 'selected' : '' }}>Inglês</option>
+            <option value="biologia" {{ request('disciplina') == 'biologia' ? 'selected' : '' }}>Biologia</option>
         </select>
         <select name="dificuldade" id="dificuldade-select">
             <option value="">Todas as dificuldades</option>
@@ -153,17 +164,17 @@
                         <p>Nenhum resultado encontrado.</p>
                     @elseif(isset($results))
                     <ul>
-    @foreach ($results as $note)
+    @foreach ($results as $result)
         <div class="main-content">
-            <button onclick="toggleNoteDetails('{{ $note->id }}')">
+            <button onclick="toggleNoteDetails('{{ $result->id }}')">
                 <li>
-                <a id="link-note" href="{{ url('note/' . $note->slug) }}">
-                    <div id="note-summary-{{ $note->id }}" class="note-summary" style="width: 600px;">
+                <a id="link-note" href="{{ url('note/' . $result->slug) }}">
+                    <div id="note-summary-{{ $result->id }}" class="note-summary" style="width: 600px;">
                         <!-- Link correto para o slug -->
-                        <h2>{{ $note->title }}</h2>
-                        <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
-                        <p><strong>Utilizador:</strong> {{ $note->user->name }}</p>
-                        <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
+                        <h2>{{ $result->title }}</h2>
+                        <p><strong>Disciplina:</strong> {{ $result->subject }}</p>
+                        <p><strong>Utilizador:</strong> {{ $result->user->name }}</p>
+                        <p><strong>Dificuldade:</strong> {{ $result->topic_difficulty }}</p>
                     </div>
                     </a>
 

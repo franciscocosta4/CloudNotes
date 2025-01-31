@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $note->title }}</title>
- 
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" as="style" onload="this.rel='stylesheet'">
+<noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+</noscript>
     <style>
-        body{
-            background-color: #F8F9FA; 
+         body, html {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F9FA;
+            color: #444;
+            font-size: 14px;
         }
         /* Estilos específicos para a página de leitura */
         .main-content {
@@ -23,23 +29,22 @@
         }
         .note-content-div{
             border-radius: 12px;
-
-            border: solid rgb(159, 159, 159);
+            border:2px solid rgb(198, 198, 198);
         }
         #note-content{
             margin-left:10px;
         }
         .main-content h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #0F044C;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .main-content p {
             font-size: 1rem;
             color: #555;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1    rem;
         }
 
         .note-meta {
@@ -58,14 +63,14 @@
 
         .note-actions {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             margin-top: 2rem;
         }
 
         .note-actions a, .note-actions button {
             background-color: #0F044C;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 1.2rem;
             border: none;
             border-radius: 8px;
             text-decoration: none;
@@ -75,25 +80,20 @@
         }
 
         .note-actions a:hover, .note-actions button:hover {
-            background-color: #141E61;
+            transform: scale(1.03);
         }
-        a{
-            font-family: 'Poppins', sans-serif; 
-        }
-        button{
 
-            font-family: 'Poppins', sans-serif;
-        }
     </style>
 </head>
 <body>
     <div class="main-content">
-    <h1>{{ $note->title }}</h1>
+
         <div class="note-meta">
             <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
             <p><strong>Utilizador:</strong> {{ $note->user->name }}</p>
             <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
         </div>
+    <h1>{{ $note->title }}</h1>
         <p>
             Conteúdo da anotação: 
         </p>
