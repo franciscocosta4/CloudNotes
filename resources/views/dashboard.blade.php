@@ -61,9 +61,9 @@
                     <h2 class="CloudNotestitle"><a href="/dashboard">CloudNotes</a></h2>
                 </div>
                 <nav class="sidebar-nav">
+                <p>Recentes:</p>
+                <br>
                     <ul>
-                        <p>Recentes:</p>
-                        <br>
                         <li><a href="#">Nota 1</a></li>
                         <li><a href="#">Nota 2</a></li>
                         <li><a href="#">Nota 3</a></li>
@@ -97,7 +97,7 @@
                 <!-- Profile Info -->
                 <div class="profile-info">
                     <span id="username">{{ Auth::user()->name }}</span>
-                    <button class="profile-btn" onclick="location.href='/profile'">
+                    <button aria-label="profile" class="profile-btn" onclick="location.href='/profile'">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zM12 14c-3.3 0-6 2.7-6 6v2h12v-2c0-3.3-2.7-6-6-6z"/>
                         </svg>
@@ -119,14 +119,14 @@
             placeholder="Entre palavras-chave para pesquisar..." 
             value="{{ old('query', $query ?? '') }}"
         >
-        <button type="submit">
+        <button type="submit" aria-label="searchButton">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 9.5 5 13 7.01 13 9.5 10.99 14 9.5 14z"/>
             </svg>
         </button>
         </div>
         <div class="search-container" id="filters-search-container">
-        <select name="disciplina" id="disciplina-select">
+        <select aria-label="select-subject" name="disciplina" id="disciplina-select">
             <option value="">Todas as disciplinas</option>
             <option value="matematica" {{ request('disciplina') == 'matematica' ? 'selected' : '' }}>Matemática</option>
             <option value="fisica" {{ request('disciplina') == 'fisica' ? 'selected' : '' }}>Física</option>
@@ -136,7 +136,7 @@
             <option value="ingles" {{ request('disciplina') == 'ingles' ? 'selected' : '' }}>Inglês</option>
             <option value="biologia" {{ request('disciplina') == 'biologia' ? 'selected' : '' }}>Biologia</option>
         </select>
-        <select name="dificuldade" id="dificuldade-select">
+        <select  aria-label="select-difficultity"name="dificuldade" id="dificuldade-select">
             <option value="">Todas as dificuldades</option>
             <option value="facil" {{ request('dificuldade') == 'facil' ? 'selected' : '' }}>Fácil</option>
             <option value="moderada" {{ request('dificuldade') == 'moderada' ? 'selected' : '' }}>Moderada</option>
