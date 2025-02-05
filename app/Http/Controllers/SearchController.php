@@ -38,8 +38,12 @@ class SearchController extends Controller
             $results->where('topic_difficulty', $dificuldade);
         }
 
-        //* Executa a consulta e obtém os resultados
+        //! METODO orderBy() VAI SER USADO QUANDO FOR PARA ORDENAR POR LIKES
+        // $results = $results->orderBy('likes')->get(); 
+
+         //* Executa a consulta e obtém os resultados
         $results = $results->get();
+
 
         //? Recupera as anotações publicadas pelo user (PARA GARANTIR QUE AS ANOTAÇÕES DA SIDEBAR AINDA FICAM LÁ ) 
         $notes = Note::where('user_id', Auth::id())->get();

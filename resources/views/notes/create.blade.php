@@ -134,7 +134,7 @@
                     <label for="topic_difficulty" class="form-label">Dificuldade</label>
                     <select name="topic_difficulty" id="topic_difficulty" class="form-control" required>
                         <option value="Fácil">Fácil</option>
-                        <option value="Moderado">Moderado</option>
+                        <option value="Moderada">Moderada</option>
                         <option value="Difícil">Difícil</option>
                     </select>
                 </div>

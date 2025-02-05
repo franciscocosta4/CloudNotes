@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relacionamento com Users
             $table->string('title');
             $table->string('subject');
-            $table->enum('topic_difficulty', ['Fácil', 'Moderado', 'Difícil'])->default('Moderado');
+            $table->enum('topic_difficulty', ['Fácil', 'Moderada', 'Difícil'])->default('Moderada');
             $table->text('content')->nullable(); // Pode ser texto ou vazio
             $table->string('file_path')->nullable(); // Caminho do arquivo (caso a nota seja um arquivo)
             $table->timestamps();

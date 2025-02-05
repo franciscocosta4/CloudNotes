@@ -132,6 +132,7 @@
             <option value="fisica" {{ request('disciplina') == 'fisica' ? 'selected' : '' }}>Física</option>
             <option value="quimica" {{ request('disciplina') == 'quimica' ? 'selected' : '' }}>Química</option>
             <option value="geografia" {{ request('disciplina') == 'geografia' ? 'selected' : '' }}>Geografia</option>
+            <option value="historia" {{ request('disciplina') == 'historia' ? 'selected' : '' }}>História</option>
             <option value="portugues" {{ request('disciplina') == 'portugues' ? 'selected' : '' }}>Português</option>
             <option value="ingles" {{ request('disciplina') == 'ingles' ? 'selected' : '' }}>Inglês</option>
             <option value="biologia" {{ request('disciplina') == 'biologia' ? 'selected' : '' }}>Biologia</option>
