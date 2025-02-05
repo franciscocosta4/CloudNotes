@@ -48,7 +48,7 @@ class NotesController extends Controller
             'subject'          => 'required|string|max:255',
             'topic_difficulty' => 'required|string|max:255',
             'content'          => 'nullable|string', // Conteúdo é opcional
-            'file_path'        => 'nullable|file',   // Arquivo é opcional
+            'file_path'        => 'nullable|file|mimes:zip,rar',   // Arquivo é opcional
         ], [
             'content.required_without'   => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
             'file_path.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
@@ -65,7 +65,7 @@ class NotesController extends Controller
             'user_id'          => auth()->id(), //* Associando ao user autenticado
             'title'            => $request->title,
             'subject'          => $request->subject,
-            'topic_difficulty' => $request->topic_difficulty,
+            'topic_difficulty' => $request->topic_difficulty,   
             'content'          => $request->content,
             'file_path'        => $filePath,
         ]);

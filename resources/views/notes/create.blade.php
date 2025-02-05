@@ -144,7 +144,7 @@
                 <p>
             Escreva aqui o conteúdo a seu resumo:
         </p>
-                <textarea name="content" id="content" class="form-control" rows="30" required style="resize: vertical;
+                <textarea name="content" id="content" class="form-control" rows="30" style="resize: vertical;
   overflow-y: hidden;"></textarea>
                 @if ($errors->has('content') || $errors->has('file_path'))
                     <div class="text-danger">
@@ -178,6 +178,19 @@
                 alert('Você deve fornecer um conteúdo ou um arquivo.');
             }
         });
+
+        document.getElementById("file_path").addEventListener("change", function () {
+        const file = this.files[0];
+            if (file) {
+                const allowedExtensions = ["zip", "rar"];
+                const fileExtension = file.name.split(".").pop().toLowerCase();
+            if (!allowedExtensions.includes(fileExtension)) {
+                alert("Apenas ficheiros .zip ou .rar são permitidos.");
+                this.value = "";
+                }
+            }
+        });
+
     </script>
 </body>
 </html>

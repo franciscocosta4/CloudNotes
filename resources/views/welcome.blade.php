@@ -22,7 +22,7 @@
                 <a href="{{ route('register') }}">Registar</a>
                 <a href="#sobre">Características</a>
                 <a href="#sobre">Objetivo</a>
-                <a href="javascript:location.reload();" title="Atualizar página">Atualizar</a>
+       
             </div>
         </div>
     </header>
