@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Models\NotesAccessLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,16 +16,16 @@ class SearchController extends Controller
      */
     public function searchNotes(Request $request)
     {
-        // Captura a query e os filtros
+        //* Captura a query e os filtros
         $query = $request->input('query');
         $disciplina = $request->input('disciplina');
         $dificuldade = $request->input('dificuldade');
 
-        // Inicializa a query do modelo Note
+        //* Inicializa a query do modelo Note
         $results = Note::query();
 
         if (!empty($query)) {
-            // Aplica a busca pelo termo, caso fornecido
+            //* Aplica a busca pelo termo, caso fornecido
             $results->where(function ($q) use ($query) {
                 $q->where('title', 'like', "%{$query}%")
                   ->orWhere('content', 'like', "%{$query}%");
@@ -44,14 +45,14 @@ class SearchController extends Controller
          //* Executa a consulta e obtém os resultados
         $results = $results->get();
 
-
-        //? Recupera as anotações publicadas pelo user (PARA GARANTIR QUE AS ANOTAÇÕES DA SIDEBAR AINDA FICAM LÁ ) 
+        //? Recupera as anotações publicadas pelo user e o histórico de acesso (PARA GARANTIR QUE AS ANOTAÇÕES DA SIDEBAR AINDA FICAM LÁ ) 
         $notes = Note::where('user_id', Auth::id())->get();
-
+        $accessLogs = NotesAccessLog::where('user_id', auth()->id())->with('note')->get();
 
         return view('dashboard', [
             'results' => $results,
             'notes' => $notes,
+            'accessLogs' => $accessLogs,
             'query' => $query,
             'disciplina' => $disciplina, 
             'dificuldade' =>$dificuldade,

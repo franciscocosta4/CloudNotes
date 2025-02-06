@@ -63,14 +63,17 @@
                 <nav class="sidebar-nav">
                 <p>Recentes:</p>
                 <br>
-                    <ul>
-                        <li><a href="#">Nota 1</a></li>
-                        <li><a href="#">Nota 2</a></li>
-                        <li><a href="#">Nota 3</a></li>
-                        <li><a href="#">Nota 4</a></li>
-                        <li><a href="#">Nota 5</a></li>
-                    </ul>
+                <ul>
+                @if(isset($accessLogs))
+    @foreach ($accessLogs as $log)
+        <li><a href="{{ route('notes.show', $log->note->slug) }}">{{ $log->note->title }}</a></li>
+
+    @endforeach
+@else
+    <p>Nenhum acesso recente encontrado.</p>
+@endif
                     <br><br>
+                    </ul>
                     <p>Ver anotações guardadas:</p>
                     <button onclick="location.href='/saved-notes'">Notas Guardadas</button>
                 </nav>

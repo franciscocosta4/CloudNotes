@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\NotesController;
+use App\Http\Controllers\NotesAccessLogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,11 +51,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-//* ROTAS PARA PESQUISA E NOTA INDIVIDUAL (para usuários comuns)
+// ROTAS PARA PESQUISA E NOTA INDIVIDUAL (para usuários comuns)
 Route::middleware('auth')->group(function () {
-    // para mostrar as anotações publicadas pelo user
-    Route::get('/dashboard', [NotesController::class, 'index'])->name('dashboard');
+    //* para mostrar as anotações acessadas pelo user (também retorna as publicadas pelo user)
+    Route::get('/dashboard', [NotesAccessLogController::class, 'index'])->middleware('auth')->name('dashboard');
 
+    // para mostrar as anotações publicadas pelo user
+    // Route::get('/dashboard', [NotesController::class, 'index'])->name('dashboard');
+ 
     // para pesquisar
     Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');   
 
@@ -70,5 +74,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/notes/{note}', [NotesController::class, 'destroyNote'])->name('notes.destroy');
 });
 
-// Rotas de autenticação (usuário comum)
 require __DIR__.'/auth.php';

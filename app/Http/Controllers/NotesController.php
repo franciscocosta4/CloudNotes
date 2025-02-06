@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Point; 
+use App\Models\NotesAccessLog; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,25 +12,31 @@ class NotesController extends Controller
 {
     public function show($slug)
     {
-        //* Encontrar a nota pelo slug
         $note = Note::where('slug', $slug)->firstOrFail();
-
-
-        //* Retorna a visão de show passando a nota
-        return view('notes.show', compact('note'));
-    }
-
-    public function index()
-    {
-        // Verifica se o usuário está logado
+    
+        //* Registra/atualiza o acesso a uma anotação
         if (Auth::check()) {
-            // Recupera todas as anotações do usuário logado
-            $notes = Note::where('user_id', Auth::id())->get();
-        } else {
-            // Caso não esteja logado, retorna para a página de login (se necessário)
-            return redirect()->route('login');
+            NotesAccessLog::updateOrCreate(
+                [
+                    'user_id' => Auth::id(),
+                    'note_id' => $note->id,
+                ],
+                ['created_at' => now()] //* Atualiza a data de acesso
+            );
         }
     
+        return view('notes.show', compact('note'));
+    }
+    
+    
+    public function index()
+    {
+        if (Auth::check()) {
+            //* Recupera todas as anotações do user logado
+            $notes = Note::where('user_id', Auth::id())->get();
+        } else {
+            return redirect()->route('login');
+        }
         // Passa a variável $notes para a view
         return view('dashboard', compact('notes'));
     }
