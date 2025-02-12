@@ -49,6 +49,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::patch('/notes/{note}', [AdminController::class, 'updateNote'])->name('notes.update');
     Route::delete('/notes/{note}', [AdminController::class, 'destroyNote'])->name('notes.destroy');
 
+    Route::delete('/logs/{log}', [AdminController::class, 'destroyLog'])->name('logs.destroy');
+
+
 });
 
 

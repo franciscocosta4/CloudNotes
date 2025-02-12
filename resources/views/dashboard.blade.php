@@ -64,13 +64,16 @@
                 <p>Recentes:</p>
                 <br>
                 <ul>
-                @if(isset($accessLogs))
-    @foreach ($accessLogs as $log)
-        <li><a href="{{ route('notes.show', $log->note->slug) }}">{{ $log->note->title }}</a></li>
-
-    @endforeach
+                @if(isset($accessLogs) && $accessLogs->isNotEmpty())
+    <ul>
+        @foreach ($accessLogs as $log)
+            @if($log->note) {{-- Evita erro se a nota não existir --}}
+                <li><a href="{{ route('notes.show', $log->note->slug) }}">{{ $log->note->title }}</a></li>
+            @endif
+        @endforeach
+    </ul>
 @else
-    <p>Nenhum acesso recente encontrado.</p>
+    <p>Nenhum acesso registado ainda.</p>
 @endif
                     <br><br>
                     </ul>

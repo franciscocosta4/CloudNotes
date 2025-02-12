@@ -129,4 +129,15 @@ class AdminController extends Controller
         $note->delete();
         return redirect()->route('admin.dashboard')->with('success', 'Anotação excluída com sucesso!');
     }
+
+
+    
+
+
+     //* Excluir log de acesso
+     public function destroyLog(NotesAccessLog $log)
+     {
+         $log->delete();
+         return redirect()->route('admin.dashboard')->with('success', 'Anotação excluída com sucesso!');
+     }
 }

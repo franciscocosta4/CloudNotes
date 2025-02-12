@@ -105,7 +105,7 @@
                     <td>{{ $log->updated_at }}</td>
                     
                     <td>
-                        <form action="{{ route('admin.notes.destroy', $note->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('admin.logs.destroy', $note->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Excluir</button>
