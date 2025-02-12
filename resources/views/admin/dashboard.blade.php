@@ -81,4 +81,38 @@
             @endforeach
         </tbody>
     </table>
+
+     <!-- Exibindo ANOTAÇÕES -->
+     <h2>Logs de acesso</h2>
+    <!-- <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Criar Nova anotação</a> -->
+
+    <table class="table" border="true">
+        <thead>
+            <tr>
+                <th>user_id</th>
+                <th>note_id</th>
+                <th>created_at</th>
+                <th>updated_at</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($logs as $log)
+                <tr>
+                    <td>{{ $log->user_id }}</td>
+                    <td>{{ $log->note_id }}</td>
+                    <td>{{ $log->created_at }}</td>
+                    <td>{{ $log->updated_at }}</td>
+                    
+                    <td>
+                        <form action="{{ route('admin.notes.destroy', $note->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>

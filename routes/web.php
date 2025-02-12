@@ -48,6 +48,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/notes/{note}/edit', [AdminController::class, 'editNote'])->name('notes.edit');
     Route::patch('/notes/{note}', [AdminController::class, 'updateNote'])->name('notes.update');
     Route::delete('/notes/{note}', [AdminController::class, 'destroyNote'])->name('notes.destroy');
+
 });
 
 

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Note;
+use App\Models\NotesAccessLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,7 +14,9 @@ class AdminController extends Controller
     {
         $users = User::all(); // Pega todos os utilizadors
         $notes = Note::all(); // Pega todas as anotações
-        return view('admin.dashboard', compact('users', 'notes'));
+        $logs = NotesAccessLog::all();
+
+        return view('admin.dashboard', compact('users', 'notes', 'logs'));
     }
 
     //* CRIAÇÃO DE UTILIZADOR 
