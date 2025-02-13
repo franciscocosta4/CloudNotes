@@ -94,22 +94,19 @@
             <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
         </div>
     <h1>{{ $note->title }}</h1>
-        <p>
-            Conteúdo da anotação: 
-        </p>
+        <p>Conteúdo da anotação: </p>
         <div class="note-content-div">
-        @if (!empty($note->content))
-            <p id="note-content">{{ $note->content }}</p>
-        @else
-            <p>Não há conteúdo disponível para esta anotação.</p>
-        @endif
+            @if (!empty($note->content))
+                <p id="note-content">{{ $note->content }}</p>
+            @else
+                <p>Não há conteúdo disponível para esta anotação.</p>
+            @endif
         </div>
- 
-        @if (!empty($note->file_path))
-            <p>O utilizador submeteu um ficheiro, caso queira transferir clique em 'transferir' </p>
-        @else
-            <p>Não existe ficheiro disponível para esta anotação.</p>
-        @endif
+            @if (!empty($note->file_path))
+                <p>O utilizador submeteu um ficheiro, caso queira transferir clique em 'transferir' </p>
+            @else
+                <p>Não existe ficheiro disponível para esta anotação.</p>
+            @endif
         <div class="note-actions">
             <a href="{{ Storage::url($note->file_path) }}" download="{{ $note->title }}.{{ pathinfo($note->file_path, PATHINFO_EXTENSION) }}">Transferir </a>
             <button onclick="window.history.back()">Voltar</button>

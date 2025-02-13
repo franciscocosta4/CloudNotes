@@ -22,7 +22,6 @@
                 <a href="{{ route('register') }}">Registar</a>
                 <a href="#sobre">Características</a>
                 <a href="#sobre">Objetivo</a>
-       
             </div>
         </div>
     </header>
@@ -46,24 +45,22 @@
     <!-- About Section -->
 <section id="sobre">
     <h3>Sobre a CloudNotes</h3>
-    <p>
+        <p>
         A CloudNotes é uma plataforma inovadora que facilita a gestão e partilha de anotações de forma rápida e segura.
         Com uma interface intuitiva e moderna, pode organizar as suas ideias, colaborar com colegas e aceder às suas notas em qualquer lugar.
         Seja estudante, profissional ou alguém que procura melhorar a organização, a CloudNotes é a solução ideal para aumentar a sua produtividade.
-    </p>
+        </p>
     <br>
     <br>
-    <h3>Objetivo</h3>
-    <p>A CloudNotes tem como objetivo facilitar a partilha e consulta de anotações entre estudantes, promovendo a colaboração e eficiência nos estudos.</p>
+        <h3>Objetivo</h3>
+            <p>A CloudNotes tem como objetivo facilitar a partilha e consulta de anotações entre estudantes, promovendo a colaboração e eficiência nos estudos.</p>
     <br>
     <br>
-    <h3>Funcionalidades</h3>
-    <p><strong>Pesquisa Avançada:</strong> Localize anotações de forma rápida utilizando filtros como disciplina e nível de dificuldade.</p>
-    <p><strong>Guardar Anotações:</strong> Guarde as suas anotações favoritas para consultas futuras.</p>
-    <p><strong>Sistema de Pontos:</strong> Ganhe pontos ao partilhar conteúdos e suba de nível na aplicação.</p>
+        <h3>Funcionalidades</h3>
+            <p><strong>Pesquisa Avançada:</strong> Localize anotações de forma rápida utilizando filtros como disciplina e nível de dificuldade.</p>
+            <p><strong>Guardar Anotações:</strong> Guarde as suas anotações favoritas para consultas futuras.</p>
+            <p><strong>Sistema de Pontos:</strong> Ganhe pontos ao partilhar conteúdos e suba de nível na aplicação.</p>
 </section>
-
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 CloudNotes. Todos os direitos reservados.</p>

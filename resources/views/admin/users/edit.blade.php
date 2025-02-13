@@ -45,7 +45,7 @@
             <label for="password_confirmation">Confirmar Senha</label>
             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
         </div>
-
+        
         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
     </form>
 </div>
