@@ -1,4 +1,4 @@
-<nav class="navbar navbar-header navbar-expand-lg bg-white shadow-sm">
+<nav class="navbar navbar-header navbar-expand-lg bg-white shadow-sm" style="height:70px;">
     <div class="container-fluid d-flex align-items-center">
         
         <!-- Campo de Pesquisa -->

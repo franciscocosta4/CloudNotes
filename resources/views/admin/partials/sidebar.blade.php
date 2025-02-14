@@ -5,9 +5,9 @@
                 <img src="{{ asset('admin/assets/img/kaiadmin/logo_light.svg') }}" alt="Admin" class="navbar-brand" height="20">
             </a> -->
             <a href="{{ route('admin.dashboard') }}" >
-                <h2 class=" text-white ">
+                <h3 class=" text-white ">
                 CloudNotes
-                </h2>
+                </h3>
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">

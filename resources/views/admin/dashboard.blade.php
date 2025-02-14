@@ -4,12 +4,12 @@
 
 <div class="container">
     <br>
-    <h1 class="mb-3">Dashboard de Administração</h1>
+    <h3 class="mb-3">Dashboard de Administração</h3>
 
     <!-- Exibindo Utilizadores -->
     <div class="card mb-4">
         <div class="card-header">
-            <h2>Utilizadores</h2>
+            <h4 class="card-title">Utilizadores</h4>
         </div>
         <div class="card-body">
             <table class="table table-striped">
@@ -43,7 +43,7 @@
     <!-- Exibindo Anotações -->
     <div class="card mb-4">
         <div class="card-header">
-            <h2>Anotações</h2>
+            <h4 class="card-title">Anotações</h4>
         </div>
         <div class="card-body">
             <table class="table table-striped">
@@ -91,7 +91,7 @@
     <!-- Exibindo Logs de Acesso -->
     <div class="card">
         <div class="card-header">
-            <h2>Logs de Acesso</h2>
+            <h4 class="card-title">Logs de Acesso a publicações</h4>
         </div>
         <div class="card-body">
             <table class="table table-striped">
