@@ -26,7 +26,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info btn-sm">Editar</a>
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -67,12 +67,18 @@
                             <td>{{ $note->topic_difficulty }}</td>
                             <td>{{ Str::limit($note->content, 50) }}</td>
                             <td>{{ $note->file_path }}</td>
-                            <td>
-                                <a href="{{ route('admin.notes.edit', $note->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <td >
+                                <a href="{{ route('admin.notes.edit', $note->id) }}" style="width: 94px;" class="btn btn-secondary btn-sm">
+                                <i class="fa fa-plus">
+                                </i>
+                                Editar
+                            </a>
+                                <br>
+                                <br>
                                 <form action="{{ route('admin.notes.destroy', $note->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" style="width: 94px;" >Excluir</button>
                                 </form>
                             </td>
                         </tr>
@@ -98,7 +104,7 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="logs">
                     @foreach($logs as $log)
                         <tr>
                             <td>{{ $log->user_id }}</td>
@@ -119,5 +125,5 @@
         </div>
     </div>
 
-</div>
+</div>  
 @endsection

@@ -74,7 +74,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="">
+                    <a href="#logs">
                         <i class="fas fa-history"></i>
                         <p>Logs de Acesso</p>
                     </a>
