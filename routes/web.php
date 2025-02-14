@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
 });
 
 //* Admin 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     // Rota para o login do admin
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login']);

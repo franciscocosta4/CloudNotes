@@ -5,7 +5,7 @@
                 <img src="{{ asset('admin/assets/img/kaiadmin/logo_light.svg') }}" alt="Admin" class="navbar-brand" height="20">
             </a> -->
             <a href="{{ route('admin.dashboard') }}" >
-                <h3 class=" text-white ">
+                <h3 id="sidebar-title" class=" text-white ">
                 CloudNotes
                 </h3>
             </a>
@@ -83,3 +83,43 @@
         </div>
     </div>
 </div>
+<script>
+
+    //* PARA ESCONDER/MOSTRAR 'CloudNotes' AO INTERAGIR COM SIDEBAR
+  document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.querySelector(".sidebar");
+    const title = document.getElementById("sidebar-title");
+    const toggleButtons = document.querySelectorAll(".toggle-sidebar, .sidenav-toggler");
+
+    let isCollapsed = false; // Estado da sidebar
+
+    //* Função para esconder/mostrar o título ao clicar no botão
+    toggleButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            isCollapsed = !isCollapsed;
+            sidebar.classList.toggle("collapsed");
+
+            if (isCollapsed) {
+                title.style.display = "none"; // Esconde título
+            } else {
+                title.style.display = "block"; // Mostra título
+            }
+        });
+    });
+
+    //* le se o rato passou por sima e caso tenha passado mostra o titulo
+    sidebar.addEventListener("mouseenter", function () {
+        if (isCollapsed) {
+            title.style.display = "block";
+        }
+    });
+
+    //* Quando o rato sai da sidebar, esconde o título 
+    sidebar.addEventListener("mouseleave", function () {
+        if (isCollapsed) {
+            title.style.display = "none";
+        }
+    });
+});
+
+</script>
