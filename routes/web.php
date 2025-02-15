@@ -12,29 +12,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard'); 
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Dashboard do utilizador comum
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard'); 
+    })->name('dashboard');
+});
 
-// Rotas de autenticação (usuário comum)
+//* Rotas de perfil do utilizador comum
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//* Admin 
-Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
-    // Rota para o login do admin
+//* Rotas de autenticação do Admin (Apenas Login)
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login']);
-    
-    // Rota de logout do admin
+});
+
+//* Rotas PROTEGIDAS do Admin (Só Admins podem aceder)
+Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-    
-    // Rota para o dashboard do admin (sem middleware, pois a role será verificada no controlador)
+
+    // Dashboard de Admin (AGORA PROTEGIDO!)
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    
+
     // Administração de utilizadores (Admin)
     Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');
     Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
@@ -50,31 +54,15 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::delete('/notes/{note}', [AdminController::class, 'destroyNote'])->name('notes.destroy');
 
     Route::delete('/logs/{log}', [AdminController::class, 'destroyLog'])->name('logs.destroy');
-
-
 });
 
-
-// ROTAS PARA PESQUISA E NOTA INDIVIDUAL (para usuários comuns)
+//* ROTAS PARA USERS COMUNS (Pesquisa e Notas)
 Route::middleware('auth')->group(function () {
-    //* para mostrar as anotações acessadas pelo user (também retorna as publicadas pelo user)
-    Route::get('/dashboard', [NotesAccessLogController::class, 'index'])->middleware('auth')->name('dashboard');
-
-    // para mostrar as anotações publicadas pelo user
-    // Route::get('/dashboard', [NotesController::class, 'index'])->name('dashboard');
- 
-    // para pesquisar
+    Route::get('/dashboard', [NotesAccessLogController::class, 'index'])->name('dashboard');
     Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');   
-
-    //para mostrar o conteudo da anotação
     Route::get('note/{slug}', [NotesController::class, 'show'])->name('notes.show');
-
-    //para armazenar a anotação
     Route::post('/notes', [NotesController::class, 'storeNote'])->name('notes.store');
-    
-    //para redirecionar para a página de criação
     Route::match(['get', 'post'],'/notes/create', [NotesController::class, 'createNote'])->name('notes.create');
-    
     Route::delete('/notes/{note}', [NotesController::class, 'destroyNote'])->name('notes.destroy');
 });
 
