@@ -38,7 +38,7 @@
     <h3>Anotações Publicadas Por Você</h3>
     {{-- Exibe as anotações publicadas --}}
     @isset($notes)
-        @if($notes->isEmpty())W
+        @if($notes->isEmpty())
             <p>Você não publicou nenhuma anotação.</p>
         @else
             <ul>

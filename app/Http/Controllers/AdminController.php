@@ -15,8 +15,11 @@ class AdminController extends Controller
         $users = User::all(); // Pega todos os utilizadors
         $notes = Note::all(); // Pega todas as anotações
         $logs = NotesAccessLog::all();
+        $totalUsers = User::count();
+        $PublishedNotes= Note::count();
+        $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->get();
 
-        return view('admin.dashboard', compact('users', 'notes', 'logs'));
+        return view('admin.dashboard', compact('users', 'notes', 'logs', 'totalUsers', 'PublishedNotes', 'ficheiros'));
     }
 
     //* CRIAÇÃO DE UTILIZADOR 

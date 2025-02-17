@@ -5,7 +5,7 @@
         <form class="d-none d-md-flex me-auto" style="max-width: 250px;">
             <div class="input-group">
                 <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted"></i></span>
-                <input type="text" class="form-control bg-light border-0" placeholder="Search ...">
+                <input type="text" class="form-control bg-light border-0" placeholder="Procurar ...">
             </div>
         </form>
 
@@ -36,7 +36,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link d-flex align-items-center" href="#" id="userDropdown" data-bs-toggle="dropdown">
                     <img src="{{ asset('admin/assets/img/profile.jpg') }}" class="rounded-circle me-2" width="30" height="30">
-                    <span class="fw-bold text-dark">Hi, {{ Auth::user()->name ?? 'Admin' }}</span>
+                    <span class="fw-bold text-dark">Olá, {{ Auth::user()->name ?? 'Admin' }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="#">Meu Perfil</a></li>

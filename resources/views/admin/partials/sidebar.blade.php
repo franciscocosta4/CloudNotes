@@ -40,8 +40,8 @@
                     <div class="collapse" id="users">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="">
-                                    <span class="sub-item">Lista de Utilizadores</span>
+                                <a href="#usersList">
+                                    <span class="sub-item" >Lista de Utilizadores</span>
                                 </a>
                             </li>
                             <li>
@@ -65,24 +65,31 @@
                                     <span class="sub-item">Lista de Anotações</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('admin.notes.create') }}">
-                                    <span class="sub-item">Criar Anotação</span>
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#logshref">
+                        <i class="fas fa-history"></i>
+                        <p>Logs de Acesso</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="logshref">
+                        <ul class="nav nav-collapse">
+                             <li>
+                                <a href="#logs">
+                                    <span class="sub-item">Logs de Acesso a publicações</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a href="#logs">
-                        <i class="fas fa-history"></i>
-                        <p>Logs de Acesso</p>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
 </div>
+
 <script>
 
     //* PARA ESCONDER/MOSTRAR 'CloudNotes' AO INTERAGIR COM SIDEBAR
