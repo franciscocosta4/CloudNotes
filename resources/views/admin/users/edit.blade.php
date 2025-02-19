@@ -48,6 +48,17 @@
                         <input type="password" name="password_confirmation" id="password_confirmation"
                             class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label for="role">Mudar as permissões:</label>
+                        <br>
+                            <input type="radio" name="role" id="roleAdmin" value="admin" 
+                            {{ old('role', $user->role) === 'admin' ? 'checked' : '' }}>
+                            <label for="roleAdmin">Admin</label>
+                            <input type="radio" name="role" id="roleUser" value="user" 
+                             {{ old('role', $user->role) === 'user' ? 'checked' : '' }}>
+                            <label for="roleUser">User</label>
+                    </div>
+
                     <br>
                     <button type="submit" class="btn btn-primary">Guardar Alterações</button>
                     <button type="submit" class="btn btn-black" onclick="window.history.back()">Voltar</button>

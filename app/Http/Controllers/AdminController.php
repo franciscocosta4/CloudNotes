@@ -60,11 +60,13 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
+            'role' =>  'required|in:user,admin',
         ]);
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password ? bcrypt($request->password) : $user->password,
+            'role' => $request->input('role'),
         ]);
 
         return redirect()->route('admin.dashboard')->with('success', 'utilizador atualizado com sucesso!');

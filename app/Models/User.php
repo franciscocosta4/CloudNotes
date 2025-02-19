@@ -24,6 +24,7 @@ class User extends Authenticatable
         'school_year', // Certifique-se de incluir este campo
         'subjects_of_interest', // Certifique-se de incluir este campo
         'points',
+        'role',
     ];
 
     /**
