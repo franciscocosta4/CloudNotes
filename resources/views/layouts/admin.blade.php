@@ -27,9 +27,9 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/plugins.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/kaiadmin.min.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('admin/assets/css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/fonts.min.css') }}">
@@ -84,9 +84,6 @@
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
 
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="assets/js/setting-demo.js"></script>
-    <script src="assets/js/demo.js"></script>
     <script>
       $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
         type: "line",

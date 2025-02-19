@@ -1,9 +1,15 @@
 @extends('layouts.admin')
 
 @section('content')
+
+<style>
+    html, body {
+    overflow-x: hidden;
+}
+</style>
 <br>
 <div class="container">
-<h3 class="mb-3">Dashboard de Administração</h3>
+    <h3 class="mb-3">Dashboard de Administração</h3>
     <p class="card-category">Dados sobre a aplicação:</p><br>
     <div class="row">
         <div class="col-sm-6 col-md-3" style="width:300px;">
@@ -65,6 +71,8 @@
         </div>  
     </div>
 </div>
+
+<!-- Tabela de Utilizadores e Card de Ficheiros Partilhados -->
 <div class="container">
     <div class="row">
         <!-- Coluna para a Tabela de Utilizadores -->
@@ -116,13 +124,16 @@
                     @else
                         <ul class="list-group">
                             @foreach($ficheiros as $ficheiro)
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="column">
+                                    <p style="font-size: 0.875rem; margin-bottom: 0.2rem;">{{ $ficheiro->user->name ?? 'Sem utilizador' }}</p>
                                     <a href="{{ Storage::url($ficheiro->file_path) }}" 
-                                       download="{{ $ficheiro->title }}.{{ pathinfo($ficheiro->file_path, PATHINFO_EXTENSION) }}" class="text-muted"> 
-                                       {{ $ficheiro->title }}.{{ pathinfo($ficheiro->file_path, PATHINFO_EXTENSION) }}
+                                    download="{{ $ficheiro->title }}.{{ pathinfo($ficheiro->file_path, PATHINFO_EXTENSION) }}" class="text-muted"> 
+                                    {{ $ficheiro->title }}.{{ pathinfo($ficheiro->file_path, PATHINFO_EXTENSION) }}
                                     </a>
-                                    <span class="badge badge-success">{{ $ficheiro->created_at->diffForHumans() }}</span>
-                                </li>
+                                </div>
+                            <span class="badge badge-success">{{ $ficheiro->created_at->diffForHumans() }}</span>
+                            </li>
                             @endforeach
                         </ul>
                     @endif
@@ -132,101 +143,172 @@
     </div>
 </div>
 
-
-    <!-- Exibindo Anotações -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4 class="card-title">Anotações</h4>
-        </div>
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Título</th>
-                        <th>Assunto</th>
-                        <th>Dificuldade</th>
-                        <th>Conteúdo</th>
-                        <th>Ficheiro</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($notes as $note)
-                        <tr>
-                            <td>{{ $note->user_id }}</td>
-                            <td>{{ $note->title }}</td>
-                            <td>{{ $note->subject }}</td>
-                            <td>{{ $note->topic_difficulty }}</td>
-                            <td>{{ Str::limit($note->content, 50) }}</td>
-                            <td class="break-word">{{ $note->file_path }}</td>
-                            <td>
-                                <div class="form-button-action">
-                                <a href="{{ route('admin.notes.edit', $note->id) }}" >
-                                <button class="btn ">
-                                <i class="fa fa-edit fa-lg">
-                                </i>
-                                </button>
-                            </a>
-            
-                                <form action="{{ route('admin.notes.destroy', $note->id) }}" method="POST" >
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn" > <i class="fas fa-trash-alt fa-lg"">
-                                    </i> </button>
-                                </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Exibindo Logs de Acesso -->
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Logs de Acesso a publicações</h4>
-        </div>
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Note ID</th>
-                        <th>Data de Criação</th>
-                        <th>Última Atualização</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="logs">
-                    @foreach($logs as $log)
-                        <tr>
-                            <td>{{ $log->user_id }}</td>
-                            <td>{{ $log->note_id }}</td>
-                            <td>{{ $log->created_at }}</td>
-                            <td>{{ $log->updated_at }}</td>
-                            <td>
-                                <form action="{{ route('admin.logs.destroy', $log->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+<!-- Tabela de Anotações -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="card-title" id="anotacoes">Anotações</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Título</th>
+                                <th>Assunto</th>
+                                <th>Dificuldade</th>
+                                <th>Conteúdo</th>
+                                <th>Ficheiro</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($notes as $note)
+                                <tr>
+                                    <td>{{ $note->user_id }}</td>
+                                    <td>{{ $note->title }}</td>
+                                    <td>{{ $note->subject }}</td>
+                                    <td>{{ $note->topic_difficulty }}</td>
+                                    <td>{{ Str::limit($note->content, 50) }}</td>
+                                    <td class="break-word">{{ $note->file_path }}</td>
+                                    <td>
+                                        <div class="form-button-action">
+                                            <a href="{{ route('admin.notes.edit', $note->id) }}">
+                                                <button class="btn">
+                                                    <i class="fa fa-edit fa-lg"></i>
+                                                </button>
+                                            </a>
+                                            <form action="{{ route('admin.notes.destroy', $note->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn">
+                                                    <i class="fas fa-trash-alt fa-lg"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Tabela de Logs -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="card-title" id="logs">Logs de Acesso a publicações</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Note ID</th>
+                                <th>Data de Criação</th>
+                                <th>Última Atualização</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($logs as $log)
+                                <tr>
+                                    <td>{{ $log->user_id }}</td>
+                                    <td>{{ $log->note_id }}</td>
+                                    <td>{{ $log->created_at }}</td>
+                                    <td>{{ $log->updated_at }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.logs.destroy', $log->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Tabela de Logs de pontos -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="card-title" id="points">Pontos</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped" >
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>points</th>
+                                <th>tipo</th>
+                                <th>Data de Criação</th>
+                                <th>Última Atualização</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            @foreach($points as $point)
+                                <tr>
+                                    <td>{{ $point->user_id }}</td>
+                                    <td>{{ $point->points }}</td>
+                                    <td>{{ $point->type }}</td>
+                                    <td>{{ $point->created_at }}</td>
+                                    <td>{{ $point->updated_at }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.points.destroy', $point->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
+
 <style>
     /* PARA QUE O FILE PATH DÊ ENTER E NAO FIQUE MUITO COMPRIDO */
     .break-word {
         word-wrap: break-word;
         max-width: 200px; 
         white-space: normal;
+    }
+
+    /* Remover margens extras e garantir que o contêiner ocupe 100% da largura */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin: 0 auto;
+    }
+
+    /* Ajustar o espaçamento vertical entre as tabelas */
+    .card {
+        margin-bottom: 20px; /* Espaçamento consistente entre as tabelas */
     }
 </style>

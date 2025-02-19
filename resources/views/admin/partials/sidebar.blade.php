@@ -5,9 +5,9 @@
                 <img src="{{ asset('admin/assets/img/kaiadmin/logo_light.svg') }}" alt="Admin" class="navbar-brand" height="20">
             </a> -->
             <a href="{{ route('admin.dashboard') }}" >
-                <h3 id="sidebar-title" class=" text-white ">
+                <h4 id="sidebar-title" class=" text-white ">
                 CloudNotes
-                </h3>
+                </h4>
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -61,7 +61,7 @@
                     <div class="collapse" id="notes">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="">
+                                <a href="#anotacoes">
                                     <span class="sub-item">Lista de Anotações</span>
                                 </a>
                             </li>
@@ -80,6 +80,22 @@
                              <li>
                                 <a href="#logs">
                                     <span class="sub-item">Logs de Acesso a publicações</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#pointshref">
+                        <i class="fas fa-bullseye"></i>
+                        <p>Logs de Pontos</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="pointshref">
+                        <ul class="nav nav-collapse">
+                             <li>
+                                <a href="#points">
+                                    <span class="sub-item">Logs de atribuição de pontos</span>
                                 </a>
                             </li>
                         </ul>

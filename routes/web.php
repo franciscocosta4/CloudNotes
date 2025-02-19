@@ -54,6 +54,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::delete('/notes/{note}', [AdminController::class, 'destroyNote'])->name('notes.destroy');
 
     Route::delete('/logs/{log}', [AdminController::class, 'destroyLog'])->name('logs.destroy');
+    Route::delete('/points/{point}', [AdminController::class, 'destroyPoint'])->name('points.destroy');
 });
 
 //* ROTAS PARA USERS COMUNS (Pesquisa e Notas)

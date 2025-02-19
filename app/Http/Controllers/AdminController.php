@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Note;
 use App\Models\NotesAccessLog;
+use App\Models\Point;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,13 +15,15 @@ class AdminController extends Controller
     {
         $users = User::all(); // Pega todos os utilizadors
         $notes = Note::all(); // Pega todas as anotações
+        $points = Point::all(); // Pega todas os pontos
         $logs = NotesAccessLog::all();
         $totalUsers = User::count();
         $PublishedNotes= Note::count();
-        $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->get();
-
-        return view('admin.dashboard', compact('users', 'notes', 'logs', 'totalUsers', 'PublishedNotes', 'ficheiros'));
+        $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->with('user')->get();
+        // $userName = User::table('users')->where('id', $ficheiro->user_id)->value('name');; 
+        return view('admin.dashboard', compact('users', 'notes', 'logs', 'totalUsers', 'PublishedNotes', 'ficheiros','points'));
     }
+    
 
     //* CRIAÇÃO DE UTILIZADOR 
     public function createUser()
@@ -134,13 +137,17 @@ class AdminController extends Controller
     }
 
 
-    
-
-
      //* Excluir log de acesso
      public function destroyLog(NotesAccessLog $log)
      {
          $log->delete();
-         return redirect()->route('admin.dashboard')->with('success', 'Anotação excluída com sucesso!');
+         return redirect()->route('admin.dashboard')->with('success', 'log de acesso excluída com sucesso!');
+     }
+
+     //* Excluir log de pontos
+     public function destroyPoint(Point $point)
+     {
+         $point->delete();
+         return redirect()->route('admin.dashboard')->with('success', 'log de pontos excluída com sucesso!');
      }
 }
