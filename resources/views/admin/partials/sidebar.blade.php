@@ -107,42 +107,41 @@
 </div>
 
 <script>
-
-    //* PARA ESCONDER/MOSTRAR 'CloudNotes' AO INTERAGIR COM SIDEBAR
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.querySelector(".sidebar");
     const title = document.getElementById("sidebar-title");
     const toggleButtons = document.querySelectorAll(".toggle-sidebar, .sidenav-toggler");
 
     let isCollapsed = false; // Estado da sidebar
 
-    //* Função para esconder/mostrar o título ao clicar no botão
+    //* Função para esconder/mostrar a sidebar inteira
     toggleButtons.forEach(button => {
         button.addEventListener("click", function () {
             isCollapsed = !isCollapsed;
             sidebar.classList.toggle("collapsed");
 
             if (isCollapsed) {
-                title.style.display = "none"; // Esconde título
+                title.style.display = "none"; // Esconde o título
             } else {
-                title.style.display = "block"; // Mostra título
+                title.style.display = "block"; // Mostra o título
             }
         });
     });
 
-    //* le se o rato passou por sima e caso tenha passado mostra o titulo
+    //* Le se o rato passou por cima da sidebar e mostra o título se estiver colapsada
     sidebar.addEventListener("mouseenter", function () {
         if (isCollapsed) {
             title.style.display = "block";
         }
     });
 
-    //* Quando o rato sai da sidebar, esconde o título 
+    //* Quando o rato sai da sidebar, esconde o título se ainda estiver colapsada
     sidebar.addEventListener("mouseleave", function () {
         if (isCollapsed) {
             title.style.display = "none";
         }
     });
 });
+
 
 </script>

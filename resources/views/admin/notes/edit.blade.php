@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container mt-5">
+<h3 class="mb-3">Dashboard de Administração</h3>
     <div class="card">
         <div class="card-header ">
             <h4 class=" mb-0 card-title ">Editar Nota</h4>
