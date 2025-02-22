@@ -50,6 +50,31 @@
     </div>
      <!-- End Custom template -->
      </div>
+     <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToast" class="toast bg-black" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header  "style="background-color:white;">
+      <strong class="me-auto"style="color:black;">Sistema</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+              <div class="toast-body">
+              <small style="color:white;">mensagem:</small><br>
+                  <span id="toastMessage" style="color:white;"></span>
+              </div>
+        </div>
+    </div>
+<!-- Script para Mostrar o Toast -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let toastMessage = "{{ session('success') }}";
+        if (toastMessage) {
+            let toastElement = document.getElementById('liveToast');
+            document.getElementById('toastMessage').innerText = toastMessage;
+            let toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        }
+    });
+</script>
     <!--   Core JS Files   -->
     <script src="{{ asset('admin/assets/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/core/popper.min.js') }}"></script>

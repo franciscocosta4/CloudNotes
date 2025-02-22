@@ -33,11 +33,32 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="subjects_of_interest">Disciplinas de Interesse</label>
-                        <input type="text" name="subjects_of_interest" id="subjects_of_interest" class="form-control"
-                            value="{{ old('subjects_of_interest', $user->subjects_of_interest) }}">
+                    <label>Disciplinas de Interesse</label>
+                        @php
+                            $subjects = ['Matemática', 'Física', 'Química', 'Biologia', 'Português', 'História', 'Geografia', 'Inglês'];
+                            $selectedSubjects = json_decode($user->subjects_of_interest, true) ?? [];
+                    @endphp
+                    <div class="row">
+                    <div class="col-md-6">
+                        @foreach (array_slice($subjects, 0, 4) as $subject)
+                            <div class="form-check">
+                                <input type="checkbox" name="subjects_of_interest[]" value="{{ $subject }}" 
+                                    {{ in_array($subject, $selectedSubjects) ? 'checked' : '' }} class="form-check-input">
+                                <label class="form-check-label">{{ $subject }}</label>
+                             </div>
+                        @endforeach
                     </div>
-
+                    <div class="col-md-6">
+                        @foreach (array_slice($subjects, 4) as $subject)
+                            <div class="form-check">
+                                <input type="checkbox" name="subjects_of_interest[]" value="{{ $subject }}" 
+                                    {{ in_array($subject, $selectedSubjects) ? 'checked' : '' }} class="form-check-input">
+                                <label class="form-check-label">{{ $subject }}</label>
+                            </div>
+                        @endforeach
+                     </div>
+                    </div>
+                </div>
                     <div class="form-group">
                         <label for="password">Senha (Deixe vazio para manter a senha atual)</label>
                         <input type="password" name="password" id="password" class="form-control">
@@ -58,7 +79,15 @@
                              {{ old('role', $user->role) === 'user' ? 'checked' : '' }}>
                             <label for="roleUser">User</label>
                     </div>
-
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <br>
                     <button type="submit" class="btn btn-primary">Guardar Alterações</button>
                     <button type="submit" class="btn btn-black" onclick="window.history.back()">Voltar</button>
