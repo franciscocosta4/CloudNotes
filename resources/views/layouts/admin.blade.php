@@ -52,14 +52,15 @@
      </div>
      <!-- Toast Container -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-      <div id="liveToast" class="toast bg-black" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header  "style="background-color:white;">
-      <strong class="me-auto"style="color:black;">Sistema</strong>
+      <div id="liveToast" class="toast " role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header " >
+      <strong class="me-auto" style="color:Black; font-weight:bold;">Sistema</strong>
+      <small>agora</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-              <div class="toast-body">
-              <small style="color:white;">mensagem:</small><br>
-                  <span id="toastMessage" style="color:white;"></span>
+              <div class="toast-body " style="color:black;">
+              <small >mensagem:</small><br>
+                  <span id="toastMessage" ></span>
               </div>
         </div>
     </div>

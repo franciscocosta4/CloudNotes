@@ -37,18 +37,19 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
             'school_year' => ['nullable', 'integer', 'between:7,12'], //  número inteiro entre 7 e 12
             'subjects_of_interest' => ['nullable', 'array'], // Validar como um array
             'subjects_of_interest.*' => ['string', 'in:Matemática,Física,Química,Biologia,Português,História,Geografia,Inglês'], // Validar que cada disciplina seja uma das opções válidas
+            'role' =>  'required|in:user,admin', 
         ]);
-
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password), 
             'school_year' => $request->school_year, // Novo campo
             'subjects_of_interest' => json_encode($request->subjects_of_interest), // Novo campo (armazenado como JSON)
+            'role' => $request->input('role'),
             'points' => 0, // Valor padrão
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'utilizador criado com sucesso!');
