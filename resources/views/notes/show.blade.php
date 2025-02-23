@@ -90,7 +90,7 @@
 
         <div class="note-meta">
             <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
-            <p><strong>Utilizador:</strong> {{ $note->user->name }}</p>
+            <p><strong>Utilizador:</strong> {{ $result->user?->name ?? 'Utilizador não encontrado' }}</p>
             <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
         </div>
     <h1>{{ $note->title }}</h1>

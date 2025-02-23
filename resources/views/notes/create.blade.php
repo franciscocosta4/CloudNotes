@@ -157,7 +157,7 @@
                 @endif
             </div>
             <div class="form-group">
-                <label for="file_path" class="form-label">Arquivo (opcional)</label>
+                <label for="file_path" class="form-label">Arquivo(opcional)</label>
                 <input type="file" name="file_path" id="file_path" class="form-control">
             </div>
             <div class="form-group">

@@ -26,10 +26,16 @@
                             value="{{ old('email', $user->email) }}" required>
                     </div>
 
+                    <!-- Ano Escolar -->
                     <div class="form-group">
-                        <label for="school_year">Ano Escolar</label>
-                        <input type="text" name="school_year" id="school_year" class="form-control"
-                            value="{{ old('school_year', $user->school_year) }}">
+                        <x-input-label for="school_year" :value="__('Ano Escolar')" /><br>
+                            <select id="school_year" name="school_year" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required onchange="showSubjects()">
+                                <option value="" disabled selected>{{ old('school_year', $user->school_year) }}</option>
+                                    @for ($i = 7; $i <= 12; $i++)
+                                        <option value="{{ $i }}" {{ old('school_year') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                    @endfor
+                            </select>
+                        <x-input-error :messages="$errors->get('school_year')" class="mt-2" />
                     </div>
 
                     <div class="form-group">

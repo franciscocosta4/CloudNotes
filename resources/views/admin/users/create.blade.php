@@ -36,7 +36,7 @@
                             </select>
                         <x-input-error :messages="$errors->get('school_year')" class="mt-2" />
                     </div>
-                     <!-- Ano Escolar -->
+                     <!--Disciplinas de interesse -->
                      <div class="form-group">
                         <x-input-label for="subjects_of_interest" :value="__('Disciplinas de interesse')" /><br>
                             <select id="subjects_of_interest" name="subjects_of_interest[]" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required multiple onchange="showSubjects()">

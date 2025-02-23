@@ -3,19 +3,23 @@
 <noscript>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </noscript>
-
+<!-- Preload do Google Google icons -->
+<link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons" as="style" onload="this.rel='stylesheet'">
+<noscript>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</noscript>
 <!-- Preload do Google Fonts -->
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" as="style" onload="this.rel='stylesheet'">
 <noscript>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </noscript>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CloudNotes</title>
-
 </head>
 <body>
     <x-app-layout>
@@ -32,28 +36,24 @@
             <h3>Como aumentar o nível?</h3>
             <p>O seu nível aumenta à medida que partilha anotações com outras pessoas. <br>Para alcançar o próximo nível, continue a compartilhar as suas anotações!</p>
         </div>
-
-        {{-- Verificação para garantir que $notes sempre seja definida --}}
-<div class="published-notes-container">
-    <h3>Anotações Publicadas Por Você</h3>
-    {{-- Exibe as anotações publicadas --}}
-    @isset($notes)
-        @if($notes->isEmpty())
-            <p>Você não publicou nenhuma anotação.</p>
-        @else
-            <ul>
-                @foreach($notes as $note)
-                    <li>
-                        <a href="{{ url('/note/' . $note->slug) }}">{{ $note->title }}</a>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    @else
-        <p>Não foi possível carregar as suas anotações.</p>
-    @endisset
-</div>
-
+        <div class="published-notes-container">
+            <h3>Anotações Publicadas Por Você</h3>
+            @isset($notes)
+                @if($notes->isEmpty())
+                    <p>Você não publicou nenhuma anotação.</p>
+                    @else
+                        <ul>
+                            @foreach($notes as $note)
+                                <li>
+                                    <a href="{{ url('/note/' . $note->slug) }}">{{ $note->title }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                @else
+                <p>Não foi possível carregar as suas anotações.</p>
+            @endisset
+        </div>
         <div class="container">
             <!-- Sidebar -->
             <aside class="sidebar" id="sidebar">
@@ -62,7 +62,6 @@
                 </div>
                 <nav class="sidebar-nav">
                 <p>Recentes:</p>
-                <br>
                 <ul>
                 @if(isset($accessLogs) && $accessLogs->isNotEmpty())
                     <ul>
@@ -73,7 +72,9 @@
                         @endforeach
                     </ul>
                 @else
-                    <p>Nenhum acesso registado ainda.</p>
+                    <ul>
+                        <li>Nenhuma publicação acessada.</li>
+                    </ul>
                 @endif
                     <br><br>
                     </ul>
@@ -84,30 +85,22 @@
                 <!-- Profile Actions -->
                 <div class="profile-actions">
                     <a class="action-btn" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 8px;">
-                            <path d="M10 17l5-5-5-5v4h-4v2h4v4zm4-14h-9c-1.1 0-1.99.9-1.99 2l-.01 12c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2z"/>
-                        </svg>
-                        Logout
+                    <span class="material-icons" style="margin-right: 5px;">logout</span>
+                    <span> Sair</span>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                     <button class="action-btn" onclick="location.href='https://github.com/franciscocosta4/CloudNotes'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 8px;">
-                            <path d="M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10zm0 16c-1.7 0-3-1.3-3-3h6c0 1.7-1.3 3-3 3zm1-4h-2v-2h2v2zm1-6c0-.6-.4-1-1-1s-1 .4-1 1v2h-2v-2c0-.6-.4-1-1-1s-1 .4-1 1v5h2v-3h2v3h2v-5z"/>
-                        </svg>
-                        Ajuda
+                    <span class="material-icons" style="margin-right: 5px;">info</span>
+                    <span> Ajuda</span>
                     </button>
                 </div>
 
                 <!-- Profile Info -->
-                <div class="profile-info">
+                    <button aria-label="profile" class="profile-info"onclick="location.href='/profile'">
                     <span id="username">{{ Auth::user()->name }}</span>
-                    <button aria-label="profile" class="profile-btn" onclick="location.href='/profile'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zM12 14c-3.3 0-6 2.7-6 6v2h12v-2c0-3.3-2.7-6-6-6z"/>
-                        </svg>
-                    </button>
+                    <span class="material-icons" >person</span>
                 </div>
             </aside>
 
@@ -125,10 +118,8 @@
                 placeholder="Entre palavras-chave para pesquisar..." 
                 value="{{ old('query', $query ?? '') }}"
             >
-                <button type="submit" aria-label="searchButton">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 9.5 5 13 7.01 13 9.5 10.99 14 9.5 14z"/>
-                    </svg>
+                <button id="searchbutton"type="submit" aria-label="searchButton">
+                <span class="material-icons" >search</span>
                 </button>
             </div>
                 <div class="search-container" id="filters-search-container">
@@ -177,7 +168,7 @@
                                             <!-- Link correto para o slug -->
                                             <h2>{{ $result->title }}</h2>
                                             <p><strong>Disciplina:</strong> {{ $result->subject }}</p>
-                                            <p><strong>Utilizador:</strong> {{ $result->user->name }}</p>
+                                            <p><strong>Utilizador:</strong> {{ $result->user?->name ?? 'Utilizador não encontrado' }}</p>
                                             <p><strong>Dificuldade:</strong> {{ $result->topic_difficulty }}</p>
                                         </div>
                                     </a>
