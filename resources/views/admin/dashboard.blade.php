@@ -8,8 +8,14 @@
 }
 </style>
 <br>
-<div class="container">
+<div class="container ">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 "> 
     <h3 class="mb-3">Dashboard de Administração</h3>
+        <div class="ms-md-auto py-2 py-md-0">
+            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-border btn-round mt-2">Ir Para Dashboard da Aplicação</a>
+            <a href="{{ route('admin.users.create') }}" class="btn btn-info btn-round mt-2"> Criar Utilizador </a>
+        </div>
+    </div>
     <p class="card-category">Dados sobre a aplicação:</p><br>
     <div class="row">
         <div class="col-sm-6 col-md-3" style="width:300px;">
@@ -97,18 +103,19 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <a href="{{ route('admin.users.edit', $user->id) }}" class="btn mb-1 btn-info btn-sm"> Editar </a>
-                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn mt-1  btn-danger btn-sm">Excluir</button>
-                                        </form>
+                                        <div class="column ">
+                                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info btn-sm mb-1"> Editar </a>
+                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn  btn-danger btn-sm">Excluir</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    <a href="{{ route('admin.users.create') }}" class="btn  btn-info btn-sm"> Criar novo utilizador </a>
                 </div>
             </div>
         </div>

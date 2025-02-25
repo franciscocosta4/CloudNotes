@@ -16,7 +16,11 @@ class NotesAccessLogController extends Controller
     $notes = Note::where('user_id', Auth::id())->get();
 
 
-    $accessLogs = NotesAccessLog::where('user_id', auth()->id())->with('note')->get();
+    $accessLogs = NotesAccessLog::where('user_id', auth()->id())
+    ->with('note')
+    ->orderBy('created_at', 'desc') //* ORDENAR POR ULTIMA DATA DE ACESSO MAS POR ORDEM DECRESCENTE
+    ->get();
+
     return view('dashboard', compact('accessLogs','notes'));
 }
 }

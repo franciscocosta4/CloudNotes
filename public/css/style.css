@@ -90,14 +90,15 @@ p {
     margin-bottom: 1.2rem;
 }
 .sidebar p{
-    margin-bottom: 4px;
+    margin-bottom: 10px;
+    font-weight: 600;
 }
 .sidebar-nav ul {
     padding: 0;
 }
 
 .sidebar-nav ul li {
-    margin-bottom: 1rem;
+    margin-bottom: 2px;
     /* border: 1px solid #d1d1d1; */
     border-radius: 10px;
 }
@@ -110,7 +111,11 @@ p {
     display: block;
     border-radius: 8px;
     transition: background-color 0.3s ease, padding-left 0.3s ease;
+    white-space: nowrap;          /* Impede a quebra de linha */
+    overflow: hidden;             /* Oculta o texto que ultrapassa o limite */
+    text-overflow: ellipsis;      /* Mostra os "..." quando o texto for muito grande */
 }
+
 
 .sidebar-nav ul li a:hover {
     background-color: #E4E6F0;

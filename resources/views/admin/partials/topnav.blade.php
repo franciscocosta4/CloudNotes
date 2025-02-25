@@ -2,8 +2,8 @@
     <div class="container-fluid d-flex align-items-center">
         
         <!-- Campo de Pesquisa -->
-        <form class="d-none d-md-flex me-auto" style="max-width: 250px;">
-            <div class="input-group">
+        <form class=" mt-3 d-none d-md-flex me-auto" style="max-width: 250px;">
+            <div class="input-group" style="border:1px solid #e6e7e9; border-radius: 5px;">
                 <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted"></i></span>
                 <input type="text" class="form-control bg-light border-0" placeholder="Procurar ...">
             </div>

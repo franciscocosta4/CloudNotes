@@ -66,7 +66,7 @@
                 @if(isset($accessLogs) && $accessLogs->isNotEmpty())
                     <ul>
                         @foreach ($accessLogs as $log)
-                            @if($log->note) {{-- Evita erro se a nota não existir --}}
+                            @if($log->note)
                                 <li><a href="{{ route('notes.show', $log->note->slug) }}">{{ $log->note->title }}</a></li>
                             @endif
                         @endforeach
