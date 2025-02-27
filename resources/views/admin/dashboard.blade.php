@@ -104,7 +104,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         <div class="column ">
-                                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info btn-sm mb-1"> Editar </a>
+                                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info btn-sm "> Editar </a>
                                             <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')

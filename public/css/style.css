@@ -156,16 +156,9 @@ p {
     
 }
 
-.profile-info button svg {
-    fill: #444;
-    width: 28px;
-    height: 28px;
-    transition: fill 0.3s ease;
-    
-}
 
-.profile-info button:hover svg {
-    fill: #141E61;
+.profile-info:hover  {
+    transform: scale(1.02); /* Efeito de ampliação */
 }
 /* Estilo para os botões "Sair" e "Ajuda" */
 .profile-actions {
@@ -218,12 +211,13 @@ p {
     top: 150px;  /* Ajuste conforme necessário */
     right: 10px;
     background-color: #fff;
-    padding: 15px;
+    padding-left: 15px;
+    padding-top: 15px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: flex-start;
+    min-height: 100px;
     z-index: 9;
     width: 280px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -245,7 +239,6 @@ p {
 
 .published-notes-container ul li {
     margin-bottom: 10px;
-    width: 210px;
 }
 
 /* Estilo dos links das anotações (mesmo estilo da sidebar) */
@@ -258,11 +251,29 @@ p {
     display: block;
     border-radius: 8px;
     transition: background-color 0.3s ease, padding-left 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 215px; /* Ajusta conforme necessário */
+    display: inline-block;
+}
+/* Inicialmente, o botão fica oculto */
+#DeleteNotesButton {
+    display: none;
+    border: none;
+    color: #434343; /* Cor do ícone */
+    cursor: pointer;
+    margin-left: 1%;
 }
 
-.published-notes-container ul li a:hover {
-    background-color: #E4E6F0;
-    padding-left: 1rem;
+/* Quando o rato passa sobre o item da lista, o botão aparece */
+.published-notes-container ul li:hover #DeleteNotesButton {
+    display: flex;
+}
+
+/* Estilo opcional ao passar o rato sobre o botão */
+.published-notes-container ul li:hover #DeleteNotesButton:hover {
+    color: #434343; /* Fica um pouco mais escuro ao passar o rato */
 }
 
 

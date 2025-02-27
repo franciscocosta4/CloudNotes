@@ -37,14 +37,13 @@
                 </div>
                 <div class="form-group">
                     <label for="content">Conteúdo</label>
-                    <textarea name="content" id="content" class="form-control" rows="5" required>{{ old('content', $note->content) }}</textarea>
+                    <textarea name="content" id="content" class="form-control" rows="15" required>{{ old('content', $note->content) }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="file_path">Arquivo (opcional)</label>
                     <input type="file" name="file_path" id="file_path" class="form-control">
                     @if ($note->file_path)
-                        <p>Arquivo atual: <a href="{{ asset('storage/' . $note->file_path) }}"
-                                target="_blank">Visualizar</a></p>
+                        <p>Arquivo atual: <a href="{{ asset('storage/' . $note->file_path) }}"  target="_blank">Visualizar</a></p>
                     @endif
                 </div>
                 <br>

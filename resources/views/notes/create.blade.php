@@ -144,7 +144,7 @@
                 <p>
             Escreva aqui o conteúdo a seu resumo:
         </p>
-                <textarea name="content" id="content" class="form-control" rows="30" style="resize: vertical;overflow-y: hidden;"></textarea>
+                <textarea name="content" id="content" class="form-control" rows="30" style="resize: vertical; overflow-y: auto;"></textarea>
                 @if ($errors->has('content') || $errors->has('file_path'))
                     <div class="text-danger">
                         @foreach ($errors->get('content') as $message)

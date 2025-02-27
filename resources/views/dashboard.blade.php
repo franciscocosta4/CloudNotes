@@ -42,12 +42,17 @@
                 @if($notes->isEmpty())
                     <p>Você não publicou nenhuma anotação.</p>
                     @else
-                        <ul>
-                            @foreach($notes as $note)
-                                <li>
-                                    <a href="{{ url('/note/' . $note->slug) }}">{{ $note->title }}</a>
-                                </li>
-                            @endforeach
+                    <ul>
+                        @foreach($notes as $note)
+                            <li style="display: flex; align-items: center; justify-content: space-between;">
+                                <a href="{{ url('/note/' . $note->slug) }}">{{ $note->title }}</a>
+                                <form action="{{ route('notes.destroy', $note->id )}}" method="POST" onsubmit="return confirmDelete(event)">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" id="DeleteNotesButton" class="material-icons">delete</button>
+                                </form>
+                            </li>
+                        @endforeach
                         </ul>
                     @endif
                 @else
@@ -187,6 +192,12 @@
 </body>
 </html>
 <script>
+    function confirmDelete(event) {
+    event.preventDefault(); // Evita o envio imediato do formulário
+    if (confirm("Tem a certeza que deseja apagar a sua publicação da plataforma?")) {
+        event.target.submit(); 
+    }
+    }
    document.getElementById('search-form').addEventListener('submit', function (e) {
     e.preventDefault(); // Impede o comportamento padrão do formulário (envio e recarregamento da página)
     

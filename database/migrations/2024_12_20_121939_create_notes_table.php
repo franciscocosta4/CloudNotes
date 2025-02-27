@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('subject');
             $table->enum('topic_difficulty', ['Fácil', 'Moderada', 'Difícil'])->default('Moderada');
-            $table->text('content')->nullable(); // Pode ser texto ou vazio
+            $table->longText('content')->nullable(); //* para suportar até  4gb de texto 
             $table->string('file_path')->nullable(); // Caminho do arquivo (caso a nota seja um arquivo)
             $table->timestamps();
         });
