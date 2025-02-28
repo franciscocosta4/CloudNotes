@@ -45,13 +45,10 @@
         <!-- Disciplinas de Interesse (hidden by default) -->
         <div class="mt-4 hidden" id="subjects_section">
             <x-input-label for="subjects_of_interest" :value="__('Disciplinas de Interesse')" />
-            <select id="subjects_of_interest" name="subjects_of_interest[]" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" multiple required>
-                <option value="" disabled>{{ __('Selecione as Disciplinas de Interesse') }}</option>
-                @foreach(['Matemática', 'Física', 'Química', 'Biologia', 'Português', 'História', 'Geografia', 'Inglês'] as $subject)
-                    <option value="{{ $subject }}" 
-                        {{ is_array(old('subjects_of_interest')) && in_array($subject, old('subjects_of_interest')) ? 'selected' : '' }}>
-                        {{ $subject }}
-                    </option>
+            <!-- <label for="subjects_of_interest">Disciplinas de Interesse</label> -->
+            <select id="subjects_of_interest"name="subjects_of_interest[]" id="subjects_of_interest" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" multiple >
+                @foreach($allSubjects as $subject)
+                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                 @endforeach
             </select>
             <x-input-error :messages="$errors->get('subjects_of_interest')" class="mt-2" />

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Note;
+use App\Models\Subject;
 use App\Models\NotesAccessLog;
 use App\Models\Point;
 use Illuminate\Http\Request;
@@ -11,24 +12,25 @@ use App\Http\Controllers\Controller;
 class AdminController extends Controller
 {
 
-    public function dashboard() 
+    public function dashboard()
     {
         $users = User::all(); // Pega todos os utilizadors
         $notes = Note::all(); // Pega todas as anotações
         $points = Point::all(); // Pega todas os pontos
         $logs = NotesAccessLog::all();
         $totalUsers = User::count();
-        $PublishedNotes= Note::count();
+        $PublishedNotes = Note::count();
         $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->with('user')->get();
         // $userName = User::table('users')->where('id', $ficheiro->user_id)->value('name');; 
-        return view('admin.dashboard', compact('users', 'notes', 'logs', 'totalUsers', 'PublishedNotes', 'ficheiros','points'));
+        return view('admin.dashboard', compact('users', 'notes', 'logs', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points'));
     }
-    
+
 
     //* CRIAÇÃO DE UTILIZADOR 
     public function createUser()
     {
-        return view('admin.users.create'); // Formulário para criar um utilizador
+        $allSubjects = Subject::all();
+        return view('admin.users.create', compact('allSubjects')); // Formulário para criar um utilizador
     }
 
     public function storeUser(Request $request)
@@ -40,18 +42,23 @@ class AdminController extends Controller
             'password' => 'required|string|min:8',
             'school_year' => ['nullable', 'integer', 'between:7,12'], //  número inteiro entre 7 e 12
             'subjects_of_interest' => ['nullable', 'array'], // Validar como um array
-            'subjects_of_interest.*' => ['string', 'in:Matemática,Física,Química,Biologia,Português,História,Geografia,Inglês'], // Validar que cada disciplina seja uma das opções válidas
-            'role' =>  'required|in:user,admin', 
+            'subjects_of_interest.*' => ['integer', 'exists:subjects,id'], // Agora usa IDs da tabela `subjects`
+            'role' => 'required|in:user,admin',
         ]);
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password), 
+            'password' => bcrypt($request->password),
             'school_year' => $request->school_year, // Novo campo
-            'subjects_of_interest' => json_encode($request->subjects_of_interest), // Novo campo (armazenado como JSON)
             'role' => $request->input('role'),
             'points' => 0, // Valor padrão
         ]);
+
+        // Associar disciplinas de interesse na tabela pivô
+        if ($request->has('subjects_of_interest')) {
+            $user->subjects()->attach($request->subjects_of_interest);
+        }
+
         return redirect()->route('admin.dashboard')->with('success', 'utilizador criado com sucesso!');
     }
 
@@ -69,8 +76,8 @@ class AdminController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
             'school_year' => ['nullable', 'integer', 'between:7,12'], //  número inteiro entre 7 e 12
             'subjects_of_interest' => ['nullable', 'array'], // Validar como um array
-            'subjects_of_interest.*' => ['string', 'in:Matemática,Física,Química,Biologia,Português,História,Geografia,Inglês'], // Validar que cada disciplina seja uma das opções válidas
-            'role' =>  'required|in:user,admin',
+            'subjects_of_interest.*' => ['integer', 'exists:subjects,id'], // Agora usa IDs da tabela `subjects`
+            'role' => 'required|in:user,admin',
         ]);
 
         $user->update([
@@ -79,8 +86,13 @@ class AdminController extends Controller
             'password' => $request->password ? bcrypt($request->password) : $user->password,
             'role' => $request->input('role'),
             'school_year' => $request->school_year, // Novo campo
-            'subjects_of_interest' => json_encode($request->subjects_of_interest), // Novo campo (armazenado como JSON),
         ]);
+
+        // Associar disciplinas de interesse na tabela pivô
+        if ($request->has('subjects_of_interest')) {
+            $user->subjects()->sync($request->subjects_of_interest); //? USAMOS  O SYNC POIS QUEREMOS ATUALIZAR
+        }
+        
         return redirect()->route('admin.dashboard')->with('success', 'utilizador atualizado com sucesso!');
     }
 
@@ -95,7 +107,7 @@ class AdminController extends Controller
     //*criação de anotação
     public function createNote()
     {
-        return view('admin.notes.create'); 
+        return view('admin.notes.create');
     }
     public function storeNote(Request $request)
     {
@@ -130,7 +142,7 @@ class AdminController extends Controller
             'subject' => 'required|string|max:255',
             'topic_difficulty' => 'required|string|max:255',
             'content' => 'required|string',
-            'file_path' => 'nullable|string', 
+            'file_path' => 'nullable|string',
         ]);
         $note->update([
             'title' => $request->title,
@@ -151,17 +163,17 @@ class AdminController extends Controller
     }
 
 
-     //* Excluir log de acesso
-     public function destroyLog(NotesAccessLog $log)
-     {
-         $log->delete();
-         return redirect()->route('admin.dashboard')->with('success', 'log de acesso excluída com sucesso!');
-     }
+    //* Excluir log de acesso
+    public function destroyLog(NotesAccessLog $log)
+    {
+        $log->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'log de acesso excluída com sucesso!');
+    }
 
-     //* Excluir log de pontos
-     public function destroyPoint(Point $point)
-     {
-         $point->delete();
-         return redirect()->route('admin.dashboard')->with('success', 'log de pontos excluída com sucesso!');
-     }
+    //* Excluir log de pontos
+    public function destroyPoint(Point $point)
+    {
+        $point->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'log de pontos excluída com sucesso!');
+    }
 }

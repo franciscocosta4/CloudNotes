@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Subject;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,40 +15,46 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user(); // Recupera o usuário autenticado
+        $allSubjects = Subject::all(); // Recupera todas as disciplinas para a dropdown
+        return view('profile.edit', compact('user', 'allSubjects')); // Passa o usuário e as disciplinas para a view
     }
-
     /**
      * Update the user's profile information.
      */
     //? Ver ProfileUpdateRequest.php caso queira editar
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $user = $request->user();
-    
-        //* PERMITE ATUALIZAR O ANO ESCOLAR E AS DISCIPLINAS 
-        $user->fill(array_merge(
-            $request->validated(),
-            [
-                'school_year' => $request->input('school_year'),
-                'subjects_of_interest' => json_encode($request->input('subjects_of_interest')),
-            ]
-        ));
-    
-        //* Verifique se o e-mail foi alterado e limpe a verificação se necessário
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
+        $user = Auth::user(); // Recupera o usuário autenticado
+
+        // Validação dos dados
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'school_year' => ['nullable', 'integer', 'between:7,12'],
+            'subjects_of_interest' => ['nullable', 'array'],
+            'subjects_of_interest.*' => ['integer', 'exists:subjects,id'],
+        ]);
+
+        // Atualiza os dados do usuário
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password ? bcrypt($request->password) : $user->password,
+            'school_year' => $request->school_year,
+        ]);
+
+        // Atualiza as disciplinas de interesse
+        if ($request->has('subjects_of_interest')) {
+            $user->subjects()->sync($request->subjects_of_interest); // Atualiza as disciplinas de interesse usando sync()
         }
-    
-        $user->save();
-    
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
-    
+
 
     /**
      * Delete the user's account.

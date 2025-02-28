@@ -28,7 +28,7 @@
                     <!-- Ano Escolar -->
                     <div class="form-group">
                         <x-input-label for="school_year" :value="__('Ano Escolar')" /><br>
-                            <select id="school_year" name="school_year" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required onchange="showSubjects()">
+                            <select id="school_year" name="school_year" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required >
                                 <option value="" disabled selected>{{ __('Selecione o Ano Escolar') }}</option>
                                     @for ($i = 7; $i <= 12; $i++)
                                         <option value="{{ $i }}" {{ old('school_year') == $i ? 'selected' : '' }}>{{ $i }}</option>
@@ -38,17 +38,15 @@
                     </div>
                      <!--Disciplinas de interesse -->
                      <div class="form-group">
-                        <x-input-label for="subjects_of_interest" :value="__('Disciplinas de interesse')" /><br>
-                            <select id="subjects_of_interest" name="subjects_of_interest[]" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required multiple onchange="showSubjects()">
-                                <option value="" disabled class="mb-1">{{ __('Selecione as suas disciplinas de interesse') }}</option>
-                                    @foreach(['Matemática', 'Física', 'Química', 'Biologia', 'Português', 'História', 'Geografia', 'Inglês'] as $subject)
-                                        <option value="{{ $subject }}"  {{ is_array(old('subjects_of_interest')) && in_array($subject, old('subjects_of_interest')) ? 'selected' : '' }}>
-                                        {{ $subject }}</option>
-                                    @endforeach
+                        <x-input-label for="subjects_of_interest" :value="__('Disciplinas de Interesse')" /><br>
+                        <!-- <label for="subjects_of_interest">Disciplinas de Interesse</label> -->
+                            <select id="subjects_of_interest"name="subjects_of_interest[]" id="subjects_of_interest" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" multiple >
+                                @foreach($allSubjects as $subject)
+                                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                @endforeach
                             </select>
                         <x-input-error :messages="$errors->get('subjects_of_interest')" class="mt-2" />
                     </div>
-        
                     <div class="form-group">
                         <label for="role">Definir as permissões:</label>
                         <br>

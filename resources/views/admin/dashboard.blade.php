@@ -103,12 +103,14 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <div class="column ">
-                                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info btn-sm "> Editar </a>
-                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                    <div class="column d-flex gap-2">
+                                            <form action="{{ route('admin.users.edit', $user->id) }}" method="GET" style="display:inline;">
+                                                <button type="submit" class="btn btn-info btn-sm">Editar</button>
+                                            </form>
+                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn  btn-danger btn-sm">Excluir</button>
+                                                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
                                             </form>
                                         </div>
                                     </td>

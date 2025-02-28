@@ -29,7 +29,7 @@
                     <!-- Ano Escolar -->
                     <div class="form-group">
                         <x-input-label for="school_year" :value="__('Ano Escolar')" /><br>
-                            <select id="school_year" name="school_year" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required onchange="showSubjects()">
+                            <select id="school_year" name="school_year" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                                 <option value="" disabled selected>{{ old('school_year', $user->school_year) }}</option>
                                     @for ($i = 7; $i <= 12; $i++)
                                         <option value="{{ $i }}" {{ old('school_year') == $i ? 'selected' : '' }}>{{ $i }}</option>
@@ -40,30 +40,32 @@
 
                     <div class="form-group">
                     <label>Disciplinas de Interesse</label>
-                        @php
-                            $subjects = ['Matemática', 'Física', 'Química', 'Biologia', 'Português', 'História', 'Geografia', 'Inglês'];
-                            $selectedSubjects = json_decode($user->subjects_of_interest, true) ?? [];
+                    @php
+                        // Obter todas as disciplinas da base de dados
+                        $subjects = App\Models\Subject::all();
+                        // Obter as disciplinas associadas ao utilizador (IDs)
+                        $selectedSubjects = $user->subjects->pluck('id')->toArray(); // Pega os IDs das disciplinas associadas ao utilizador
                     @endphp
                     <div class="row">
+                        <div class="col-md-6">
+                            @foreach ($subjects->take(4) as $subject) <!-- Apenas os 4 primeiros -->
+                                <div class="form-check">
+                                    <input type="checkbox" name="subjects_of_interest[]" value="{{ $subject->id }}" 
+                                        {{ in_array($subject->id, $selectedSubjects) ? 'checked' : '' }} class="form-check-input">
+                                    <label class="form-check-label">{{ $subject->name }}</label>
+                                </div>
+                            @endforeach
+                        </div>
                     <div class="col-md-6">
-                        @foreach (array_slice($subjects, 0, 4) as $subject)
+                        @foreach ($subjects->skip(4) as $subject) <!-- A partir do 5º item -->
                             <div class="form-check">
-                                <input type="checkbox" name="subjects_of_interest[]" value="{{ $subject }}" 
-                                    {{ in_array($subject, $selectedSubjects) ? 'checked' : '' }} class="form-check-input">
-                                <label class="form-check-label">{{ $subject }}</label>
-                             </div>
-                        @endforeach
-                    </div>
-                    <div class="col-md-6">
-                        @foreach (array_slice($subjects, 4) as $subject)
-                            <div class="form-check">
-                                <input type="checkbox" name="subjects_of_interest[]" value="{{ $subject }}" 
-                                    {{ in_array($subject, $selectedSubjects) ? 'checked' : '' }} class="form-check-input">
-                                <label class="form-check-label">{{ $subject }}</label>
+                                <input type="checkbox" name="subjects_of_interest[]" value="{{ $subject->id }}" 
+                                    {{ in_array($subject->id, $selectedSubjects) ? 'checked' : '' }} class="form-check-input">
+                                <label class="form-check-label">{{ $subject->name }}</label>
                             </div>
                         @endforeach
-                     </div>
                     </div>
+                </div>
                 </div>
                     <div class="form-group">
                         <label for="password">Senha (Deixe vazio para manter a senha atual)</label>

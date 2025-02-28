@@ -50,7 +50,7 @@
                     @endif
                 </div>
             @endif
-        </div>
+        </div>  
 
         <!-- Ano Escolar -->
         <div class="form-group">
@@ -66,19 +66,18 @@
 
         <!-- Disciplinas de Interesse -->
         <div class="form-group">
+        <!-- Disciplinas de Interesse (hidden by default) -->
             <x-input-label for="subjects_of_interest" :value="__('Disciplinas de Interesse')" />
-            <select id="subjects_of_interest" name="subjects_of_interest[]" class="form-input mt-1 block w-full" multiple>
-                @php
-                    $subjects = ['Matemática', 'Física', 'Química', 'Biologia', 'Português', 'História', 'Geografia', 'Inglês'];
-                @endphp
-
-                @foreach ($subjects as $subject)
-                    <option value="{{ $subject }}" {{ collect(old('subjects_of_interest', json_decode($user->subjects_of_interest, true)))->contains($subject) ? 'selected' : '' }}>
-                        {{ $subject }}
+            <!-- <label for="subjects_of_interest">Disciplinas de Interesse</label> -->
+            <select name="subjects_of_interest[]" id="subjects_of_interest" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" multiple required>
+                @foreach($allSubjects as $subject)
+                    <option value="{{ $subject->id }}" 
+                        @if(in_array($subject->id, old('subjects_of_interest', $user->subjects->pluck('id')->toArray()))) selected @endif>
+                        {{ $subject->name }} 
                     </option>
                 @endforeach
             </select>
-            <x-input-error class="mt-2" :messages="$errors->get('subjects_of_interest')" />
+            <x-input-error :messages="$errors->get('subjects_of_interest')" class="mt-2" />
             <p class="text-sm text-gray-600 mt-2">
                 {{ __('Segure a tecla Ctrl ou Command para selecionar várias disciplinas.') }}
             </p>
