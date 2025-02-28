@@ -18,11 +18,13 @@ class AdminController extends Controller
         $notes = Note::all(); // Pega todas as anotações
         $points = Point::all(); // Pega todas os pontos
         $logs = NotesAccessLog::all();
+        $subjects = Subject::all();
+        $totalSubjects = Subject::count();
         $totalUsers = User::count();
         $PublishedNotes = Note::count();
         $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->with('user')->get();
         // $userName = User::table('users')->where('id', $ficheiro->user_id)->value('name');; 
-        return view('admin.dashboard', compact('users', 'notes', 'logs', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points'));
+        return view('admin.dashboard', compact('users', 'notes', 'logs','subjects', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points','totalSubjects'));
     }
 
 
@@ -162,6 +164,29 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Anotação excluída com sucesso!');
     }
 
+
+    //*criação de Disciplina
+    public function createSubject()
+    {
+        return view('admin.subjects.create');
+    }
+    public function storeSubject(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        Subject::create([
+            'name' => $request->name,
+        ]);
+        return redirect()->route('admin.dashboard')->with('success', 'Disciplina adicionada com sucesso!');
+    }
+
+    //* Excluir Disciplina
+    public function destroySubject(NotesAccessLog $subject)
+    {
+        $subject->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Disciplina excluída com sucesso!');
+    }
 
     //* Excluir log de acesso
     public function destroyLog(NotesAccessLog $log)

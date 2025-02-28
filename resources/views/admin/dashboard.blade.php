@@ -12,7 +12,8 @@
     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 "> 
     <h3 class="mb-3">Dashboard de Administração</h3>
         <div class="ms-md-auto py-2 py-md-0">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-border btn-round mt-2">Ir Para Dashboard da Aplicação</a>
+            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-border btn-round mt-2">Ir Para a Aplicação</a>
+            <!-- <a href="{{ route('admin.subjects.create') }}" class="btn btn-info  btn-round mt-2">Adicionar Disciplina</a> -->
             <a href="{{ route('admin.users.create') }}" class="btn btn-info btn-round mt-2"> Criar Utilizador </a>
         </div>
     </div>
@@ -61,7 +62,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-icon">
-                            <div class="icon-big text-center icon-success   bubble-shadow-small">
+                            <div class="icon-big text-center icon-secondary   bubble-shadow-small">
                                 <i class="fab fa-telegram-plane"></i>
                             </div>
                         </div>
@@ -69,6 +70,25 @@
                             <div class="numbers">
                                 <p class="card-category">Total de publicações</p>
                                 <h4 class="class-title"> {{ $PublishedNotes }} </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3" style="width:300px;">
+            <div class="card card-stats card-round">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-icon">
+                            <div class="icon-big text-center icon-success   bubble-shadow-small">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                            <div class="numbers">
+                                <p class="card-category">Disciplinas suportadas</p>
+                                <h4 class="class-title"> {{ $totalSubjects }} </h4>
                             </div>
                         </div>
                     </div>
@@ -154,13 +174,63 @@
     </div>
 </div>
 
+<!-- TABELA DE DISCIPLINAS -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title" id="subjects">Disciplinas disponíveis</h4>
+                        <a href="{{ route('admin.subjects.create') }}" class="btn btn-info  btn-round ms-auto">
+                            <i class="fa fa-plus"></i>
+                            Adicionar Disciplina
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Data de Criação</th>
+                                <th>Última Atualização</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($subjects as $subject)
+                                <tr>
+                                    <td>{{ $subject->id }}</td>
+                                    <td>{{ $subject->name }}</td>
+                                    <td>{{ $subject->created_at }}</td>
+                                    <td>{{ $subject->updated_at }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.subjects.destroy', $subject->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Tabela de Anotações -->
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h4 class="card-title" id="anotacoes">Anotações</h4>
+                    <h4 class="card-title" id="anotacoes">Anotações Publicadas</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped">
@@ -209,7 +279,6 @@
         </div>
     </div>
 </div>
-
 <!-- Tabela de Logs -->
 <div class="container">
     <div class="row">

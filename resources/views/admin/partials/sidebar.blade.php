@@ -70,6 +70,27 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#Disciplinas">
+                        <i class="fas fa-book"></i>
+                        <p>Disciplinas</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="Disciplinas">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="#subjects">
+                                    <span class="sub-item">Lista de Disciplinas</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.subjects.create') }}">
+                                    <span class="sub-item">Adicionar uma Disciplina</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#logshref">
                         <i class="fas fa-history"></i>
                         <p>Logs de Acesso</p>

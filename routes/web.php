@@ -53,7 +53,15 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::patch('/notes/{note}', [AdminController::class, 'updateNote'])->name('notes.update');
     Route::delete('/notes/{note}', [AdminController::class, 'destroyNote'])->name('notes.destroy');
 
+    // Administração de logs (Admin)
     Route::delete('/logs/{log}', [AdminController::class, 'destroyLog'])->name('logs.destroy');
+
+    // Administração de disciplinas (Admin)
+    Route::delete('/subjects/{subject}', [AdminController::class, 'destroySubject'])->name('subjects.destroy');
+    Route::get('/subjects/create', [AdminController::class, 'createSubject'])->name('subjects.create');
+    Route::post('/subjects', [AdminController::class, 'storeSubject'])->name('subjects.store');
+    
+
     Route::delete('/points/{point}', [AdminController::class, 'destroyPoint'])->name('points.destroy');
 });
 
