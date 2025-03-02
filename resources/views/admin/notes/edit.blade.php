@@ -48,7 +48,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Guardar Alterações</button>
-                <button type="submit" class="btn btn-black" onclick="window.history.back()">Voltar</button>
+                <button type="button" class="btn btn-black" onclick="window.history.back()">Voltar</button>
             </form>
         </div>
     </div>

@@ -182,7 +182,7 @@ class AdminController extends Controller
     }
 
     //* Excluir Disciplina
-    public function destroySubject(NotesAccessLog $subject)
+    public function destroySubject(Subject $subject)
     {
         $subject->delete();
         return redirect()->route('admin.dashboard')->with('success', 'Disciplina excluída com sucesso!');

@@ -28,7 +28,7 @@
                     <!-- Ano Escolar -->
                     <div class="form-group">
                         <x-input-label for="school_year" :value="__('Ano Escolar')" /><br>
-                            <select id="school_year" name="school_year" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required >
+                            <select id="school_year" name="school_year" class="form-select " style=" width:210px;" required >
                                 <option value="" disabled selected>{{ __('Selecione o Ano Escolar') }}</option>
                                     @for ($i = 7; $i <= 12; $i++)
                                         <option value="{{ $i }}" {{ old('school_year') == $i ? 'selected' : '' }}>{{ $i }}</option>
@@ -40,7 +40,7 @@
                      <div class="form-group">
                         <x-input-label for="subjects_of_interest" :value="__('Disciplinas de Interesse')" /><br>
                         <!-- <label for="subjects_of_interest">Disciplinas de Interesse</label> -->
-                            <select id="subjects_of_interest"name="subjects_of_interest[]" id="subjects_of_interest" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" multiple >
+                            <select id="subjects_of_interest"name="subjects_of_interest[]" id="subjects_of_interest" class="form-select " style=" width:150px;" multiple >
                                 @foreach($allSubjects as $subject)
                                     <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                                 @endforeach
@@ -66,7 +66,7 @@
                     @endif
                     <br>
                     <button type="submit" class="btn btn-primary">Guardar Alterações</button>
-                    <button type="submit" class="btn btn-black" onclick="window.history.back()">Voltar</button>
+                    <button type="button" class="btn btn-black" onclick="window.history.back()">Voltar</button>
                 </form>
             </div>
         </div>
