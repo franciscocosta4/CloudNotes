@@ -108,6 +108,7 @@
 
     <!-- Kaiadmin JS -->
     <script src="{{ asset('admin/assets/js/kaiadmin.min.js') }}"></script>
+    
 
     <script>
       $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {

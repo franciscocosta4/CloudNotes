@@ -39,7 +39,7 @@
                     <span class="fw-bold text-dark">Olá, {{ Auth::user()->name ?? 'Admin' }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#" onclick="location.href='/profile'">Meu Perfil</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}">Meu Perfil</a></li>
                     <li><a class="dropdown-item" href="#">Definições</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">

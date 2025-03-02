@@ -21,6 +21,12 @@ class ProfileController extends Controller
         $allSubjects = Subject::all(); // Recupera todas as disciplinas para a dropdown
         return view('profile.edit', compact('user', 'allSubjects')); // Passa o usuário e as disciplinas para a view
     }
+    public function editAdmin(Request $request)
+    {
+        $user = Auth::user(); // Recupera o usuário autenticado
+        $allSubjects = Subject::all(); // Recupera todas as disciplinas para a dropdown
+        return view('admin.profile.edit', compact('user', 'allSubjects')); // Passa o usuário e as disciplinas para a view
+    }
     /**
      * Update the user's profile information.
      */

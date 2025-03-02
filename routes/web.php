@@ -39,6 +39,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     // Dashboard de Admin (AGORA PROTEGIDO!)
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
+
+    Route::get('/profile/edit', [ProfileController::class, 'editAdmin'])->name('profile.edit');
+    Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Administração de utilizadores (Admin)
     Route::match(['get', 'post'],'/users/create', [AdminController::class, 'createUser'])->name('users.create');
     Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');

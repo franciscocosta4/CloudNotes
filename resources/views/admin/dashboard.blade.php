@@ -19,7 +19,7 @@
     </div>
     <p class="card-category">Dados sobre a aplicação:</p><br>
     <div class="row">
-        <div class="col-sm-6 col-md-3" style="width:300px;">
+        <div class="col-sm-6 col-md-3" style="width:290px;">
             <div class="card card-stats card-round">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col col-stats ms-3 ms-sm-0">
                             <div class="numbers">
-                                <p class="card-category">Utilizadores registrados</p>
+                                <p class="card-category">Utilizadores registados</p>
                                 <h4 class="class-title"> {{ $totalUsers }}</h4>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-3" style="width:300px;">
+        <div class="col-sm-6 col-md-3" style="width:290px;">
             <div class="card card-stats card-round">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>  
-        <div class="col-sm-6 col-md-3" style="width:300px;">
+        <div class="col-sm-6 col-md-3" style="width:290px;">
             <div class="card card-stats card-round">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-3" style="width:300px;">
+        <div class="col-sm-6 col-md-3" style="width:290px;">
             <div class="card card-stats card-round">
                 <div class="card-body">
                     <div class="row align-items-center">

@@ -4,6 +4,8 @@
             <!-- <a href="{{ route('admin.dashboard') }}" class="logo">
                 <img src="{{ asset('admin/assets/img/kaiadmin/logo_light.svg') }}" alt="Admin" class="navbar-brand" height="20">
             </a> -->
+                <!-- Kaiadmin JS -->
+    <script src="{{ asset('admin/assets/js/kaiadmin.min.js') }}"></script>
             <a href="{{ route('admin.dashboard') }}" >
                 <h4 id="sidebar-title" class=" text-white ">
                 CloudNotes
