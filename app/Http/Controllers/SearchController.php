@@ -48,7 +48,7 @@ class SearchController extends Controller
         //? Recupera as anotações publicadas pelo user e o histórico de acesso (PARA GARANTIR QUE AS ANOTAÇÕES DA SIDEBAR AINDA FICAM LÁ ) 
         $notes = Note::where('user_id', Auth::id())->get();
         $accessLogs = NotesAccessLog::where('user_id', auth()->id())->with('note')->get();
-
+        
         return view('dashboard', [
             'results' => $results,
             'notes' => $notes,

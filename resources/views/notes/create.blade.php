@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Partilhar Anotação</title>
     <!-- Preload do Google Fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" as="style" onload="this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" as="style"
+        onload="this.rel='stylesheet'">
     <noscript>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     </noscript>
     <style>
-        body, html {
+        body,
+        html {
             font-family: 'Poppins', sans-serif;
             background-color: #F8F9FA;
             color: #444;
@@ -36,17 +39,21 @@
         }
 
         .form-group {
-            margin-bottom: 1.5rem; /* Espaçamento entre os campos */
+            margin-bottom: 1.5rem;
+            /* Espaçamento entre os campos */
         }
 
         .form-group.inline {
             display: flex;
-            gap: 1rem; /* Espaço entre os campos */
-            align-items: flex-end; /* Alinha os campos na parte inferior */
+            gap: 1rem;
+            /* Espaço entre os campos */
+            align-items: flex-end;
+            /* Alinha os campos na parte inferior */
         }
 
         .form-group.inline .form-control {
-            flex: 1; /* Faz os campos ocuparem o espaço disponível */
+            flex: 1;
+            /* Faz os campos ocuparem o espaço disponível */
         }
 
         .form-label {
@@ -57,9 +64,11 @@
             display: block;
             width: 130px;
         }
-        #content{
+
+        #content {
             border: 2px solid rgb(159, 159, 159);
         }
+
         .form-control {
             width: 95%;
             padding: 0.75rem;
@@ -104,6 +113,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Partilhar Anotação</h2>
@@ -120,14 +130,9 @@
                 <div>
                     <label for="subject" class="form-label">Disciplina</label>
                     <select name="subject" id="subject" class="form-control" required>
-                        <option value="Matemática">Matemática</option>
-                        <option value="Física">Física</option>
-                        <option value="Química">Química</option>
-                        <option value="Biologia">Biologia</option>
-                        <option value="Português">Português</option>
-                        <option value="História">História</option>
-                        <option value="Geografia">Geografia</option>
-                        <option value="Inglês">Inglês</option>
+                        @foreach(\App\Models\Subject::all() as $subject)
+                            <option value="{{ $subject->name }}">{{ $subject->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>
@@ -140,11 +145,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="content" class="form-label" >Conteúdo</label>
+                <label for="content" class="form-label">Conteúdo</label>
                 <p>
-            Escreva aqui o conteúdo a seu resumo:
-        </p>
-                <textarea name="content" id="content" class="form-control" rows="30" style="resize: vertical; overflow-y: auto;"></textarea>
+                    Escreva aqui o conteúdo a seu resumo:
+                </p>
+                <textarea name="content" id="content" class="form-control" rows="30"
+                    style="resize: vertical; overflow-y: auto;"></textarea>
                 @if ($errors->has('content') || $errors->has('file_path'))
                     <div class="text-danger">
                         @foreach ($errors->get('content') as $message)
@@ -179,16 +185,17 @@
         });
 
         document.getElementById("file_path").addEventListener("change", function () {
-        const file = this.files[0];
+            const file = this.files[0];
             if (file) {
                 const allowedExtensions = ["zip", "rar"];
                 const fileExtension = file.name.split(".").pop().toLowerCase();
-            if (!allowedExtensions.includes(fileExtension)) {
-                alert("Apenas ficheiros .zip ou .rar são permitidos.");
-                this.value = "";
+                if (!allowedExtensions.includes(fileExtension)) {
+                    alert("Apenas ficheiros .zip ou .rar são permitidos.");
+                    this.value = "";
                 }
             }
         });
     </script>
 </body>
+
 </html>
