@@ -89,10 +89,11 @@
                         @endif
                         <br><br>
                     </ul>
+                </nav>
+                <div class="saved-notes">
                     <p>Ver anotações guardadas:</p>
                     <button onclick="location.href='/saved-notes'">Notas Guardadas</button>
-                </nav>
-
+                </div>
                 <!-- Profile Actions -->
                 <div class="profile-actions">
                     <a class="action-btn" href="{{ route('logout') }}"
