@@ -35,7 +35,7 @@
             <!-- Perfil do Usuário -->
             <li class="nav-item dropdown">
                 <a class="nav-link d-flex align-items-center" href="#" id="userDropdown" data-bs-toggle="dropdown">
-                    <img src="{{ asset('admin/assets/img/profile.jpg') }}" class="rounded-circle me-2" width="30" height="30">
+                    <img src="{{ asset('admin/assets/img/eu.jpg') }}" class="rounded-circle me-2" width="30" height="30">
                     <span class="fw-bold text-dark">Olá, {{ Auth::user()->name ?? 'Admin' }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
