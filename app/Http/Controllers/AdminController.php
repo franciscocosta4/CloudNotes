@@ -3,15 +3,19 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Note;
+use App\Models\AdminLog;
 use App\Models\Subject;
 use App\Models\NotesAccessLog;
 use App\Models\Point;
+
 use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
 
+    
     public function dashboard()
     {
         $users = User::all(); // Pega todos os utilizadors
@@ -23,6 +27,7 @@ class AdminController extends Controller
         $totalUsers = User::count();
         $PublishedNotes = Note::count();
         $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->with('user')->get();
+        // $adminActions= AdminLog::all();
         // $userName = User::table('users')->where('id', $ficheiro->user_id)->value('name');; 
         return view('admin.dashboard', compact('users', 'notes', 'logs','subjects', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points','totalSubjects'));
     }

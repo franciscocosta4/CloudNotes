@@ -33,7 +33,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 //* Rotas PROTEGIDAS do Admin (Só Admins podem aceder)
-Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin', 'logAdminActions'])->name('admin.')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     // Dashboard de Admin (AGORA PROTEGIDO!)
