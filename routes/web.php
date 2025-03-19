@@ -33,40 +33,39 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 //* Rotas PROTEGIDAS do Admin (Só Admins podem aceder)
-Route::prefix('admin')->middleware(['auth', 'admin', 'logAdminActions'])->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Dashboard de Admin (AGORA PROTEGIDO!)
+    // Dashboard de Admin (não precisa de log de ações)
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-
-
     Route::get('/profile/edit', [ProfileController::class, 'editAdmin'])->name('profile.edit');
     Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Administração de utilizadores (Admin)
+    // Administração de utilizadores (Admin) com log de ações
     Route::match(['get', 'post'],'/users/create', [AdminController::class, 'createUser'])->name('users.create');
-    Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
+    Route::post('/users', [AdminController::class, 'storeUser'])->middleware('logAdminActions')->name('users.store');
     Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
-    Route::patch('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
-    Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
+    Route::patch('/users/{user}', [AdminController::class, 'updateUser'])->middleware('logAdminActions')->name('users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->middleware('logAdminActions')->name('users.destroy');
     
-    // Administração de anotações (Admin)
+    // Administração de anotações (Admin) com log de ações
     Route::get('/notes/create', [AdminController::class, 'createNote'])->name('notes.create');
-    Route::post('/notes', [AdminController::class, 'storeNote'])->name('notes.store');
+    Route::post('/notes', [AdminController::class, 'storeNote'])->middleware('logAdminActions')->name('notes.store');
     Route::get('/notes/{note}/edit', [AdminController::class, 'editNote'])->name('notes.edit');
-    Route::patch('/notes/{note}', [AdminController::class, 'updateNote'])->name('notes.update');
-    Route::delete('/notes/{note}', [AdminController::class, 'destroyNote'])->name('notes.destroy');
+    Route::patch('/notes/{note}', [AdminController::class, 'updateNote'])->middleware('logAdminActions')->name('notes.update');
+    Route::delete('/notes/{note}', [AdminController::class, 'destroyNote'])->middleware('logAdminActions')->name('notes.destroy');
 
-    // Administração de logs (Admin)
-    Route::delete('/logs/{log}', [AdminController::class, 'destroyLog'])->name('logs.destroy');
+    // Administração de logs (Admin) com log de ações
+    Route::delete('/logs/{log}', [AdminController::class, 'destroyLog'])->middleware('logAdminActions')->name('logs.destroy');
 
-    // Administração de disciplinas (Admin)
-    Route::delete('/subjects/{subject}', [AdminController::class, 'destroySubject'])->name('subjects.destroy');
+    // Administração de disciplinas (Admin) com log de ações
+    Route::delete('/subjects/{subject}', [AdminController::class, 'destroySubject'])->middleware('logAdminActions')->name('subjects.destroy');
     Route::get('/subjects/create', [AdminController::class, 'createSubject'])->name('subjects.create');
-    Route::post('/subjects', [AdminController::class, 'storeSubject'])->name('subjects.store');
+    Route::post('/subjects', [AdminController::class, 'storeSubject'])->middleware('logAdminActions')->name('subjects.store');
     
-
-    Route::delete('/points/{point}', [AdminController::class, 'destroyPoint'])->name('points.destroy');
+    // Administração de pontos (Admin) com log de ações
+    Route::delete('/points/{point}', [AdminController::class, 'destroyPoint'])->middleware('logAdminActions')->name('points.destroy');
 });
+
 
 //* ROTAS PARA USERS COMUNS (Pesquisa e Notas)
 Route::middleware('auth')->group(function () {

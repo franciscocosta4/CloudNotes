@@ -27,7 +27,8 @@ class LogAdminActions
                 ]);
 
                 //* Remove a mensagem da sessão após registrar para evitar registrar na bd 2 vezes
-                session()->forget('success');
+                // session()->forget('success');
+                session()->reflash(); //* mantém a sessão ativa para a próxima requisição, garantindo que o JavaScript no frontend ainda consiga acessar session('success') e exibir o toast.
             }
         }
 

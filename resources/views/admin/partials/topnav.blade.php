@@ -42,7 +42,7 @@
                                 @foreach($adminActions as $adminAction)
                                     <a href="#">
                                         <div
-                                            class="notif-icon {{ str_contains(strtolower($adminAction->message), 'criado') ? 'notif-success' : 'notif-primary' }}">
+                                        class="notif-icon {{ str_contains(strtolower($adminAction->message), 'criado') ? 'notif-success' : 'notif-primary' }}">
                                             <i class="fa fa-user-plus"></i>
                                         </div>
                                         <div class="notif-content" style="margin-right: 0; padding-right: 0;">
@@ -72,6 +72,7 @@
                               />
                             </div>
                             <div class="notif-content">
+
                               <span class="block">
                                 Reza send messages to you
                               </span>
