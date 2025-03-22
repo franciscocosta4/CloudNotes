@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin_logs', function (Blueprint $table) {
+        Schema::create('admin_actions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('set null');
             $table->text('message');
+            $table->boolean('seen')->default(false);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin_logs');
+        Schema::dropIfExists('admin_actions');
     }
 };

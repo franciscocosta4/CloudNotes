@@ -22,11 +22,16 @@
                 <a class="nav-link" href="#" id="notifDropdown" data-bs-toggle="dropdown">
                     <i class="fas fa-bell text-muted"></i>
                     @php
-                        $adminActionQuant = App\Models\AdminLog::count();
+                       $adminActionQuant = App\Models\AdminAction::count();
+                        if ($adminActionQuant > 6) {
+                            $adminActionQuant = 6;
+                        }
+
                     @endphp
                     <span
-                        class="badge badge-pill bg-success position-absolute translate-middle p-1">{{ $adminActionQuant }}</span>
+                    class="badge badge-pill bg-success position-absolute translate-middle p-1">{{ $adminActionQuant }}</span>
                 </a>
+
                 <ul class="dropdown-menu notif-box animated fadeIn">
                     <li>
                         <div class="dropdown-title">Você tem novas notificações</div>
@@ -36,13 +41,13 @@
                         <div class="notif-scroll scrollbar-outer">
                             <div class="notif-center">
                                 @php
-                                    $adminActions = App\Models\AdminLog::latest()->paginate(6);
+                                    $adminActions = App\Models\AdminAction::latest()->paginate(6);
                                 @endphp
 
                                 @foreach($adminActions as $adminAction)
                                     <a href="#">
                                         <div
-                                        class="notif-icon {{ str_contains(strtolower($adminAction->message), 'criado') ? 'notif-success' : 'notif-primary' }}">
+                                            class="notif-icon {{ str_contains(strtolower($adminAction->message), 'criado') ? 'notif-success' : 'notif-primary' }}">
                                             <i class="fa fa-user-plus"></i>
                                         </div>
                                         <div class="notif-content" style="margin-right: 0; padding-right: 0;">

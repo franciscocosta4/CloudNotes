@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdminLog extends Model
+class AdminAction extends Model
 {
     use HasFactory;
+    protected $table = 'admin_actions';
 
-    protected $fillable= ['admin_id','message'];
+    protected $fillable= ['admin_id','message','seen'];
 }

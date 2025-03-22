@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\AdminLog;
+use App\Models\AdminAction;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Session;
@@ -21,9 +21,10 @@ class LogAdminActions
             // Captura a mensagem de sucesso da sessão
             $message = session('success');
             if ($message) {
-                AdminLog::create([
+                AdminAction::create([
                     'admin_id' => Auth::id(),
-                    'message'  => $message
+                    'message'  => $message,
+                    'seen'     => false,
                 ]);
 
                 //* Remove a mensagem da sessão após registrar para evitar registrar na bd 2 vezes
