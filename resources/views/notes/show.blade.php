@@ -120,18 +120,24 @@
             <p>O utilizador submeteu um ficheiro, caso queira transferir clique em 'transferir' </p>
         @else
             <p>Não existe ficheiro disponível para esta anotação.</p>
-        @endif
-        <div class="note-actions">
-            <a href="{{ Storage::url($note->file_path) }}"
-                download="{{ $note->title }}.{{ pathinfo($note->file_path, PATHINFO_EXTENSION) }}"
-                style="display: flex; align-items: center; gap: 5px;">
-                <span class="material-icons">download</span>
-                Transferir
-            </a>
+            <script>
 
-            <button onclick="window.history.back()">Voltar</button>
+            </script>
+        @endif  
+        <div class="note-actions">
+            @if ($note->file_path)
+                <div class="note-actions">
+                    <a id="button-down" href="{{ Storage::url($note->file_path) }}"
+                        download="{{ $note->title }}.{{ pathinfo($note->file_path, PATHINFO_EXTENSION) }}"
+                        style="display: flex; align-items: center; gap: 5px;">
+                        <span class="material-icons">download</span>
+                        Transferir
+                    </a>
+            @endif
+
+                <button onclick="window.history.back()">Voltar</button>
+            </div>
         </div>
-    </div>
 </body>
 
 </html>
