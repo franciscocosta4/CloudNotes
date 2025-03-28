@@ -17,10 +17,13 @@
                         value="{{ old('title', $note->title) }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="subject">Matéria</label>
-                    <input type="text" name="subject" id="subject" class="form-control"
-                        value="{{ old('subject', $note->subject) }}" required>
-                </div>
+                    <label for="subject">Disciplina</label>
+                    <select name="subject" id="subject" class="form-control" required>
+                        @foreach(\App\Models\Subject::all() as $subject)
+                            <option value="{{ $subject->name }}">{{ $subject->name }}</option>
+                        @endforeach
+                    </select>
+                </div>               
                 <div class="form-group">
                     <label for="topic_difficulty">Dificuldade do Tópico</label>
                     <select name="topic_difficulty" id="topic_difficulty" class="form-control" required>

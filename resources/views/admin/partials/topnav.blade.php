@@ -22,11 +22,7 @@
                 <a class="nav-link" href="#" id="notifDropdown" data-bs-toggle="dropdown">
                     <i class="fas fa-bell text-muted"></i>
                     @php
-                       $adminActionQuant = App\Models\AdminAction::count();
-                        if ($adminActionQuant > 6) {
-                            $adminActionQuant = 6;
-                        }
-
+                       $adminActionQuant = App\Models\AdminAction::count(); 
                     @endphp
                     <span
                     class="badge badge-pill bg-success position-absolute translate-middle p-1">{{ $adminActionQuant }}</span>
@@ -46,10 +42,15 @@
 
                                 @foreach($adminActions as $adminAction)
                                     <a href="#">
-                                        <div
-                                            class="notif-icon {{ str_contains(strtolower($adminAction->message), 'criado') ? 'notif-success' : 'notif-primary' }}">
-                                            <i class="fa fa-user-plus"></i>
-                                        </div>
+                                    <div class="notif-icon 
+                                        {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'notif-danger' : 
+                                        (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'notif-success' : 'notif-primary') }}">
+                                    <i class="
+                                        {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fas fa-trash-alt' : 
+                                        (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'fa fa-user-plus' : 
+                                        'fas fa-hdd') }}">
+                                    </i>
+                                    </div>
                                         <div class="notif-content" style="margin-right: 0; padding-right: 0;">
                                             <span
                                                 class="block">{{ $adminAction->admin_id ? \App\Models\User::find($adminAction->admin_id)->name : 'Desconhecido' }}:
@@ -97,8 +98,7 @@
                         </div>
                     </li>
                     <li>
-                        <a class="see-all" href="javascript:void(0);">Ver todas as notificações<i
-                                class="fa fa-angle-right"></i>
+                        <a class="see-all" href="{{ url('admin/notifications') }}">Ver todas as notificações<i class="fa fa-angle-right"></i>
                         </a>
                     </li>
                 </ul>

@@ -183,7 +183,7 @@ class AdminController extends Controller
         Subject::create([
             'name' => $request->name,
         ]);
-        return redirect()->route('admin.dashboard')->with('success', 'Disciplina adicionada com sucesso!');
+        return redirect()->route('admin.dashboard')->with('success', 'Disciplina criada com sucesso!');
     }
 
     //* Excluir Disciplina
