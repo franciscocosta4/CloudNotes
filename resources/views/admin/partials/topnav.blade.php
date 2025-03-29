@@ -19,14 +19,51 @@
 
             <!-- Ícone de Notificações -->
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#" id="notifDropdown" data-bs-toggle="dropdown">
+                <a class="nav-link" href="#" id="notifDropdown" data-bs-toggle="dropdown"
+                    onclick="markNotificationsAsSeen(event)">
                     <i class="fas fa-bell text-muted"></i>
                     @php
-                       $adminActionQuant = App\Models\AdminAction::count(); 
+                        $adminActionQuant = App\Models\AdminAction::where('seen', 0)->count();
                     @endphp
-                    <span
-                    class="badge badge-pill bg-success position-absolute translate-middle p-1">{{ $adminActionQuant }}</span>
+
+                    @if ($adminActionQuant > 0)
+                        <span
+                            class="badge badge-pill bg-success position-absolute translate-middle p-1">{{ $adminActionQuant }}</span>
+                    @endif
+
                 </a>
+                <script>
+                    //* este script basicamente manda para o controller uma req para ele marcar as notificações que ainda nao foram vistas como vistas 
+                    //? esta é a unica solução de mandar o form sem dar refresh e sem sair do pagina 
+                    function markNotificationsAsSeen(event) {
+                        event.preventDefault(); // Previne o comportamento padrão do link
+
+                        // Faz uma chamada AJAX para a rota 'admin.notifications.update'
+                        fetch("{{ route('admin.notifications.update') }}", {
+                            method: "POST", // Utiliza o método POST para atualizar as notificações
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}" // Inclui o token CSRF para proteção
+                            },
+                            body: JSON.stringify({
+                                // neste caso nao mandamos nada para o controller 
+                            })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Lógica após a resposta bem-sucedida
+                                console.log("Notificações marcadas como vistas", data);
+                                // Atualize a contagem de notificações (se necessário)
+                                document.querySelector(".badge").textContent = "0"; // Zera a quantidade na bolinha verde
+                            })
+                            .catch(error => {
+                                console.error("Erro ao marcar notificações como vistas", error);
+                            });
+                    }
+                </script>
+
+
+
 
                 <ul class="dropdown-menu notif-box animated fadeIn">
                     <li>
@@ -37,28 +74,36 @@
                         <div class="notif-scroll scrollbar-outer">
                             <div class="notif-center">
                                 @php
-                                    $adminActions = App\Models\AdminAction::latest()->paginate(6);
+                                    // Buscar apenas as notificações não vistas
+                                    $adminActions = App\Models\AdminAction::where('seen', 0)->latest()->get();
                                 @endphp
 
-                                @foreach($adminActions as $adminAction)
-                                    <a href="#">
-                                    <div class="notif-icon 
-                                        {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'notif-danger' : 
-                                        (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'notif-success' : 'notif-primary') }}">
-                                    <i class="
-                                        {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fas fa-trash-alt' : 
-                                        (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'fa fa-user-plus' : 
-                                        'fas fa-hdd') }}">
-                                    </i>
-                                    </div>
-                                        <div class="notif-content" style="margin-right: 0; padding-right: 0;">
-                                            <span
-                                                class="block">{{ $adminAction->admin_id ? \App\Models\User::find($adminAction->admin_id)->name : 'Desconhecido' }}:
-                                                <br>'{{ $adminAction->message }}'</span>
-                                            <span class="time">{{ $adminAction->created_at->format('d/m/Y H:i') }}</span>
-                                        </div>
-                                    </a>
-                                @endforeach
+                                @if($adminActions->isEmpty())
+                                    <p>Não há notificações por ver.</p>
+                                @else
+                                                        @foreach($adminActions as $adminAction)
+                                                                                <a href="#">
+                                                                                    <div
+                                                                                        class="notif-icon 
+                                                                                                                {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'notif-danger' :
+                                                            (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'notif-success' : 'notif-primary') }}">
+                                                                                        <i class=" 
+                                                                                                                    {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fas fa-trash-alt' :
+                                                            (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'fa fa-user-plus' :
+                                                                'fas fa-hdd') }}">
+                                                                                        </i>
+                                                                                    </div>
+                                                                                    <div class="notif-content" style="margin-right: 0; padding-right: 0;">
+                                                                                        <span class="block">
+                                                                                            {{ $adminAction->admin_id ? \App\Models\User::find($adminAction->admin_id)->name : 'Desconhecido' }}:
+                                                                                            <br>'{{ $adminAction->message }}'
+                                                                                        </span>
+                                                                                        <span class="time">{{ $adminAction->created_at->format('d/m/Y H:i') }}</span>
+                                                                                    </div>
+                                                                                </a>
+                                                        @endforeach
+                                @endif
+
                                 <!-- <a href="#">
                             <div class="notif-icon notif-success">
                               <i class="fa fa-comment"></i>
@@ -98,7 +143,8 @@
                         </div>
                     </li>
                     <li>
-                        <a class="see-all" href="{{ url('admin/notifications') }}">Ver todas as notificações<i class="fa fa-angle-right"></i>
+                        <a class="see-all" href="{{ url('admin/notifications') }}">Ver todas as notificações<i
+                                class="fa fa-angle-right"></i>
                         </a>
                     </li>
                 </ul>
