@@ -29,6 +29,18 @@ class NotificationsController extends Controller
         // Retorna uma resposta de sucesso
         return response()->json(['success' => true]);
     }
+    //* Excluir notificação
+    public function destroyNotification($id)
+{
+    $notification = AdminAction::find($id);
+
+    if (!$notification) {
+        return response()->json(['error' => 'Notificação não encontrada'], 404);
+    }
+
+    $notification->delete();
+    return redirect()->route('admin.notifications.show')->with('success', 'Notificação apagada com sucesso!');
+}
 
 
 }

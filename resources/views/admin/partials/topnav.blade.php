@@ -64,31 +64,37 @@
 
 
 
-
+                @php
+                    // Buscar apenas as notificações não vistas
+                    $adminActions = App\Models\AdminAction::where('seen', 0)->latest()->get();
+                @endphp
                 <ul class="dropdown-menu notif-box animated fadeIn">
                     <li>
-                        <div class="dropdown-title">Você tem novas notificações</div>
+                        <div class="dropdown-title">
+                            @if ($adminActionQuant > 0)
+                                Você tem novas notificações
+                            @else
+                                Sem novas notificações
+                            @endif
+                        </div>
                     </li>
+
 
                     <li>
                         <div class="notif-scroll scrollbar-outer">
                             <div class="notif-center">
-                                @php
-                                    // Buscar apenas as notificações não vistas
-                                    $adminActions = App\Models\AdminAction::where('seen', 0)->latest()->get();
-                                @endphp
 
                                 @if($adminActions->isEmpty())
-                                    <p>Não há notificações por ver.</p>
+                                    <!-- a barrinha fica vazia -->
                                 @else
                                                         @foreach($adminActions as $adminAction)
                                                                                 <a href="#">
                                                                                     <div
                                                                                         class="notif-icon 
-                                                                                                                {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'notif-danger' :
+                                                                                                                                                                                                                {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'notif-danger' :
                                                             (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'notif-success' : 'notif-primary') }}">
                                                                                         <i class=" 
-                                                                                                                    {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fas fa-trash-alt' :
+                                                                                                                                                                                                                    {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fas fa-trash-alt' :
                                                             (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'fa fa-user-plus' :
                                                                 'fas fa-hdd') }}">
                                                                                         </i>

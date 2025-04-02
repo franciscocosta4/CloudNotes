@@ -44,6 +44,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     //notificações: 
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.show');
     Route::post('/notifications/update', [NotificationsController::class, 'setNotificationAsSeen'])->name('notifications.update');
+    Route::delete('/notifications/{id}', [NotificationsController::class, 'destroyNotification'])->name('notifications.destroy');
 
     Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Administração de utilizadores (Admin) com log de ações
