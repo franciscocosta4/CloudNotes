@@ -18,10 +18,10 @@ class AdminController extends Controller
     
     public function dashboard()
     {
-        $users = User::all(); // Pega todos os utilizadors
-        $notes = Note::all(); // Pega todas as anotações
-        $points = Point::all(); // Pega todas os pontos
-        $logs = NotesAccessLog::all();
+        $users = User::paginate(5, ['*'], 'users_page')->withQueryString()->fragment('users');
+        $notes = Note::paginate(10, ['*'], 'notes_page')->withQueryString()->fragment('anotacoes');
+        $points = Point::paginate(10, ['*'], 'points_page')->withQueryString()->fragment('points');
+        $logs = NotesAccessLog::paginate(10, ['*'], 'logs_page')->withQueryString()->fragment('logs');
         $subjects = Subject::all();
         $totalSubjects = Subject::count();
         $totalUsers = User::count();
