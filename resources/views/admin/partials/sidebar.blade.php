@@ -42,7 +42,7 @@
                     <div class="collapse" id="users">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="#usersList">
+                                 <a href="{{ route('admin.dashboard') . '#usersList' }}">  <!-- basicamente vai para: http://127.0.0.1:8000/admin/dashboard#usersList  -->
                                     <span class="sub-item" >Lista de Utilizadores</span>
                                 </a>
                             </li>
@@ -63,7 +63,7 @@
                     <div class="collapse" id="notes">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="#anotacoes">
+                            <a href="{{ route('admin.dashboard') . '#anotacoes' }}">
                                     <span class="sub-item">Lista de Anotações</span>
                                 </a>
                             </li>
@@ -80,7 +80,7 @@
                     <div class="collapse" id="Disciplinas">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="#subjects">
+                                <a href="{{ route('admin.dashboard') . '#subjects' }}">
                                     <span class="sub-item">Lista de Disciplinas</span>
                                 </a>
                             </li>
@@ -101,7 +101,7 @@
                     <div class="collapse" id="logshref">
                         <ul class="nav nav-collapse">
                              <li>
-                                <a href="#logs">
+                             <a href="{{ route('admin.dashboard') . '#logs' }}">
                                     <span class="sub-item">Logs de Acesso a publicações</span>
                                 </a>
                             </li>
@@ -117,7 +117,7 @@
                     <div class="collapse" id="pointshref">
                         <ul class="nav nav-collapse">
                              <li>
-                                <a href="#points">
+                             <a href="{{ route('admin.dashboard') . '#points' }}">
                                     <span class="sub-item">Logs de atribuição de pontos</span>
                                 </a>
                             </li>
