@@ -1,4 +1,4 @@
-<div class="sidebar sidebar-style-2" data-background-color="dark">
+<div class="sidebar sidebar-style-1" data-background-color="dark">
     <div class="sidebar-logo">
         <div class="logo-header" data-background-color="dark">
             <!-- <a href="{{ route('admin.dashboard') }}" class="logo">

@@ -120,10 +120,7 @@
             <p>O utilizador submeteu um ficheiro, caso queira transferir clique em 'transferir' </p>
         @else
             <p>Não existe ficheiro disponível para esta anotação.</p>
-            <script>
-
-            </script>
-        @endif  
+        @endif
         <div class="note-actions">
             @if ($note->file_path)
                 <div class="note-actions">
@@ -134,7 +131,6 @@
                         Transferir
                     </a>
             @endif
-
                 <button onclick="window.history.back()">Voltar</button>
             </div>
         </div>

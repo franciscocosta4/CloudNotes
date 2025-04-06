@@ -2,13 +2,14 @@
     <div class="container-fluid d-flex align-items-center">
 
         <!-- Campo de Pesquisa -->
-        <form class=" mt-3 d-none d-md-flex me-auto" style="max-width: 250px;">
+        <form   action="{{ route('admin.search') }}" method="GET"  class=" mt-3 d-none d-md-flex me-auto" style="width: 320px;">
             <div class="input-group" style="border:1px solid #e6e7e9; border-radius: 5px;">
+                <input  value="{{ old('query', $query ?? '') }}" type="text" name="query" class="form-control bg-light border-0" placeholder="Procure por qualquer coisa ...">
+                <button  class="bg-light"style="border:none;" type="submit" aria-label="searchButton">
                 <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted"></i></span>
-                <input type="text" class="form-control bg-light border-0" placeholder="Procurar ...">
+                </button>
             </div>
         </form>
-
         <ul class="navbar-nav ms-auto d-flex align-items-center">
             <!-- Ícone de Mensagens -->
             <li class="nav-item">
@@ -16,7 +17,6 @@
                     <i class="fas fa-envelope text-muted"></i>
                 </a>
             </li>
-
             <!-- Ícone de Notificações -->
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="notifDropdown" data-bs-toggle="dropdown"
@@ -30,7 +30,6 @@
                         <span
                             class="badge badge-pill bg-success position-absolute translate-middle p-1">{{ $adminActionQuant }}</span>
                     @endif
-
                 </a>
                 <script>
                     //* este script basicamente manda para o controller uma req para ele marcar as notificações que ainda nao foram vistas como vistas 
@@ -61,9 +60,6 @@
                             });
                     }
                 </script>
-
-
-
                 @php
                     // Buscar apenas as notificações não vistas
                     $adminActions = App\Models\AdminAction::where('seen', 0)->latest()->get();

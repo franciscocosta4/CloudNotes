@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Models\User;
 use App\Models\NotesAccessLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,4 +59,26 @@ class SearchController extends Controller
             'dificuldade' =>$dificuldade,
         ]);
     }
+
+    public function adminSearch(Request $request)
+    {
+        //* Captura a query 
+        $query = $request->input('query');
+
+        $results = [
+            'notes' => Note::where('title', 'like', "%{$query}%")
+            ->orWhere('content', 'like', "%{$query}%")
+            ->orWhere('subject', 'like', "%{$query}%")->get(),
+            'users' => User::where('name', 'like', "%$query%")
+            ->orWhere('email', 'like', "%{$query}%")
+            ->orWhere('id', 'like', "%{$query}%")->get(),
+        ];
+
+
+        return view('admin.searchresult', [
+            'results' => $results,
+            'query' => $query,
+        ]);
+    }
+
 }

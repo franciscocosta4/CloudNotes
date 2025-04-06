@@ -40,7 +40,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     // Dashboard de Admin (não precisa de log de ações)
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile/edit', [ProfileController::class, 'editAdmin'])->name('profile.edit');
-
+    Route::get('/search', [SearchController::class, 'adminSearch'])->name('search');   
     //notificações: 
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.show');
     Route::post('/notifications/update', [NotificationsController::class, 'setNotificationAsSeen'])->name('notifications.update');

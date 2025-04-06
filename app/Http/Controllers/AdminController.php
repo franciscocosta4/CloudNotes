@@ -18,8 +18,9 @@ class AdminController extends Controller
     
     public function dashboard()
     {
-        $users = User::paginate(5, ['*'], 'users_page')->withQueryString()->fragment('users');
-        $notes = Note::paginate(10, ['*'], 'notes_page')->withQueryString()->fragment('anotacoes');
+        //*  ESTÁ ASSIM PARA QUE O PAGINATE DE CADA TABELA SEJA INDIVIDUAL, E DÊ SCROLL AUTOMATICAMENTE
+        $users = User::paginate(4, ['*'], 'users_page')->withQueryString()->fragment('users'); //adiciona um fragmento à URL da paginação.em vez de ?users_page=2 fica: ?users_page=2#users. (o que faz o browser dar scroll automaticamente )
+        $notes = Note::paginate(5, ['*'], 'notes_page')->withQueryString()->fragment('anotacoes');
         $points = Point::paginate(10, ['*'], 'points_page')->withQueryString()->fragment('points');
         $logs = NotesAccessLog::paginate(10, ['*'], 'logs_page')->withQueryString()->fragment('logs');
         $subjects = Subject::all();

@@ -110,7 +110,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <table class="display table table-striped table-hover dataTable" role="grid">
+                        <table class="display table table-striped table-hover " role="grid">
                             <thead>
                                 <tr>
                                     <th>Nome</th>
@@ -293,7 +293,7 @@
                                     <td colspan="3">
                                         <div class="d-flex justify-content-left">
                                             <!-- {{ $notes->links('pagination::bootstrap-4') }} -->
-                                            {{ $notes->withQueryString()->fragment('notes')->links('pagination::bootstrap-4') }}
+                                            {{ $notes->withQueryString()->fragment('anotacoes')->links('pagination::bootstrap-4') }}
                                         </div>
                                     </td>
                                 </tr>
