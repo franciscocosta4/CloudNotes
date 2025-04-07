@@ -94,7 +94,7 @@
     <script src="{{ asset('admin/assets/js/plugin/jsvectormap/world.js') }}"></script> -->
 
   <!-- Sweet Alert -->
-  <script src="{{ asset('admin/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+  <script src="{{ asset('admin/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>  <!--  está a ser usado, nao tirar-->
 
 
 </body>
