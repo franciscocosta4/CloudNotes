@@ -4,11 +4,16 @@
 @section('content')
     <div class="mx-3 mt-3">
         @if(isset($query) && !empty($query))
-            <p>Resultados para: <strong>{{ $query }}</strong></p>
+            <p class="text-muted">Resultados para: <strong>{{ $query }}</strong></p>
+            <!-- <p class="text-muted">*ao pesquisar por dados relacionados a um utilizador as anotações da sua autoria iram aparecer em 'Publicações encontradas:'</p> -->
+            <div style="width: 70%; color:black;" class="alert alert-success mt-2 mb-3 py-2 px-3  rounded" role="alert">
+            Ao pesquisar por dados relacionados a um utilizador as anotações da sua autoria também são listadas abaixo.
+</div>
+
         @endif
     </div>
     <div class="container mt-4 mx-2">
-        <h4>Utilizadores encontrados: </h4>
+        <h4 class="h4">Utilizadores encontrados: </h4>
         @if($results['users']->isNotEmpty())
             @foreach ($results['users'] as $user)
                 <div class="row">
@@ -36,9 +41,9 @@
                 </div>
             @endforeach
         @else
-            <p>sem resultados</p>
+            <p class="text-muted">Nenhum utilizador encontrado.</p>
         @endif
-        <h4>Publicações encontradas: </h4>
+        <h4  >Publicações encontradas: </h4>
         @if($results['notes']->isNotEmpty())
                 @foreach ($results['notes'] as $note)
                 <div class="row">
@@ -66,7 +71,7 @@
                 </div>
                 @endforeach
         @else
-            <p>sem resultados</p>
+            <p class="text-muted">Nenhuma anotação encontrada.</p>
         @endif
     </div>
 

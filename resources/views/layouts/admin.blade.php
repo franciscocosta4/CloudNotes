@@ -42,7 +42,7 @@
   <div class="toast-container position-fixed top-0 end-0 p-3">
     <div id="liveToast" class="toast " role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header ">
-        <strong class="me-auto" style="color:Black; font-weight:bold;">Sistema</strong>
+        <strong class="me-auto" style="font-weight:bold;">Sistema</strong>
         <small>agora</small>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
@@ -65,12 +65,13 @@
     });
   </script>
   <!--   Core JS Files   -->
-  <!-- <script src="{{ asset('admin/assets/js/core/popper.min.js') }}" defer></script> -->
-  <script src="{{ asset('admin/assets/js/core/bootstrap.min.js') }}"></script>
+  <!-- <script src="{{ asset('admin/assets/js/core/bootstrap.min.js') }}"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+  <script src="{{ asset('admin/assets/js/core/popper.min.js') }}" defer></script>
   <!-- Kaiadmin JS -->
   <script src="{{ asset('admin/assets/js/kaiadmin.min.js') }}"></script>
   <!-- jQuery Scrollbar -->
-  <!-- <script src="{{ asset('admin/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}" defer></script> -->
+  <script src="{{ asset('admin/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}" defer></script>
 
   <!-- Chart JS -->
   <!-- <script src="{{ asset('admin/assets/js/plugin/chart.js/chart.min.js') }}"></script> -->
@@ -93,7 +94,7 @@
     <script src="{{ asset('admin/assets/js/plugin/jsvectormap/world.js') }}"></script> -->
 
   <!-- Sweet Alert -->
-  <!-- <script src="{{ asset('admin/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script> -->
+  <script src="{{ asset('admin/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
 
 </body>

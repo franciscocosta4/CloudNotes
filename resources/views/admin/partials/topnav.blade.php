@@ -2,29 +2,41 @@
     <div class="container-fluid d-flex align-items-center">
 
         <!-- Campo de Pesquisa -->
-        <form  action="{{ route('admin.search') }}" method="GET"  id="search-form"  class=" mt-3 d-none d-md-flex me-auto" style="width: 320px;">
+        <form action="{{ route('admin.search') }}" method="GET" id="search-form" class=" mt-3 d-none d-md-flex me-auto"
+            style="width: 320px;">
             <div class="input-group" style="border:1px solid #e6e7e9; border-radius: 5px;">
-                <input id="search-input" value="{{ old('query', $query ?? '') }}" type="text" name="query" class="form-control bg-light border-0" placeholder="Procure por qualquer coisa ...">
-                <button     class="bg-light"style="border:none;" type="submit" aria-label="searchButton">
-                <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted"></i></span>
+                <input id="search-input" value="{{ old('query', $query ?? '') }}" type="text" name="query"
+                    class="form-control bg-light border-0" placeholder="Procure por qualquer coisa ...">
+                <button class="bg-light" style="border:none;" type="submit" aria-label="searchButton">
+                    <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted"></i></span>
                 </button>
             </div>
         </form>
         <script>
             document.getElementById('search-form').addEventListener('submit', function (e) {
-            e.preventDefault(); // Impede o comportamento padrão do formulário (envio e recarregamento da página)
+                e.preventDefault(); // Impede o comportamento padrão do formulário (envio e recarregamento da página)
 
-            const searchInput = document.getElementById('search-input');
+                const searchInput = document.getElementById('search-input');
 
                 // Verifica se o campo de busca está vazio e exibe o alerta
                 if (searchInput.value === "") {
-                    alert("Insira alguma palavra antes de pesquisar");
+                    //* SINTAXE DO  Sweetalert Demo 3 (está a ser importado no admin.blade.php)
+                    swal("Campo de pesquisa vazio", "Por favor, escreva algo para pesquisar.", {
+                        icon: "warning",
+                        buttons: {
+                            confirm: {
+                                text: "Entendi",
+                                className: "btn btn-warning",
+                            },
+                        },
+                    });
+
                     return; // Para a execução aqui e não envia o formulário
                 }
 
-            // Se chegou aqui, o formulário será enviado manualmente
-            this.submit(); // Envia o formulário caso os campos estejam válidos
-    });
+                // Se chegou aqui, o formulário será enviado manualmente
+                this.submit(); // Envia o formulário caso os campos estejam válidos
+            });
         </script>
         <ul class="navbar-nav ms-auto d-flex align-items-center">
             <!-- Ícone de Mensagens -->
@@ -103,10 +115,10 @@
                                                                                 <a href="#">
                                                                                     <div
                                                                                         class="notif-icon 
-                                                                                                                                                                                                                {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'notif-danger' :
+                                                                                                                                                                                                                                                                                                                {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'notif-danger' :
                                                             (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'notif-success' : 'notif-primary') }}">
                                                                                         <i class=" 
-                                                                                                                                                                                                                    {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fas fa-trash-alt' :
+                                                                                                                                                                                                                                                                                                                    {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fas fa-trash-alt' :
                                                             (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'fa fa-user-plus' :
                                                                 'fas fa-hdd') }}">
                                                                                         </i>

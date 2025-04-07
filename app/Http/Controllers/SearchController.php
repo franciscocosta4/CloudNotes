@@ -68,9 +68,15 @@ class SearchController extends Controller
         $results = [
             'notes' => Note::where('title', 'like', "%{$query}%")
                 ->orWhere('content', 'like', "%{$query}%")
-                ->orWhere('subject', 'like', "%{$query}%")->get(),
+                ->orWhere('subject', 'like', "%{$query}%")
+                ->orWhereHas('user', function ($q) use ($query) {  //* orWhereHas('user', ...) vai incluir todas as notes que pertencem a utilizadores cujo nome, email ou id correspondam à pesquisa.
+                    $q->where('name', 'like', "%{$query}%")
+                        ->orWhere('email', 'like', "%{$query}%")
+                        ->orWhere('id', 'like', "%{$query}%");
+                })->get(),
+
             'users' => User::where('name', 'like', "%$query%")
-                ->orWhere('email', 'like', "%{$query}%")
+                ->orWhere('email', 'like', "%{$query}%")    
                 ->orWhere('id', 'like', "%{$query}%")->get(),
         ];
 

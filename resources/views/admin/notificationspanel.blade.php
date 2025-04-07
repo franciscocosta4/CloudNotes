@@ -8,14 +8,10 @@
             <div class="col-md-12">
                 <ul class="timeline">
                     @foreach($adminActions as $adminAction)
-                                <li
-                                    class="{{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'timeline-inverted' : '' }}">
-                                    <div class="timeline-badge 
-                                                                            {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'danger' :
-                        (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'success' : 'info') }}">
-                                        <i class="fas 
-                                                                                {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fa-trash-alt' :
-                        (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'fa-user-plus' : 'fa-hdd') }}">
+                    <!-- sintaxe do preg_match() serve para definir os icones e cor dependendo da ação que foi efetuada pelo admin  -->
+                                <li class="{{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'timeline-inverted' : '' }}">
+                                    <div class="timeline-badge {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'danger' : (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'success' : 'info') }}">
+                                        <i class="fas {{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fa-trash-alt' : (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'fa-user-plus' : 'fa-hdd') }}">
                                         </i>
                                     </div>
                                     <div class="timeline-panel">
