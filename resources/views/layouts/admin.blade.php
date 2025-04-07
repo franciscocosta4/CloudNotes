@@ -5,55 +5,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-
-
-  <!-- Fonts and icons -->
-  <script src="{{ asset('admin/assets/js/plugin/webfont/webfont.min.js') }}"></script>
-  <script>
-    WebFont.load({
-      google: { families: ["Public Sans:300,400,500,600,700"] },
-      custom: {
-        families: [
-          "Font Awesome 5 Solid",
-          "Font Awesome 5 Regular",
-          "Font Awesome 5 Brands",
-          "simple-line-icons",
-        ],
-        urls: ["assets/css/fonts.min.css"],
-      },
-      active: function () {
-        sessionStorage.fonts = true;
-      },
-    });
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <!-- CSS Files -->
+  <link rel="preload" href="{{ asset('admin/assets/js/core/jquery-3.7.1.min.js') }}" as="script">
   <script src="{{ asset('admin/assets/js/core/jquery-3.7.1.min.js') }}"></script>
-  <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('admin/assets/css/plugins.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('admin/assets/css/kaiadmin.min.css') }}" />
 
+  <link rel="preload" href="{{ asset('admin/assets/css/bootstrap.min.css') }}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{{ asset('admin/assets/css/plugins.min.css') }}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="{{ asset('admin/assets/css/kaiadmin.min.css') }}">
+  <noscript>
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/plugins.min.css') }}">
+  </noscript>
   <link rel="preload" href="{{ asset('admin/assets/css/fonts.css') }}" as="style"
     onload="this.onload=null;this.rel='stylesheet'">
-
-
 </head>
-
 <body>
   <div class="wrapper">
     @include('admin.partials.sidebar') <!-- Sidebar Estilo 2 -->
-
     <div class="main-panel">
       @include('admin.partials.topnav') <!-- Top Navbar Padrão -->
-
       <div class="content">
         @yield('content') <!-- Conteúdo da página -->
       </div>
-
       @if(empty($hideFooter))
         @include('admin.partials.footer') <!-- Footer -->
       @endif
-
-
     </div>
   </div>
   <!-- End Custom template -->
@@ -85,12 +65,12 @@
     });
   </script>
   <!--   Core JS Files   -->
-  <script src="{{ asset('admin/assets/js/core/popper.min.js') }}"></script>
+  <!-- <script src="{{ asset('admin/assets/js/core/popper.min.js') }}" defer></script> -->
   <script src="{{ asset('admin/assets/js/core/bootstrap.min.js') }}"></script>
   <!-- Kaiadmin JS -->
   <script src="{{ asset('admin/assets/js/kaiadmin.min.js') }}"></script>
   <!-- jQuery Scrollbar -->
-  <script src="{{ asset('admin/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+  <!-- <script src="{{ asset('admin/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}" defer></script> -->
 
   <!-- Chart JS -->
   <!-- <script src="{{ asset('admin/assets/js/plugin/chart.js/chart.min.js') }}"></script> -->

@@ -2,14 +2,30 @@
     <div class="container-fluid d-flex align-items-center">
 
         <!-- Campo de Pesquisa -->
-        <form   action="{{ route('admin.search') }}" method="GET"  class=" mt-3 d-none d-md-flex me-auto" style="width: 320px;">
+        <form  action="{{ route('admin.search') }}" method="GET"  id="search-form"  class=" mt-3 d-none d-md-flex me-auto" style="width: 320px;">
             <div class="input-group" style="border:1px solid #e6e7e9; border-radius: 5px;">
-                <input  value="{{ old('query', $query ?? '') }}" type="text" name="query" class="form-control bg-light border-0" placeholder="Procure por qualquer coisa ...">
-                <button  class="bg-light"style="border:none;" type="submit" aria-label="searchButton">
+                <input id="search-input" value="{{ old('query', $query ?? '') }}" type="text" name="query" class="form-control bg-light border-0" placeholder="Procure por qualquer coisa ...">
+                <button     class="bg-light"style="border:none;" type="submit" aria-label="searchButton">
                 <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted"></i></span>
                 </button>
             </div>
         </form>
+        <script>
+            document.getElementById('search-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Impede o comportamento padrão do formulário (envio e recarregamento da página)
+
+            const searchInput = document.getElementById('search-input');
+
+                // Verifica se o campo de busca está vazio e exibe o alerta
+                if (searchInput.value === "") {
+                    alert("Insira alguma palavra antes de pesquisar");
+                    return; // Para a execução aqui e não envia o formulário
+                }
+
+            // Se chegou aqui, o formulário será enviado manualmente
+            this.submit(); // Envia o formulário caso os campos estejam válidos
+    });
+        </script>
         <ul class="navbar-nav ms-auto d-flex align-items-center">
             <!-- Ícone de Mensagens -->
             <li class="nav-item">

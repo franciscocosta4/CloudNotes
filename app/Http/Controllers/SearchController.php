@@ -29,7 +29,7 @@ class SearchController extends Controller
             //* Aplica a busca pelo termo, caso fornecido
             $results->where(function ($q) use ($query) {
                 $q->where('title', 'like', "%{$query}%")
-                  ->orWhere('content', 'like', "%{$query}%");
+                    ->orWhere('content', 'like', "%{$query}%");
             });
         }
 
@@ -43,20 +43,20 @@ class SearchController extends Controller
         //! METODO orderBy() VAI SER USADO QUANDO FOR PARA ORDENAR POR LIKES
         // $results = $results->orderBy('likes')->get(); 
 
-         //* Executa a consulta e obtém os resultados
+        //* Executa a consulta e obtém os resultados
         $results = $results->get();
 
         //? Recupera as anotações publicadas pelo user e o histórico de acesso (PARA GARANTIR QUE AS ANOTAÇÕES DA SIDEBAR AINDA FICAM LÁ ) 
         $notes = Note::where('user_id', Auth::id())->get();
         $accessLogs = NotesAccessLog::where('user_id', auth()->id())->with('note')->get();
-        
+
         return view('dashboard', [
             'results' => $results,
             'notes' => $notes,
             'accessLogs' => $accessLogs,
             'query' => $query,
-            'disciplina' => $disciplina, 
-            'dificuldade' =>$dificuldade,
+            'disciplina' => $disciplina,
+            'dificuldade' => $dificuldade,
         ]);
     }
 
@@ -67,18 +67,17 @@ class SearchController extends Controller
 
         $results = [
             'notes' => Note::where('title', 'like', "%{$query}%")
-            ->orWhere('content', 'like', "%{$query}%")
-            ->orWhere('subject', 'like', "%{$query}%")->get(),
+                ->orWhere('content', 'like', "%{$query}%")
+                ->orWhere('subject', 'like', "%{$query}%")->get(),
             'users' => User::where('name', 'like', "%$query%")
-            ->orWhere('email', 'like', "%{$query}%")
-            ->orWhere('id', 'like', "%{$query}%")->get(),
+                ->orWhere('email', 'like', "%{$query}%")
+                ->orWhere('id', 'like', "%{$query}%")->get(),
         ];
-
 
         return view('admin.searchresult', [
             'results' => $results,
             'query' => $query,
         ]);
-    }
 
+    }
 }
