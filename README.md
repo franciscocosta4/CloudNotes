@@ -16,11 +16,22 @@ A CloudNotes destaca-se pela sua abordagem colaborativa, promovendo a partilha d
 - **Avaliação de Conteúdo**: Sistema de likes que destaca as anotações mais populares.
 - **Gestão de Favoritos**: Interface para guardar e aceder facilmente a anotações importantes.
 - **Administração**: Ferramentas para os administradores gerirem conteúdos e utilizadores.
+  
+##Tecnologias utilizadas:
+
+- **Laravel**:Framework PHP utilizado para o desenvolvimento da aplicação.​
+- **PHP**:Linguagem de programação do lado do servidor.​
+- **MySQL**:Sistema de gestão de bases de dados relacional utilizado para armazenar as notas e informações dos utilizadores.
 
 Esta aplicação foi desenvolvida para ser a ferramenta ideal para estudantes que procuram organização, colaboração e eficiência nos seus estudos.
 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+
+![image](https://github.com/user-attachments/assets/f772de96-89f6-4bfd-9b76-8f07391b2e58)
+
+![image](https://github.com/user-attachments/assets/a33d4396-1547-44f1-986b-563891d5fd07)
+
 
 ## License
 
