@@ -1,11 +1,9 @@
 
-
-
 # CloudNotes
 
 A **CloudNotes** é uma aplicação web inovadora projetada para facilitar o processo de partilha e pesquisa de anotações entre estudantes. Baseada em tecnologias como Laravel, PHP e MySQL, esta aplicação prioriza simplicidade e acessibilidade, oferecendo uma plataforma moderna e intuitiva.
 
-A CloudNotes destaca-se pela sua abordagem colaborativa, promovendo a partilha de conhecimento de forma gratuita e acessível. Com recursos como sistemas de pesquisa avançada, partilha de anotações, pontos por colaboração e níveis de utilizador, a aplicação visa melhorar a organização e produtividade dos estudantes.
+A CloudNotes destaca-se pela sua abordagem colaborativa, promovendo a partilha de conhecimento de forma gratuita e acessível. Com recursos como sistemas de pesquisa avançada, partilha de anotações, pontos por colaboração e níveis de utilizador, a aplicação visa melhorar a organização e produtividade dos estudantes. Esta aplicação foi desenvolvida para ser a ferramenta ideal para estudantes que procuram organização, colaboração e eficiência nos seus estudos.
 
 ## Principais Funcionalidades
 
@@ -19,18 +17,18 @@ A CloudNotes destaca-se pela sua abordagem colaborativa, promovendo a partilha d
   
 ##Tecnologias utilizadas:
 
-- **Laravel**:Framework PHP utilizado para o desenvolvimento da aplicação.​
 - **PHP**:Linguagem de programação do lado do servidor.​
 - **MySQL**:Sistema de gestão de bases de dados relacional utilizado para armazenar as notas e informações dos utilizadores.
-
-Esta aplicação foi desenvolvida para ser a ferramenta ideal para estudantes que procuram organização, colaboração e eficiência nos seus estudos.
-
+- **Laravel**:Framework PHP utilizado para o desenvolvimento da aplicação.​
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
+##Imagens:
+
 ![image](https://github.com/user-attachments/assets/f772de96-89f6-4bfd-9b76-8f07391b2e58)
 
-![image](https://github.com/user-attachments/assets/a33d4396-1547-44f1-986b-563891d5fd07)
+![image](https://github.com/user-attachments/assets/cea097da-8be2-45d8-a3e3-4ea1075ed59f)
+
 
 
 ## License
