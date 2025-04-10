@@ -15,7 +15,7 @@ A CloudNotes destaca-se pela sua abordagem colaborativa, promovendo a partilha d
 - **Gestão de Favoritos**: Interface para guardar e aceder facilmente a anotações importantes.
 - **Administração**: Ferramentas para os administradores gerirem conteúdos e utilizadores.
   
-##Tecnologias utilizadas:
+## Tecnologias utilizadas:
 
 - **PHP**:Linguagem de programação do lado do servidor.​
 - **MySQL**:Sistema de gestão de bases de dados relacional utilizado para armazenar as notas e informações dos utilizadores.
@@ -23,7 +23,7 @@ A CloudNotes destaca-se pela sua abordagem colaborativa, promovendo a partilha d
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-##Imagens:
+## Imagens:
 
 ![image](https://github.com/user-attachments/assets/f772de96-89f6-4bfd-9b76-8f07391b2e58)
 
