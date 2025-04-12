@@ -57,5 +57,4 @@ class Note extends Model
         });
     }
     
-
 }
