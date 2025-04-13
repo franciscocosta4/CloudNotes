@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Auth\googleAuthController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
@@ -21,6 +23,13 @@ Route::middleware('guest')->group(function () {
         ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    //* login com o google: 
+    Route::get('login/google', [GoogleAuthController::class, 'redirectToGoogle'])
+        ->name('login.google');
+
+    Route::get('login/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])
+        ->name('login.google.callback');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');

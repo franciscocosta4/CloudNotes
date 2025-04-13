@@ -20,8 +20,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'school_year', // Certifique-se de incluir este campo
-        'subjects_of_interest', // Certifique-se de incluir este campo
+        'school_year',
+        'subjects_of_interest',
+        'google_id',
         'points',
         'role',
     ];
@@ -57,4 +58,10 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function isUsingSocialLogin()
+    {
+        return !is_null($this->google_id);
+    }
+
 }

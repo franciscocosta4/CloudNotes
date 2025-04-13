@@ -13,6 +13,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 // Dashboard do utilizador comum
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {

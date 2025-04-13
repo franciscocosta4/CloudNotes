@@ -63,7 +63,17 @@
             </x-primary-button>
         </div>
     </form>
-
+    <br>
+    <hr>
+    <div class="flex items-center justify-center mt-4">
+    <a href="{{ route('login.google') }}" class="ms-3">
+        <x-primary-button type="button" class="ms-3"
+            style="background-color:rgb(240, 240, 240); color:rgb(55 65 81 / var(--tw-text-opacity, 1)); border: none; display: flex; align-items: center; padding: 8px 16px;">
+            <img loading="lazy" width="19px" height="19px" src="/images/google.png" alt="icone do google">
+            <p class="ms-4" style="text-transform: none; margin-left: 10px;">Entre com a sua conta Google</p>
+        </x-primary-button>
+    </a>
+</div>
     <script>
         // Função para mostrar a seção de disciplinas quando o ano escolar for selecionado
         function showSubjects() {
