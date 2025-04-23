@@ -102,4 +102,34 @@ class NotesController extends Controller
         $note->delete();
         return redirect()->route('dashboard')->with('success', 'Anotação excluída com sucesso!');
     }
+
+    //* FUNÇÃO PARA O UPLOAD DE IMAGENS NA TEXTAREA(CKEDITOR)
+    public function uploadImage(Request $request)
+    {
+        //*Basicamente A rota e o controlador no Laravel servem apenas para receber o 
+        //* ficheiro da imagem, guardá-lo no servidor, e devolver a URL para que o CKEditor a possa inserir automaticamente no conteúdo.
+
+        
+        // Validação: verifica se existe um ficheiro e se este é uma imagem válida
+        $request->validate([
+            'upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Obter o ficheiro enviado (a key 'upload' é usada pelo CKEditor 5)
+        $image = $request->file('upload');
+        
+        // Gerar um nome único para o ficheiro
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+        // Mover o ficheiro para a pasta 'public/uploads'
+        $image->move(public_path('uploads'), $imageName);
+
+        // Gerar o URL de acesso à imagem
+        $url = asset('uploads/' . $imageName);
+
+        // Responder com JSON no formato esperado pelo CKEditor 5
+        return response()->json([
+            'url' => $url
+        ]);
+    }
 }

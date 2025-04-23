@@ -149,26 +149,73 @@
                 <p>
                     Escreva aqui o conteúdo do seu resumo:
                 </p>
+                <!-- 
+    INTEGRAÇÃO CKEDITOR 5 COM UPLOAD DE IMAGENS
+
+    Este código usa o CKEditor 5 via CDN com suporte a upload de imagens,
+    ativando manualmente o adaptador 'SimpleUploadAdapter'
+    porque a build do CDN não o inclui automaticamente.
+    Como funciona:
+    - Cria-se uma função (MyCustomUploadAdapterPlugin) que ativa o adaptador.
+    - Define-se uma classe (MyUploadAdapter) que envia a imagem para o Laravel.
+    - O Laravel recebe o ficheiro via rota (ex: upload.image) e devolve um JSON com a URL.
+    - O CKEditor insere automaticamente a imagem no conteúdo.
+-->
                 <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
+
                 <textarea name="content" id="content" class="form-control" rows="30"
                     style="resize: vertical; overflow-y: auto;"></textarea>
                 <script>
                     ClassicEditor
-                        .create(document.querySelector('#content'))
+                        .create(document.querySelector('#content'), {
+                            extraPlugins: [MyCustomUploadAdapterPlugin], // chamando o plugin de uploadImage
+                        })
                         .catch(error => {
                             console.error(error);
                         });
+
+                    // Plugin para ativar o SimpleUploadAdapter
+                    function MyCustomUploadAdapterPlugin(editor) {
+                        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                            return new MyUploadAdapter(loader);
+                        };
+                    }
+
+                    // Classe do adaptador de upload (PLUGIN DO CKEDITOR)
+                    class MyUploadAdapter {
+                        constructor(loader) {
+                            this.loader = loader;
+                        }
+                        upload() {
+                            return this.loader.file.then(file => {
+                                return new Promise((resolve, reject) => {
+                                    const data = new FormData();
+                                    data.append('upload', file);
+
+                                    fetch('{{ route('upload.image') }}', {
+                                        method: 'POST',
+                                        body: data,
+                                        headers: {
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            resolve({
+                                                default: data.url
+                                            });
+                                        })
+                                        .catch(err => {
+                                            reject(err);
+                                        });
+                                });
+                            });
+                        }
+                    }
                 </script>
-                @if ($errors->has('content') || $errors->has('file_path'))
-                    <div class="text-danger">
-                        @foreach ($errors->get('content') as $message)
-                            <p>{{ $message }}</p>
-                        @endforeach
-                        @foreach ($errors->get('file_path') as $message)
-                            <p>{{ $message }}</p>
-                        @endforeach
-                    </div>
-                @endif
+
+
+
             </div>
             <div class="form-group">
                 <label for="file_path" class="form-label">Arquivo(opcional)</label>
