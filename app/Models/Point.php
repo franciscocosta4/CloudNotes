@@ -12,6 +12,7 @@ class Point extends Model
 
     protected $fillable = ['user_id', 'points', 'type'];
 
+    // Relacionamento com o model User
     public function user()
     {
         return $this->belongsTo(User::class);

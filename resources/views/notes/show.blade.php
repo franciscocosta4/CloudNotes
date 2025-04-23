@@ -111,7 +111,8 @@
         <p>Conteúdo da anotação: </p>
         <div class="note-content-div">
             @if (!empty($note->content))
-                <p id="note-content">{{ $note->content }}</p>
+            <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
+            <div id="note-content">{!! $note->content !!}</div>
             @else
                 <p>Não há conteúdo disponível para esta anotação.</p>
             @endif

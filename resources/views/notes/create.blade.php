@@ -147,10 +147,18 @@
             <div class="form-group">
                 <label for="content" class="form-label">Conteúdo</label>
                 <p>
-                    Escreva aqui o conteúdo a seu resumo:
+                    Escreva aqui o conteúdo do seu resumo:
                 </p>
+                <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
                 <textarea name="content" id="content" class="form-control" rows="30"
                     style="resize: vertical; overflow-y: auto;"></textarea>
+                <script>
+                    ClassicEditor
+                        .create(document.querySelector('#content'))
+                        .catch(error => {
+                            console.error(error);
+                        });
+                </script>
                 @if ($errors->has('content') || $errors->has('file_path'))
                     <div class="text-danger">
                         @foreach ($errors->get('content') as $message)

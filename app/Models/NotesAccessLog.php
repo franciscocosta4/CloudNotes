@@ -14,4 +14,11 @@ class NotesAccessLog extends Model
     {
         return $this->belongsTo(Note::class);
     }
+
+
+     // Relacionamento com o model User
+     public function user()
+     {
+         return $this->belongsTo(User::class);
+     }
 }

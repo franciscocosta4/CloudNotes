@@ -143,7 +143,7 @@
                                 <tr>
                                     <td colspan="3">
                                         <div class="d-flex justify-content-left">
-                                            {{ $users->withQueryString()->fragment('users')->links('pagination::bootstrap-4') }}                                              
+                                            {{ $users->withQueryString()->fragment('users')->links('pagination::bootstrap-4') }}
                                         </div>
                                     </td>
                                 </tr>
@@ -251,9 +251,9 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>User ID</th>
+                                    <th>Utilizador</th>
                                     <th>Título</th>
-                                    <th>Assunto</th>
+                                    <th>Disciplina</th>
                                     <th>Dificuldade</th>
                                     <th>Conteúdo</th>
                                     <th>Ficheiro</th>
@@ -263,7 +263,13 @@
                             <tbody>
                                 @foreach($notes as $note)
                                     <tr>
-                                        <td>{{ $note->user_id }}</td>
+                                    <td>
+                                            @if ($note->user)
+                                                {{ $note->user->name }}
+                                            @else
+                                                utilizador não encontrado
+                                            @endif
+                                        </td>
                                         <td>{{ $note->title }}</td>
                                         <td>{{ $note->subject }}</td>
                                         <td>{{ $note->topic_difficulty }}</td>
@@ -316,8 +322,8 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>User ID</th>
-                                    <th>Note ID</th>
+                                    <th>Utilizador</th>
+                                    <th>Anotação</th>
                                     <th>Data de Criação</th>
                                     <th>Última Atualização</th>
                                     <th>Ações</th>
@@ -326,8 +332,21 @@
                             <tbody>
                                 @foreach($logs as $log)
                                     <tr>
-                                        <td>{{ $log->user_id }}</td>
-                                        <td>{{ $log->note_id }}</td>
+                                        <td>
+                                            @if ($log->user)
+                                                {{ $log->user->name }}
+                                            @else
+                                                utilizador não encontrado
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            @if ($log->note)
+                                                {{ $log->note->title }}
+                                            @else
+                                                anotação não encontrada
+                                            @endif
+                                        </td>
                                         <td>{{ $log->created_at }}</td>
                                         <td>{{ $log->updated_at }}</td>
                                         <td>
@@ -345,7 +364,7 @@
                                 <tr>
                                     <td colspan="3">
                                         <div class="d-flex justify-content-left">
-                                        {{ $logs->withQueryString()->fragment('logs')->links('pagination::bootstrap-4') }}
+                                            {{ $logs->withQueryString()->fragment('logs')->links('pagination::bootstrap-4') }}
                                         </div>
                                     </td>
                                 </tr>
@@ -370,8 +389,8 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>User ID</th>
-                                    <th>points</th>
+                                    <th>utilizador</th>
+                                    <th>pontos</th>
                                     <th>tipo</th>
                                     <th>Data de Criação</th>
                                     <th>Última Atualização</th>
@@ -381,7 +400,13 @@
                             <tbody>
                                 @foreach($points as $point)
                                     <tr>
-                                        <td>{{ $point->user_id }}</td>
+                                    <td>
+                                        @if ($point->user)
+                                            {{ $point->user->name }}
+                                        @else
+                                            utilizador não encontrado
+                                        @endif
+                                        </td>
                                         <td>{{ $point->points }}</td>
                                         <td>{{ $point->type }}</td>
                                         <td>{{ $point->created_at }}</td>

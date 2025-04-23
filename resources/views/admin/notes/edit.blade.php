@@ -36,9 +36,17 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="content">Conteúdo</label>
+                        <label for="content">Conteúdo:</label>
+                        <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>   
                         <textarea name="content" id="content" class="form-control" rows="15"
                             required>{{ old('content', $note->content) }}</textarea>
+                        <script>
+                            ClassicEditor
+                                .create(document.querySelector('#content'))
+                                .catch(error => {
+                                    console.error(error);
+                                });
+                        </script>
                     </div>
                     <div class="form-group">
                         @if ($note->file_path)
