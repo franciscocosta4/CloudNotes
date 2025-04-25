@@ -4,11 +4,11 @@
             <!-- <a href="{{ route('admin.dashboard') }}" class="logo">
                 <img src="{{ asset('admin/assets/img/kaiadmin/logo_light.svg') }}" alt="Admin" class="navbar-brand" height="20">
             </a> -->
-                <!-- Kaiadmin JS -->
-    <script src="{{ asset('admin/assets/js/kaiadmin.min.js') }}"></script>
-            <a href="{{ route('admin.dashboard') }}" >
+            <!-- Kaiadmin JS -->
+            <script src="{{ asset('admin/assets/js/kaiadmin.min.js') }}"></script>
+            <a href="{{ route('admin.dashboard') }}">
                 <h4 id="sidebar-title" class=" text-white ">
-                CloudNotes
+                    CloudNotes
                 </h4>
             </a>
             <div class="nav-toggle">
@@ -42,8 +42,9 @@
                     <div class="collapse" id="users">
                         <ul class="nav nav-collapse">
                             <li>
-                                 <a href="{{ route('admin.dashboard') . '#usersList' }}">  <!-- basicamente vai para: http://127.0.0.1:8000/admin/dashboard#usersList  -->
-                                    <span class="sub-item" >Lista de Utilizadores</span>
+                                <a href="{{ route('admin.dashboard') . '#usersList' }}">
+                                    <!-- basicamente vai para: http://127.0.0.1:8000/admin/dashboard#usersList  -->
+                                    <span class="sub-item">Lista de Utilizadores</span>
                                 </a>
                             </li>
                             <li>
@@ -63,7 +64,7 @@
                     <div class="collapse" id="notes">
                         <ul class="nav nav-collapse">
                             <li>
-                            <a href="{{ route('admin.dashboard') . '#anotacoes' }}">
+                                <a href="{{ route('admin.dashboard') . '#anotacoes' }}">
                                     <span class="sub-item">Lista de Anotações</span>
                                 </a>
                             </li>
@@ -93,15 +94,15 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#logshref">
+                    <a data-bs-toggle="collapse" href="#logshref">
                         <i class="fas fa-history"></i>
                         <p>Logs de Acesso</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="logshref">
                         <ul class="nav nav-collapse">
-                             <li>
-                             <a href="{{ route('admin.dashboard') . '#logs' }}">
+                            <li>
+                                <a href="{{ route('admin.dashboard') . '#logs' }}">
                                     <span class="sub-item">Logs de Acesso a publicações</span>
                                 </a>
                             </li>
@@ -109,15 +110,15 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#pointshref">
+                    <a data-bs-toggle="collapse" href="#pointshref">
                         <i class="fas fa-bullseye"></i>
                         <p>Logs de Pontos</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="pointshref">
                         <ul class="nav nav-collapse">
-                             <li>
-                             <a href="{{ route('admin.dashboard') . '#points' }}">
+                            <li>
+                                <a href="{{ route('admin.dashboard') . '#points' }}">
                                     <span class="sub-item">Logs de atribuição de pontos</span>
                                 </a>
                             </li>
@@ -130,41 +131,41 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const sidebar = document.querySelector(".sidebar");
-    const title = document.getElementById("sidebar-title");
-    const toggleButtons = document.querySelectorAll(".toggle-sidebar, .sidenav-toggler");
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebar = document.querySelector(".sidebar");
+        const title = document.getElementById("sidebar-title");
+        const toggleButtons = document.querySelectorAll(".toggle-sidebar, .sidenav-toggler");
 
-    let isCollapsed = false; // Estado da sidebar
+        let isCollapsed = false; // Estado da sidebar
 
-    //* Função para esconder/mostrar a sidebar inteira
-    toggleButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            isCollapsed = !isCollapsed;
-            sidebar.classList.toggle("collapsed");
+        //* Função para esconder/mostrar a sidebar inteira
+        toggleButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                isCollapsed = !isCollapsed;
+                sidebar.classList.toggle("collapsed");
 
+                if (isCollapsed) {
+                    title.style.display = "none"; // Esconde o título
+                } else {
+                    title.style.display = "block"; // Mostra o título
+                }
+            });
+        });
+
+        //* Le se o rato passou por cima da sidebar e mostra o título se estiver colapsada
+        sidebar.addEventListener("mouseenter", function () {
             if (isCollapsed) {
-                title.style.display = "none"; // Esconde o título
-            } else {
-                title.style.display = "block"; // Mostra o título
+                title.style.display = "block";
+            }
+        });
+
+        //* Quando o rato sai da sidebar, esconde o título se ainda estiver colapsada
+        sidebar.addEventListener("mouseleave", function () {
+            if (isCollapsed) {
+                title.style.display = "none";
             }
         });
     });
-
-    //* Le se o rato passou por cima da sidebar e mostra o título se estiver colapsada
-    sidebar.addEventListener("mouseenter", function () {
-        if (isCollapsed) {
-            title.style.display = "block";
-        }
-    });
-
-    //* Quando o rato sai da sidebar, esconde o título se ainda estiver colapsada
-    sidebar.addEventListener("mouseleave", function () {
-        if (isCollapsed) {
-            title.style.display = "none";
-        }
-    });
-});
 
 
 </script>

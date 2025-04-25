@@ -251,11 +251,11 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Utilizador</th>
                                     <th>Título</th>
+                                    <th>Utilizador</th>
+                                    <th>Data de criação</th>
                                     <th>Disciplina</th>
                                     <th>Dificuldade</th>
-                                    <th>Conteúdo</th>
                                     <th>Ficheiro</th>
                                     <th>Ações</th>
                                 </tr>
@@ -263,17 +263,18 @@
                             <tbody>
                                 @foreach($notes as $note)
                                     <tr>
-                                    <td>
+                                        <td>{{ $note->title }}</td>
+                                        <td>
                                             @if ($note->user)
                                                 {{ $note->user->name }}
                                             @else
                                                 utilizador não encontrado
                                             @endif
                                         </td>
-                                        <td>{{ $note->title }}</td>
+                                        <td>{{ $note->created_at }}</td>
                                         <td>{{ $note->subject }}</td>
                                         <td>{{ $note->topic_difficulty }}</td>
-                                        <td>{{ Str::limit($note->content, 50) }}</td>
+                                        <!-- <td>{{ Str::limit($note->content, 50) }}</td> -->
                                         <td class="break-word">{{ $note->file_path }}</td>
                                         <td>
                                             <div class="form-button-action">
@@ -324,8 +325,8 @@
                                 <tr>
                                     <th>Utilizador</th>
                                     <th>Anotação</th>
-                                    <th>Data de Criação</th>
-                                    <th>Última Atualização</th>
+                                    <th>Último acesso</th>
+                                    <th>Primeiro acesso</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -347,8 +348,8 @@
                                                 anotação não encontrada
                                             @endif
                                         </td>
-                                        <td>{{ $log->created_at }}</td>
                                         <td>{{ $log->updated_at }}</td>
+                                        <td>{{ $log->created_at }}</td>
                                         <td>
                                             <form action="{{ route('admin.logs.destroy', $log->id) }}" method="POST"
                                                 style="display:inline;">

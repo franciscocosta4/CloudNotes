@@ -18,7 +18,7 @@ class NotificationsController extends Controller
         return view('admin.notificationspanel', compact('adminActions'));
     }
 
-    //? A NOTA NAO É CRIADA AQUI, ELA É CRIADA NO MIDDLEWARE LogAdminActions.php
+    //? A NOTIFICACAO NAO É CRIADA AQUI, ELA É CRIADA NO MIDDLEWARE LogAdminActions.php
 
     public function setNotificationAsSeen(Request $request)
     {

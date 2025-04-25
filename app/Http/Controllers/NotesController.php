@@ -3,9 +3,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\User;
-use App\Models\Point; 
-use App\Models\Subject; 
-use App\Models\NotesAccessLog; 
+use App\Models\Point;
+use App\Models\Subject;
+use App\Models\NotesAccessLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,22 +14,30 @@ class NotesController extends Controller
     public function show($slug)
     {
         $note = Note::where('slug', $slug)->firstOrFail();
-    
+
+        $log = NotesAccessLog::where('user_id', Auth::id())
+            ->where('note_id', $note->id)
+            ->first();
+
         //* Registra/atualiza o acesso a uma anotação
         if (Auth::check()) {
-            NotesAccessLog::updateOrCreate(
-                [
-                    'user_id' => Auth::id(),
-                    'note_id' => $note->id,
-                ],
-                ['created_at' => now()] //* Atualiza a data de acesso
-            );
+            if ($log) { //* se o user já tiver acedido pelo menos uma vez apenas atualiza o campo updated_at
+                $log->touch(); //atualiza o campo updated_at
+            } else { //* se for a primeira vez cria um registo na bd 
+                NotesAccessLog::updateOrCreate(
+                    [
+                        'user_id' => Auth::id(),
+                        'note_id' => $note->id,
+                    ],
+                    ['created_at' => now()] // cria um registro na bd
+                );
+            }
         }
-    
+
         return view('notes.show', compact('note'));
     }
-    
-    
+
+
     public function index()
     {
         if (Auth::check()) {
@@ -41,24 +49,24 @@ class NotesController extends Controller
         // Passa a variável $notes para a view
         return view('dashboard', compact('notes'));
     }
-    
+
 
     public function createNote()
     {
         return view('notes.create');
     }
-    
+
     //? Armazenar uma nova anotação e atribuir pontos ao user
     public function storeNote(Request $request)
     {
         $request->validate([
-            'title'            => 'required|string|max:255',
-            'subject'          => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
             'topic_difficulty' => 'required|string|max:255',
-            'content'          => 'nullable|string', // Conteúdo é opcional
-            'file_path'        => 'nullable|file|mimes:zip,rar',   // Arquivo é opcional
+            'content' => 'nullable|string', // Conteúdo é opcional
+            'file_path' => 'nullable|file|mimes:zip,rar',   // Arquivo é opcional
         ], [
-            'content.required_without'   => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
+            'content.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
             'file_path.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
         ]);
 
@@ -67,15 +75,15 @@ class NotesController extends Controller
             //* Salve o arquivo e obtenha o caminho
             $filePath = $request->file('file_path')->store('notes', 'public');
         }
-        
+
         //* Criação da nota
         $note = Note::create([
-            'user_id'          => auth()->id(), //* Associando ao user autenticado
-            'title'            => $request->title,
-            'subject'          => $request->subject,
-            'topic_difficulty' => $request->topic_difficulty,   
-            'content'          => $request->content,
-            'file_path'        => $filePath,
+            'user_id' => auth()->id(), //* Associando ao user autenticado
+            'title' => $request->title,
+            'subject' => $request->subject,
+            'topic_difficulty' => $request->topic_difficulty,
+            'content' => $request->content,
+            'file_path' => $filePath,
         ]);
 
         //* Adicionar pontos ao user
@@ -86,8 +94,8 @@ class NotesController extends Controller
             //* Registra os pontos na tabela 'points'
             Point::create([
                 'user_id' => $user->id,
-                'points'  => $pointsEarned,
-                'type'    => 'upload',
+                'points' => $pointsEarned,
+                'type' => 'upload',
             ]);
 
             //* Atualiza a pontuação total do user na tabela 'users'
@@ -109,7 +117,7 @@ class NotesController extends Controller
         //*Basicamente A rota e o controlador no Laravel servem apenas para receber o 
         //* ficheiro da imagem, guardá-lo no servidor, e devolver a URL para que o CKEditor a possa inserir automaticamente no conteúdo.
 
-        
+
         // Validação: verifica se existe um ficheiro e se este é uma imagem válida
         $request->validate([
             'upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -117,7 +125,7 @@ class NotesController extends Controller
 
         // Obter o ficheiro enviado (a key 'upload' é usada pelo CKEditor 5)
         $image = $request->file('upload');
-        
+
         // Gerar um nome único para o ficheiro
         $imageName = time() . '.' . $image->getClientOriginalExtension();
 

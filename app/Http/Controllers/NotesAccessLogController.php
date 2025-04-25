@@ -12,13 +12,16 @@ class NotesAccessLogController extends Controller
 {
     public function index()
 {
-    //? Recupera as anotações publicadas pelo user (PARA GARANTIR QUE AS ANOTAÇÕES PUBLICADAS PELO USER AINDA FICAM LÁ ) 
+    //? Recupera as anotações publicadas pelo user (PARA GARANTIR QUE AS ANOTAÇÕES PUBLICADAS PELO USER AINDA APARECEM NA PAGINA )
     $notes = Note::where('user_id', Auth::id())->get();
 
+    //* AS ACCESSLOGS SAO REGISTADAS NO NotesController nao aqui
 
-    $accessLogs = NotesAccessLog::where('user_id', auth()->id())
+    //* isto é para mostrar na pagina do user, nao na tabela do admin, as accessLogs para a do admin estao declaradas no adminController
+    //? a var $accessLogs também é declarada no SearchController por isso sempre que se mudar aqui algo tb tem de se mudar lá
+    $accessLogs = NotesAccessLog::where('user_id', auth()->id()) 
     ->with('note')
-    ->orderBy('created_at', 'desc') //* ORDENAR POR ULTIMA DATA DE ACESSO MAS POR ORDEM DECRESCENTE
+    ->orderBy('updated_at', 'desc') //* ORDENAR POR ULTIMA DATA DE ACESSO MAS POR ORDEM DECRESCENTE
     ->get();
 
     return view('dashboard', compact('accessLogs','notes'));
