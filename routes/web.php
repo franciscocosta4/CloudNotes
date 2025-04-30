@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [NotesAccessLogController::class, 'index'])->name('dashboard');
     Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');
     Route::get('note/{slug}', [NotesController::class, 'show'])->name('notes.show');
+    Route::post('/notes/{note}/like', [NotesController::class, 'likeNote'])->name('notes.like');
     Route::post('/notes', [NotesController::class, 'storeNote'])->name('notes.store');
     Route::match(['get', 'post'], '/notes/create', [NotesController::class, 'createNote'])->name('notes.create');
     Route::delete('/notes/{note}', [NotesController::class, 'destroyNote'])->name('notes.destroy');

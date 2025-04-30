@@ -13,7 +13,6 @@
     </noscript>
     <link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons" as="style"
         onload="this.rel='stylesheet'">
-
     <style>
         body,
         html {
@@ -96,6 +95,24 @@
         .note-actions button:hover {
             transform: scale(1.03);
         }
+
+        .note-actions #likesbutton {
+            background-color: rgb(252, 252, 252); 
+            border: 1px solid rgb(198, 198, 198); 
+            padding: 3px 25px; display: flex; 
+            align-items: center;
+        }
+        .note-actions #backbutton {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .note-actions #likescounter {
+            color: #434343;
+            font-weight: 500;
+            font-size: 17px;
+            line-height: 36px;
+            font-family: 'Poppins', sans-serif;
+        }
     </style>
 </head>
 
@@ -111,8 +128,8 @@
         <p>Conteúdo da anotação: </p>
         <div class="note-content-div">
             @if (!empty($note->content))
-            <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
-            <div id="note-content">{!! $note->content !!}</div>
+                <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
+                <div id="note-content">{!! $note->content !!}</div>
             @else
                 <p>Não há conteúdo disponível para esta anotação.</p>
             @endif
@@ -132,7 +149,21 @@
                         Transferir
                     </a>
             @endif
-                <button onclick="window.history.back()">Voltar</button>
+                <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.like', $note->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" id="likesbutton">
+                        <!-- Imagem do Like/Dislike -->
+                        <img src="{{ asset('images/' . ($hasLiked ? 'thumb_down.png' : 'thumb_up.png')) }}"
+                            alt="{{ $hasLiked ? 'Remover Like' : 'Dar Like' }}"
+                            style="width: 24px; height: 24px; cursor: pointer; margin-right: 10px;">
+
+                        <!-- Contagem de Likes -->
+                        <span id="likescounter" >{{ $likesCount }}</span> <!-- Aqui mostramos a contagem de likes -->
+                    </button>
+                    
+                </form>
+                <button id="backbutton" onclick="window.location.href='{{ route('dashboard') }}'">Voltar</button>
+
             </div>
         </div>
 </body>

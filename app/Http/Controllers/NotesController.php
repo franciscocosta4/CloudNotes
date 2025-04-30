@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Point;
 use App\Models\Subject;
 use App\Models\NotesAccessLog;
+use App\Models\NoteLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +19,12 @@ class NotesController extends Controller
         $log = NotesAccessLog::where('user_id', Auth::id())
             ->where('note_id', $note->id)
             ->first();
+
+        $hasLiked = NoteLike::where('user_id', auth()->id()) // var que verifica se o user deu like, para que depois se mude o estilo do buttom
+            ->where('note_id', $note->id)
+            ->exists();
+
+        $likesCount = $note->likes()->count();
 
         //* Registra/atualiza o acesso a uma anotação
         if (Auth::check()) {
@@ -34,7 +41,7 @@ class NotesController extends Controller
             }
         }
 
-        return view('notes.show', compact('note'));
+        return view('notes.show', compact('note', 'hasLiked', 'likesCount'));
     }
 
 
@@ -139,5 +146,45 @@ class NotesController extends Controller
         return response()->json([
             'url' => $url
         ]);
+    }
+
+    public function likeNote($noteId)
+    {
+
+
+        $user = Auth::user();
+        //verifica se o user já deu like 
+        $existing = NoteLike::where('user_id', $user->id)
+            ->where('note_id', $noteId)
+            ->first();
+
+        //caso tenha dado remove o like 
+        if ($existing) {
+
+            $existing->delete();
+
+            return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId);
+
+        } else {
+            NoteLike::create([
+                'user_id' => $user->id,
+                'note_id' => $noteId,
+            ]);
+
+            $pointsEarned = 100; //* pontos pelo like  
+
+            //* Registra os pontos na tabela 'points'
+            Point::create([
+                'user_id' => $user->id,
+                'points' => $pointsEarned,
+                'type' => 'like',
+            ]);
+
+            return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId); //* dá scroll automatico outravez para o botao de like
+
+        }
+
+
+
     }
 }

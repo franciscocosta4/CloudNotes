@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Note extends Model
 {
     protected $fillable = [
-        'user_id', 
-        'title', 
-        'subject', 
-        'topic_difficulty', 
-        'content', 
+        'user_id',
+        'title',
+        'subject',
+        'topic_difficulty',
+        'content',
         'file_path',
     ];
 
@@ -23,16 +23,21 @@ class Note extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(NoteLike::class, 'note_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
-    
+
         static::creating(function ($note) {
             //* o método Str::slug gera um slug para o titulo da anotaçao
             if (empty($note->slug)) {
                 $note->slug = Str::slug($note->title);
             }
-            
+
             $originalSlug = $note->slug;
             $count = 1;
             //* verifica se já existe um slug igual e caso exista adiciona um contador ao numero no final do slug
@@ -46,7 +51,7 @@ class Note extends Model
             if (empty($note->slug)) {
                 $note->slug = Str::slug($note->title);
             }
-    
+
             // Garantir que o slug seja único durante a atualização
             $originalSlug = $note->slug;
             $count = 1;
@@ -56,5 +61,5 @@ class Note extends Model
             }
         });
     }
-    
+
 }
