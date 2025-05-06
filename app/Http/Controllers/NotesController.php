@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\User;
+use App\Models\SavedNote;
 use App\Models\Point;
 use App\Models\Subject;
 use App\Models\NotesAccessLog;
@@ -24,6 +25,10 @@ class NotesController extends Controller
             ->where('note_id', $note->id)
             ->exists();
 
+        $hasSaved = SavedNote::where('user_id', auth()->id()) // var que verifica se o user guardou, para que depois se mude o estilo do buttom
+            ->where('note_id', $note->id)
+            ->exists();
+
         $likesCount = $note->likes()->count();
 
         //* Registra/atualiza o acesso a uma anotação
@@ -41,7 +46,7 @@ class NotesController extends Controller
             }
         }
 
-        return view('notes.show', compact('note', 'hasLiked', 'likesCount'));
+        return view('notes.show', compact('note', 'hasLiked', 'hasSaved', 'likesCount'));
     }
 
 
@@ -183,8 +188,85 @@ class NotesController extends Controller
             return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId); //* dá scroll automatico outravez para o botao de like
 
         }
+    }
+
+    public function saveNote($noteId)
+    {
+
+        $user = Auth::user();
 
 
+        //verifica se o user já deu like 
+        $existing = SavedNote::where('user_id', $user->id)
+            ->where('note_id', $noteId)
+            ->first();
+
+        if ($existing) {
+
+            $existing->delete();
+
+            return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId);
+
+        } else {
+            SavedNote::create([
+                'user_id' => $user->id,
+                'note_id' => $noteId,
+            ]);
+
+
+            return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId); //* dá scroll automatico outravez para o botao de like
+
+        }
+    }
+    public function RemoveSavedNote($noteId)
+    {
+        $user = Auth::user();
+
+        // Tenta encontrar a nota guardada associada ao utilizador e à nota
+        $savedNote = SavedNote::where('user_id', $user->id)
+            ->where('note_id', $noteId)
+            ->first();
+
+        // Verifica se a nota foi encontrada
+        if (!$savedNote) {
+            return redirect()->route('saved.notes.index')->with('error', 'Nota não encontrada.');
+        }
+
+        // Caso a nota tenha sido encontrada, apaga-a
+        $savedNote->delete();
+
+        return redirect()->route('saved.notes.index')->with('success', 'Anotação excluída com sucesso!');
+    }
+
+
+    public function IndexSavedNotes()
+    {
+
+        $user = Auth::user();
+
+        if (Auth::check()) {
+            $savedNoteIds = SavedNote::where('user_id', $user->id)->pluck('note_id');
+
+            $SavedNotes = Note::whereIn('id', $savedNoteIds)->get();
+
+        } else {
+            return redirect()->route('login');
+        }
+
+
+        //? Recupera as anotações publicadas pelo user (PARA GARANTIR QUE AS ANOTAÇÕES PUBLICADAS PELO USER AINDA APARECEM NA PAGINA )
+        $notes = Note::where('user_id', Auth::id())->get();
+
+        //* AS ACCESSLOGS SAO REGISTADAS NO NotesController nao aqui
+
+        //* isto é para mostrar na pagina do user, nao na tabela do admin, as accessLogs para a do admin estao declaradas no adminController
+        //? a var $accessLogs também é declarada no SearchController por isso sempre que se mudar aqui algo tb tem de se mudar lá
+        $accessLogs = NotesAccessLog::where('user_id', auth()->id())
+            ->with('note')
+            ->orderBy('updated_at', 'desc') //* ORDENAR POR ULTIMA DATA DE ACESSO MAS POR ORDEM DECRESCENTE
+            ->get();
+
+        return view('SavedNotes.index', compact('SavedNotes', 'notes', 'accessLogs'));
 
     }
 }

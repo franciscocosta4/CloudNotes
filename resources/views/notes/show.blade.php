@@ -99,7 +99,8 @@
         .note-actions #likesbutton {
             background-color: rgb(252, 252, 252); 
             border: 1px solid rgb(198, 198, 198); 
-            padding: 3px 25px; display: flex; 
+            padding: 1px 10px; 
+            display: flex; 
             align-items: center;
         }
         .note-actions #backbutton {
@@ -109,9 +110,11 @@
         .note-actions #likescounter {
             color: #434343;
             font-weight: 500;
-            font-size: 17px;
+            font-size: 15px;
             line-height: 36px;
             font-family: 'Poppins', sans-serif;
+            padding-left: 10px;
+            border-left:1px solid rgb(198, 198, 198);
         }
     </style>
 </head>
@@ -155,12 +158,21 @@
                         <!-- Imagem do Like/Dislike -->
                         <img src="{{ asset('images/' . ($hasLiked ? 'thumb_down.png' : 'thumb_up.png')) }}"
                             alt="{{ $hasLiked ? 'Remover Like' : 'Dar Like' }}"
-                            style="width: 24px; height: 24px; cursor: pointer; margin-right: 10px;">
+                            style="width: 24px; height: 24px; cursor: pointer;  padding:9px 9px ; ">
 
                         <!-- Contagem de Likes -->
-                        <span id="likescounter" >{{ $likesCount }}</span> <!-- Aqui mostramos a contagem de likes -->
+                        <span id="likescounter">gostos: {{ $likesCount }}</span> 
                     </button>
                     
+                </form>
+                <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.save', $note->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" id="likesbutton">
+                        <!-- Imagem do Like/Dislike -->
+                        <img src="{{ asset('images/' . ($hasSaved ? 'bookmarkFILL.png' : 'bookmark.png')) }}"
+                            alt="{{ $hasSaved ? 'Remover ' : 'guardar' }}"
+                            style="width: 24px; height: 24px; cursor: pointer; padding:9px 9px ; margin-right: 10%;">
+                    </button>
                 </form>
                 <button id="backbutton" onclick="window.location.href='{{ route('dashboard') }}'">Voltar</button>
 

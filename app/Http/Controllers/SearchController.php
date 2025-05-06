@@ -41,10 +41,11 @@ class SearchController extends Controller
         }
 
         //! METODO orderBy() VAI SER USADO QUANDO FOR PARA ORDENAR POR LIKES
-        // $results = $results->orderBy('likes')->get(); 
+        $results = Note::withCount('likes')->orderBy('likes_count', 'desc')->get();
+
 
         //* Executa a consulta e obtém os resultados
-        $results = $results->get();
+        // $results = $results->get();
 
         //? Recupera as anotações publicadas pelo user e o histórico de acesso (PARA GARANTIR QUE AS ANOTAÇÕES DA SIDEBAR AINDA FICAM LÁ ) 
         $notes = Note::where('user_id', Auth::id())->get();

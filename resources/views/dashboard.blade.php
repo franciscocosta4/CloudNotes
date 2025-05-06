@@ -92,8 +92,8 @@
                 </nav>
                 <div class="saved-notes">
                     <p>Ver anotações guardadas:</p>
-                    <button onclick="location.href='/saved-notes'">Notas Guardadas</button>
-                </div>
+                    <button onclick="location.href='{{ route('saved.notes.index') }}'" style="font-family: 'Poppins', sans-serif;">Notas Guardadas</button>
+                    </div>
                 <!-- Profile Actions -->
                 <div class="profile-actions">
                     <a class="action-btn" href="{{ route('logout') }}"

@@ -82,11 +82,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/search', [SearchController::class, 'searchNotes'])->name('search');
     Route::get('note/{slug}', [NotesController::class, 'show'])->name('notes.show');
     Route::post('/notes/{note}/like', [NotesController::class, 'likeNote'])->name('notes.like');
+    Route::post('/notes/{note}/save', [NotesController::class, 'saveNote'])->name('notes.save');
+    Route::post('/notes/{note}/save/remove', [NotesController::class, 'RemoveSavedNote'])->name('notes.saved.remove');
     Route::post('/notes', [NotesController::class, 'storeNote'])->name('notes.store');
     Route::match(['get', 'post'], '/notes/create', [NotesController::class, 'createNote'])->name('notes.create');
     Route::delete('/notes/{note}', [NotesController::class, 'destroyNote'])->name('notes.destroy');
     //* Rota para o upload de imagem na textarea do CKEDITOR
     Route::post('/upload-image', [NotesController::class, 'uploadImage'])->name('upload.image');
+    Route::get('/saved-notes', [NotesController::class, 'IndexSavedNotes'])->name('saved.notes.index');
+    
 });
 
 require __DIR__ . '/auth.php';
