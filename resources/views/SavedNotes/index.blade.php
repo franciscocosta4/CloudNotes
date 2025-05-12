@@ -92,7 +92,8 @@
                 </nav>
                 <div class="saved-notes">
                     <p>Voltar para a dashboard:</p>
-                    <button onclick="location.href='{{ route('dashboard') }}'" style="font-family: 'Poppins', sans-serif;">Dashboard</button>
+                    <button onclick="location.href='{{ route('dashboard') }}'"
+                        style="font-family: 'Poppins', sans-serif;">Dashboard</button>
                 </div>
                 <!-- Profile Actions -->
                 <div class="profile-actions">
@@ -119,35 +120,43 @@
 
         <!-- Main Content -->
         <main class="main">
-        <div class="saved-notes-container">
-        <h2>Anotações Guardadas</h2>
+            <div class="saved-notes-container">
+                <h2>Anotações Guardadas</h2>
 
-        @if($SavedNotes->isEmpty())
-            <p class="empty-message">Não tens notas guardadas.</p>
-        @else
-            <ul class="saved-notes-list">
-                @foreach($SavedNotes as $note)
-                    <li class="saved-note-item">
-                        <div class="saved-note-title">
-                            <a href="{{ url('/note/' . $note->slug) }}">{{ $note->title }}</a>
-                        </div>
-                        <form action="{{ route('notes.saved.remove', $note->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            <button type="submit" class="remove-btn">
-                                <span class="material-icons">delete</span>
-                                Remover
-                            </button>
-                        </form>
-                    </li>
-                    <br>
-                @endforeach
-            </ul>
-            <div class="saved-notes">
-                    <p>Voltar para a dashboard:</p>
-                    <button onclick="location.href='{{ route('dashboard') }}'" style="font-family: 'Poppins', sans-serif;">Dashboard</button>
-                </div>
-        @endif
-    </div>
+                @if($SavedNotes->isEmpty())
+                    <p class="empty-message">Não tens notas guardadas.</p>
+                @else
+                    <ul class="saved-notes-list">
+                        @foreach($SavedNotes as $note)
+                            <li class="saved-note-item">
+                                <div class="saved-note-content">
+                                    <div class="saved-note-title">
+                                        <a href="{{ url('/note/' . $note->slug) }}">{{ $note->title }}</a>
+                                    </div>
+                                    <div class="saved-note-meta">
+                                        <span class="note-author">Autor: {{ $note->user->name }}</span>
+                                        <span class="note-likes">Gostos: {{ $note->likes->count() }}</span>
+                                    </div>
+                                </div>
+                                <form action="{{ route('notes.saved.remove', $note->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="remove-btn">
+                                        <span class="material-icons">delete</span>
+                                        Remover
+                                    </button>
+                                </form>
+                            </li>
+                            <br>
+                        @endforeach
+                    </ul>
+                    <div class="saved-notes">
+                        <p>Voltar para a dashboard:</p>
+                        <button onclick="location.href='{{ route('dashboard') }}'"
+                            style="font-family: 'Poppins', sans-serif;">Dashboard</button>
+                    </div>
+                @endif
+            </div>
         </main>
         </div>
     </x-app-layout>
@@ -165,22 +174,22 @@
     });
 </script>
 
-
 <style>
-  /* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    /* Global Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-body, html {
-    height: 100%;
-    font-family: 'Poppins', sans-serif;
-    background-color: #F8F9FA; 
-    color: #444;
-    font-size: 14px;
-}
+    body,
+    html {
+        height: 100%;
+        font-family: 'Poppins', sans-serif;
+        background-color: #F8F9FA;
+        color: #444;
+        font-size: 14px;
+    }
 
     .saved-notes-container {
         width: 700px;
@@ -193,10 +202,10 @@ body, html {
     }
 
     .saved-notes-container h2 {
-    font-size: 1.4rem;
-    margin-bottom: 1.2rem;
-    font-weight: 600;
-    color: #0F044C;
+        font-size: 1.4rem;
+        margin-bottom: 1.2rem;
+        font-weight: 600;
+        color: #0F044C;
     }
 
     .saved-notes-list {
@@ -218,20 +227,41 @@ body, html {
         background-color: #f9f9f9;
     }
 
+    .saved-note-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
     .saved-note-title {
         color: #333;
-        flex-grow: 1;
     }
 
     .saved-note-title a {
         color: #0F044C;
         text-decoration: none;
         transition: color 0.3s;
+        font-weight: 500;
     }
 
     .saved-note-title a:hover {
         color: #3a2b8d;
         text-decoration: underline;
+    }
+
+    .saved-note-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    .note-author,
+    .note-likes {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
     }
 
     .remove-btn {
@@ -247,10 +277,12 @@ body, html {
         display: flex;
         align-items: center;
         gap: 5px;
+        background-color: #fff;
     }
 
     .remove-btn:hover {
         background-color: #c0392b;
+        color: white;
         transform: translateY(-2px);
     }
 
@@ -273,6 +305,12 @@ body, html {
             flex-direction: column;
             align-items: flex-start;
             gap: 1rem;
+        }
+
+        .remove-btn {
+            margin-left: 0;
+            margin-top: 0.5rem;
+            align-self: flex-end;
         }
     }
 </style>

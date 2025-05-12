@@ -29,7 +29,7 @@
     <!-- Main Content -->
     <main>
         <h2>Aprenda melhor</h2>
-        <p>Transforme a forma como organiza e partilha as suas anotações com o CloudNotes.</p>
+        <p>Transforme a forma como procura e partilha as suas anotações com a CloudNotes.</p>
         <div class="button-group">
             <a href="{{ route('register') }}" class="register">Registar</a>
             <a href="{{ route('login') }}" class="login">Iniciar Sessão</a>
@@ -46,9 +46,9 @@
 <section id="sobre">
     <h3>Sobre a CloudNotes</h3>
         <p>
-        A CloudNotes é uma plataforma inovadora que facilita a gestão e partilha de anotações de forma rápida e segura.
+        A CloudNotes é uma plataforma inovadora que facilita a procura e partilha de anotações de forma rápida e segura.
         Com uma interface intuitiva e moderna, pode organizar as suas ideias, colaborar com colegas e aceder às suas notas em qualquer lugar.
-        Seja estudante, profissional ou alguém que procura melhorar a organização, a CloudNotes é a solução ideal para aumentar a sua produtividade.
+        Seja estudante, ou alguém que procura conteúdo escolar de qualidade, a CloudNotes é a solução ideal para aumentar a sua produtividade.
         </p>
     <br>
     <br>
