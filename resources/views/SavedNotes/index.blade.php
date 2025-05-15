@@ -134,7 +134,7 @@
                                         <a href="{{ url('/note/' . $note->slug) }}">{{ $note->title }}</a>
                                     </div>
                                     <div class="saved-note-meta">
-                                        <span class="note-author">Autor: {{ $note->user->name }}</span>
+                                        <span class="note-author">Autor: {{ $note->user?->name ?? 'Utilizador não encontrado' }}</span>
                                         <span class="note-likes">Gostos: {{ $note->likes->count() }}</span>
                                     </div>
                                 </div>

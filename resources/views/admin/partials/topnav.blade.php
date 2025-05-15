@@ -109,23 +109,20 @@
                                 @if($adminActions->isEmpty())
                                     <!-- a barrinha fica vazia -->
                                 @else
-                                    @foreach($adminActions as $adminAction)
-                                        <a href="{{ route('admin.notifications.show') }}">
-                                            <div class="notif-icon{{ preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'notif-danger' :(preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'notif-success' : 'notif-primary') }}">
-                                                <i class=" preg_match('/\b(excluída|excluído)\b/i', $adminAction->message) ? 'fas fa-trash-alt' :
-                                                            (preg_match('/\b(criada|criado)\b/i', $adminAction->message) ? 'fa fa-user-plus' :
-                                                                'fas fa-hdd') }}">
-                                                </i>
-                                            </div>
-                                            <div class="notif-content" style="margin-right: 0; padding-right: 0;">
-                                                <span class="block">
-                                                    {{ $adminAction->admin_id ? \App\Models\User::find($adminAction->admin_id)->name : 'Desconhecido' }}:
-                                                    <br>'{{ $adminAction->message }}'
-                                                </span>
-                                                <span class="time">{{ $adminAction->created_at->format('d/m/Y H:i') }}</span>
-                                            </div>
-                                        </a>
-                                    @endforeach
+                                     @foreach($adminActions as $adminAction)
+                                    <a href="#">
+                                        <div
+                                            class="notif-icon {{ str_contains(strtolower($adminAction->message), 'criado') ? 'notif-success' : 'notif-primary' }}">
+                                            <i class="fa fa-user-plus"></i>
+                                        </div>
+                                        <div class="notif-content" style="margin-right: 0; padding-right: 0;">
+                                            <span
+                                                class="block">{{ $adminAction->admin_id ? \App\Models\User::find($adminAction->admin_id)->name : 'Desconhecido' }}:
+                                                <br>'{{ $adminAction->message }}'</span>
+                                            <span class="time">{{ $adminAction->created_at->format('d/m/Y H:i') }}</span>
+                                        </div>
+                                    </a>
+                                @endforeach
                                 @endif
 
                                 <!-- <a href="#">
@@ -194,8 +191,7 @@
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button class="dropdown-item" ><a
-                                    href="{{ route('logout') }}"></a>Sair</button>
+                            <button class="dropdown-item"><a href="{{ route('logout') }}"></a>Sair</button>
                         </form>
                     </li>
                 </ul>

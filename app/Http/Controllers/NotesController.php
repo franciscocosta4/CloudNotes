@@ -76,7 +76,7 @@ class NotesController extends Controller
             'subject' => 'required|string|max:255',
             'topic_difficulty' => 'required|string|max:255',
             'content' => 'nullable|string', // Conteúdo é opcional
-            'file_path' => 'nullable|file|mimes:zip,rar',   // Arquivo é opcional
+            'file_path' => 'nullable|file|mimes:pdf',   // Arquivo é opcional
         ], [
             'content.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',
             'file_path.required_without' => 'Você precisa fornecer o conteúdo ou carregar um arquivo.',

@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Partilhar Anotação</title>
     <!-- Preload do Google Fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" as="style"
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" as="style"
         onload="this.rel='stylesheet'">
     <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     </noscript>
     <style>
+        :root {
+            --primary-color: #0F044C;
+            --secondary-color: #F8F9FA;
+            --text-color: #444;
+            --border-color: #ddd;
+            --error-color: #dc3545;
+            --hover-effect: scale(1.02);
+        }
+
         body,
         html {
             font-family: 'Poppins', sans-serif;
-            background-color: #F8F9FA;
-            color: #444;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
             font-size: 14px;
+            line-height: 1.6;
         }
 
         /* Estilos específicos para a página de partilha */
@@ -25,7 +35,7 @@
             width: 100%;
             max-width: 1100px;
             margin: 2rem auto;
-            padding: 1.5rem;
+            padding: 2rem;
             background-color: #FFFFFF;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -34,82 +44,180 @@
 
         .container h2 {
             font-size: 1.7rem;
-            color: #0F044C;
+            color: var(--primary-color);
             margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .container p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
         }
 
         .form-group {
             margin-bottom: 1.5rem;
-            /* Espaçamento entre os campos */
+            position: relative;
         }
 
         .form-group.inline {
             display: flex;
-            gap: 1rem;
-            /* Espaço entre os campos */
-            align-items: flex-end;
-            /* Alinha os campos na parte inferior */
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .form-group.inline .form-control {
+        .form-group.inline > div {
             flex: 1;
-            /* Faz os campos ocuparem o espaço disponível */
+            min-width: 200px;
         }
 
         .form-label {
-            font-size: 1rem;
-            color: #0F044C;
-            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            font-weight: 500;
             margin-bottom: 0.5rem;
             display: block;
-            width: 130px;
-        }
-
-        #content {
-            border: 2px solid rgb(159, 159, 159);
         }
 
         .form-control {
-            width: 95%;
-            padding: 0.75rem;
-            font-size: 1rem;
-            border: 2px solid #0F044C;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
-            /* background-color: #F8F9FA; */
-            color: #444;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
         }
 
         .form-control:focus {
-            border-color: #0F044C;
-            box-shadow: 0 0 8px rgba(15, 4, 76, 0.3);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(15, 4, 76, 0.1);
+            outline: none;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1rem;
+        }
+
+        /* Estilo específico para o input de arquivo */
+        .file-input-container {
+            position: relative;
+            margin-top: 0.5rem;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background-color: #f8f9fa;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input-label:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(15, 4, 76, 0.05);
+        }
+
+        .file-input-label span {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-input-label .browse-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
+        .file-input {
+            position: absolute;
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .file-hint {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        #content {
+            border: 2px solid var(--border-color);
+            min-height: 300px;
         }
 
         .text-danger {
-            color: #dc3545;
+            color: var(--error-color);
             font-size: 0.875rem;
             margin-top: 0.5rem;
+            display: block;
         }
 
         .btn {
             font-family: 'Poppins', sans-serif;
-            background-color: #0F044C;
+            background-color: var(--primary-color);
             color: white;
             padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 8px;
             font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .btn:hover {
-            transform: scale(1.05);
+            transform: var(--hover-effect);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
         #back-button {
-            margin-top: 1rem;
-            background-color: #0F044C;
+            background-color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+            
+            .form-group.inline {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -149,39 +257,24 @@
                 <p>
                     Escreva aqui o conteúdo do seu resumo:
                 </p>
-                <!-- 
-    INTEGRAÇÃO CKEDITOR 5 COM UPLOAD DE IMAGENS
-
-    Este código usa o CKEditor 5 via CDN com suporte a upload de imagens,
-    ativando manualmente o adaptador 'SimpleUploadAdapter'
-    porque a build do CDN não o inclui automaticamente.
-    Como funciona:
-    - Cria-se uma função (MyCustomUploadAdapterPlugin) que ativa o adaptador.
-    - Define-se uma classe (MyUploadAdapter) que envia a imagem para o Laravel.
-    - O Laravel recebe o ficheiro via rota (ex: upload.image) e devolve um JSON com a URL.
-    - O CKEditor insere automaticamente a imagem no conteúdo.
--->
-                <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
-
                 <textarea name="content" id="content" class="form-control" rows="30"
                     style="resize: vertical; overflow-y: auto;"></textarea>
+                <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
                 <script>
                     ClassicEditor
                         .create(document.querySelector('#content'), {
-                            extraPlugins: [MyCustomUploadAdapterPlugin], // chamando o plugin de uploadImage
+                            extraPlugins: [MyCustomUploadAdapterPlugin],
                         })
                         .catch(error => {
                             console.error(error);
                         });
 
-                    // Plugin para ativar o SimpleUploadAdapter
                     function MyCustomUploadAdapterPlugin(editor) {
                         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
                             return new MyUploadAdapter(loader);
                         };
                     }
 
-                    // Classe do adaptador de upload (PLUGIN DO CKEDITOR)
                     class MyUploadAdapter {
                         constructor(loader) {
                             this.loader = loader;
@@ -213,44 +306,53 @@
                         }
                     }
                 </script>
-
-
-
             </div>
             <div class="form-group">
-                <label for="file_path" class="form-label">Arquivo(opcional)</label>
-                <input type="file" name="file_path" id="file_path" class="form-control">
+                <label for="file_path" class="form-label">Arquivo (opcional)</label>
+                <div class="file-input-container">
+                    <label for="file_path" class="file-input-label">
+                        <span id="file-name">Nenhum arquivo selecionado</span>
+                        <span class="browse-btn">Procurar</span>
+                    </label>
+                    <input type="file" name="file_path" id="file_path" class="file-input" accept=".pdf">
+                    <small class="file-hint">Formatos aceites: .pdf (tamanho máximo: 10MB)</small>
+                </div>
             </div>
-            <div class="form-group">
+            <div class="btn-group">
                 <button type="submit" class="btn">Partilhar</button>
-                <button id="back-button" class="btn" onclick="window.history.back()">Voltar</button>
+                <button type="button" id="back-button" class="btn" onclick="window.history.back()">Voltar</button>
             </div>
         </form>
     </div>
 
     <script>
-        document.querySelector('form').addEventListener('submit', function (event) {
+        // Mostrar nome do arquivo selecionado
+        document.getElementById("file_path").addEventListener("change", function() {
+            const fileName = this.files[0] ? this.files[0].name : "Nenhum arquivo selecionado";
+            document.getElementById("file-name").textContent = fileName;
+            
+            // Validação do tipo de arquivo
+            if (this.files[0]) {
+                const allowedExtensions = ["pdf"];
+                const fileExtension = this.files[0].name.split(".").pop().toLowerCase();
+                if (!allowedExtensions.includes(fileExtension)) {
+                    alert("Apenas ficheiros .pdf são permitidos.");
+                    this.value = "";
+                    document.getElementById("file-name").textContent = "Nenhum arquivo selecionado";
+                }
+            }
+        });
+
+        // Validação do formulário
+        document.querySelector('form').addEventListener('submit', function(event) {
             const content = document.getElementById('content').value.trim();
             const file = document.getElementById('file_path').files.length > 0;
 
             if (!content && !file) {
-                event.preventDefault()
+                event.preventDefault();
                 alert('Você deve fornecer um conteúdo ou um arquivo.');
-            }
-        });
-
-        document.getElementById("file_path").addEventListener("change", function () {
-            const file = this.files[0];
-            if (file) {
-                const allowedExtensions = ["zip", "rar"];
-                const fileExtension = file.name.split(".").pop().toLowerCase();
-                if (!allowedExtensions.includes(fileExtension)) {
-                    alert("Apenas ficheiros .zip ou .rar são permitidos.");
-                    this.value = "";
-                }
             }
         });
     </script>
 </body>
-
 </html>

@@ -36,7 +36,7 @@
         }
 
         .note-content-div {
-            border-radius: 12px;
+            border-radius: 10px;
             border: 2px solid rgb(198, 198, 198);
         }
 
@@ -97,12 +97,13 @@
         }
 
         .note-actions #likesbutton {
-            background-color: rgb(252, 252, 252); 
-            border: 1px solid rgb(198, 198, 198); 
-            padding: 1px 10px; 
-            display: flex; 
+            background-color: rgb(252, 252, 252);
+            border: 1px solid rgb(198, 198, 198);
+            padding: 1px 10px;
+            display: flex;
             align-items: center;
         }
+
         .note-actions #backbutton {
             font-family: 'Poppins', sans-serif;
         }
@@ -114,7 +115,22 @@
             line-height: 36px;
             font-family: 'Poppins', sans-serif;
             padding-left: 10px;
-            border-left:1px solid rgb(198, 198, 198);
+            border-left: 1px solid rgb(198, 198, 198);
+        }
+
+        #pdf-container {
+            max-width: 1200px;
+            overflow-x: auto;
+            /* permite scroll se for maior */
+        }
+
+        #pdf-container canvas {
+            display: block;
+            margin-bottom: 20px;
+            width: auto !important;
+            /* deixa o canvas manter a proporção de pixels */
+            height: auto !important;
+            max-width: 100%;
         }
     </style>
 </head>
@@ -128,13 +144,59 @@
             <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
         </div>
         <h1>{{ $note->title }}</h1>
+        @if (!empty($note->content))
         <p>Conteúdo da anotação: </p>
         <div class="note-content-div">
-            @if (!empty($note->content))
                 <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
                 <div id="note-content">{!! $note->content !!}</div>
             @else
-                <p>Não há conteúdo disponível para esta anotação.</p>
+            <p>ver em outra pagina: <a href="{{ asset('storage/' . $note->file_path) }}"
+target="_blank">Visualizar</a></p>
+            <div class="note-content-div">
+                <!-- <iframe src="{{ Storage::url($note->file_path) }}" width="100%" height="600px"></iframe> -->
+                <div id="pdf-container">
+                    <canvas id="pdf-canvas"></canvas>
+                </div>
+
+                <!-- PDF.js via CDN -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+                <script>
+                    const url = "{{ Storage::url($note->file_path) }}";
+
+                    const pdfContainer = document.getElementById('pdf-container');
+
+                    pdfjsLib.getDocument(url).promise.then(pdf => {
+                        const totalPages = pdf.numPages;
+                        const scale = 1.4;
+
+                        // Loop por todas as páginas
+                        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                            pdf.getPage(pageNum).then(page => {
+                                const viewport = page.getViewport({ scale: scale });
+
+                                const canvas = document.createElement('canvas');
+                                const context = canvas.getContext('2d');
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
+                                canvas.style.marginTop = '0px';
+                                canvas.style.marginBottom = '210px';
+
+                                const renderContext = {
+                                    canvasContext: context,
+                                    viewport: viewport
+                                };
+
+                                // Adiciona o canvas ao container
+                                pdfContainer.appendChild(canvas);
+
+                                // Renderiza a página
+                                page.render(renderContext);
+                            });
+                        }
+                    });
+                </script>
+
             @endif
         </div>
         @if (!empty($note->file_path))
@@ -152,7 +214,8 @@
                         Transferir
                     </a>
             @endif
-                <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.like', $note->id) }}" method="POST" style="display: inline;">
+                <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.like', $note->id) }}" method="POST"
+                    style="display: inline;">
                     @csrf
                     <button type="submit" id="likesbutton">
                         <!-- Imagem do Like/Dislike -->
@@ -161,11 +224,12 @@
                             style="width: 24px; height: 24px; cursor: pointer;  padding:9px 9px ; ">
 
                         <!-- Contagem de Likes -->
-                        <span id="likescounter">gostos: {{ $likesCount }}</span> 
+                        <span id="likescounter">gostos: {{ $likesCount }}</span>
                     </button>
-                    
+
                 </form>
-                <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.save', $note->id) }}" method="POST" style="display: inline;">
+                <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.save', $note->id) }}" method="POST"
+                    style="display: inline;">
                     @csrf
                     <button type="submit" id="likesbutton">
                         <!-- Imagem do Like/Dislike -->

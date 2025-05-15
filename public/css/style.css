@@ -13,6 +13,7 @@ body, html {
     font-size: 14px;
 }
 
+
 /* Header */
 header {
     display: flex;
@@ -353,7 +354,7 @@ p {
 #username {
     display: flex;
     align-items: center;
-    font-size: 16px;
+    font-size: 15px;
     color: #444;
     font-weight: 600;
 }
@@ -459,7 +460,6 @@ p {
 #disciplina-select {
     width: 175px; /* Ocupa o mesmo espaço do input */
     padding: 12px 16px;
-    font-size: 1rem;
     border: 1px solid #d1d1d1;
     border-radius: 16px;
     background-color: #fff;
@@ -508,13 +508,9 @@ p {
     gap: 8px;
     align-items: center;
 }
-.share-button {
-    background-color: #0F044C; /* Fundo escuro */
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+#share-button {
+    font-family: 'Poppins', sans-serif;
+   margin:auto;background-color:#0F044C; color:white; border: none; padding: 8px 21px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s, transform 0.3s;
 }
 
 /* Botão de Compartilhar Notas */
@@ -561,6 +557,7 @@ form {
     border-radius: 16px;
     background-color: #fff;
     color: #444;
+    font-family: 'Poppins', sans-serif;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
