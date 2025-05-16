@@ -24,9 +24,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 //* Rotas de perfil do utilizador comum
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::delete('/profile/subjects/remove', [ProfileController::class, 'removeSubjectsOfInterest'])->name('user.subjects.remove');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/users/{user:username}', [ProfileController::class, 'public'])->name('users.profile');
+
 });
 
 //* Rotas de autenticação do Admin (Apenas Login)
@@ -90,7 +94,7 @@ Route::middleware('auth')->group(function () {
     //* Rota para o upload de imagem na textarea do CKEDITOR
     Route::post('/upload-image', [NotesController::class, 'uploadImage'])->name('upload.image');
     Route::get('/saved-notes', [NotesController::class, 'IndexSavedNotes'])->name('saved.notes.index');
-    
+
 });
 
 require __DIR__ . '/auth.php';

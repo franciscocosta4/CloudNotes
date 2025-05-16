@@ -13,8 +13,12 @@
                     @csrf
  
                     <div class="form-group">
-                        <label for="name">Nome</label>
+                        <label for="name">Nome Pessoal</label>
                         <input type="text" name="name" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nome de utilizador</label>
+                        <input type="text" name="username" id="name" class="form-control" required>
                     </div>
 
                     <div class="form-group">

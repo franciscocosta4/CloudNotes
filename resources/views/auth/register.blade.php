@@ -5,35 +5,51 @@
         <!-- Nome -->
         <div>
             <x-input-label for="name" :value="__('Nome')" />
-            <x-text-input id="name" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-text-input id="name"
+                class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
-
+        <br>
+        <div>
+            <x-input-label for="username" :value="__('Nome de utilizador')" />
+            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')"
+                required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('username')" class="mt-2" />
+        </div>
         <!-- Email -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-text-input id="email"
+                class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Senha -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Palavra-Passe')" />
-            <x-text-input id="password" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" type="password" name="password" required autocomplete="new-password" />
+            <x-text-input id="password"
+                class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                type="password" name="password" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirmar Senha -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirmar Palavra-Passe')" />
-            <x-text-input id="password_confirmation" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" type="password" name="password_confirmation" required autocomplete="new-password" />
+            <x-text-input id="password_confirmation"
+                class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                type="password" name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
         <!-- Ano Escolar -->
         <div class="mt-4">
             <x-input-label for="school_year" :value="__('Ano Escolar')" />
-            <select id="school_year" name="school_year" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required onchange="showSubjects()">
+            <select id="school_year" name="school_year"
+                class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required onchange="showSubjects()">
                 <option value="" disabled selected>{{ __('Selecione o Ano Escolar') }}</option>
                 @for ($i = 7; $i <= 12; $i++)
                     <option value="{{ $i }}" {{ old('school_year') == $i ? 'selected' : '' }}>{{ $i }}</option>
@@ -46,7 +62,9 @@
         <div class="mt-4 hidden" id="subjects_section">
             <x-input-label for="subjects_of_interest" :value="__('Disciplinas de Interesse')" />
             <!-- <label for="subjects_of_interest">Disciplinas de Interesse</label> -->
-            <select id="subjects_of_interest"name="subjects_of_interest[]" id="subjects_of_interest" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" multiple >
+            <select id="subjects_of_interest" name="subjects_of_interest[]" id="subjects_of_interest"
+                class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                multiple>
                 @foreach($allSubjects as $subject)
                     <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                 @endforeach
@@ -55,7 +73,8 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                href="{{ route('login') }}">
                 {{ __('Já tem conta?') }}
             </a>
             <x-primary-button class="ms-4" style="background-color: #0F044C; color: white; border: none;">
@@ -66,20 +85,20 @@
     <br>
     <hr>
     <div class="flex items-center justify-center mt-4">
-    <a href="{{ route('login.google') }}" class="ms-3">
-        <x-primary-button type="button" class="ms-3"
-            style="background-color:rgb(240, 240, 240); color:rgb(55 65 81 / var(--tw-text-opacity, 1)); border: none; display: flex; align-items: center; padding: 8px 16px;">
-            <img loading="lazy" width="19px" height="19px" src="/images/google.png" alt="icone do google">
-            <p class="ms-4" style="text-transform: none; margin-left: 10px;">Entre com a sua conta Google</p>
-        </x-primary-button>
-    </a>
-</div>
+        <a href="{{ route('login.google') }}" class="ms-3">
+            <x-primary-button type="button" class="ms-3"
+                style="background-color:rgb(240, 240, 240); color:rgb(55 65 81 / var(--tw-text-opacity, 1)); border: none; display: flex; align-items: center; padding: 8px 16px;">
+                <img loading="lazy" width="19px" height="19px" src="/images/google.png" alt="icone do google">
+                <p class="ms-4" style="text-transform: none; margin-left: 10px;">Entre com a sua conta Google</p>
+            </x-primary-button>
+        </a>
+    </div>
     <script>
         // Função para mostrar a seção de disciplinas quando o ano escolar for selecionado
         function showSubjects() {
             var schoolYear = document.getElementById('school_year').value;
             var subjectsSection = document.getElementById('subjects_section');
-            
+
             if (schoolYear) {
                 subjectsSection.classList.remove('hidden'); // Mostra o campo de disciplinas
             } else {

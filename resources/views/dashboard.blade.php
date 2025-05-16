@@ -38,8 +38,8 @@
                 <p>{{ __('Faltam ') . $pointsForNextLevel . __(' pontos para o próximo nível.') }}</p>
             </div>
             <h3>Como aumentar o nível?</h3>
-            <p>O seu nível aumenta à medida que partilha anotações com outras pessoas. <br>Para alcançar o próximo
-                nível, continue a compartilhar as suas anotações!</p>
+            <p>O seu nível aumenta à medida que partilha anotações com outras pessoas e gosta de outras publicações. <br>Para alcançar o próximo
+                nível, continue a partilhar e a interagir com a comunidade!</p>
         </div>
         <div class="published-notes-container">
             <h3>Anotações Publicadas Por Você</h3>
@@ -92,8 +92,9 @@
                 </nav>
                 <div class="saved-notes">
                     <p>Ver anotações guardadas:</p>
-                    <button onclick="location.href='{{ route('saved.notes.index') }}'" style="font-family: 'Poppins', sans-serif;">Notas Guardadas</button>
-                    </div>
+                    <button onclick="location.href='{{ route('saved.notes.index') }}'"
+                        style="font-family: 'Poppins', sans-serif;">Anotações Guardadas</button>
+                </div>
                 <!-- Profile Actions -->
                 <div class="profile-actions">
                     <a class="action-btn" href="{{ route('logout') }}"
@@ -111,9 +112,10 @@
                 </div>
 
                 <!-- Profile Info -->
-                <button aria-label="profile" class="profile-info" onclick="location.href='/profile'">
+                <button aria-label="profile" class="profile-info" onclick="location.href='/profile/show'">
                     <span id="username">{{ Auth::user()->name }}</span>
                     <span class="material-icons">person</span>
+                </button>
         </div>
         </aside>
 
@@ -142,7 +144,7 @@
                         <x-input-error :messages="$errors->get('disciplina-select')" class="mt-2" />
                         <select aria-label="select-difficultity" name="dificuldade" id="dificuldade-select">
                             <option value="">Todas as dificuldades</option>
-                            <option  value="facil" {{ request('dificuldade') == 'facil' ? 'selected' : '' }}>Fácil</option>
+                            <option value="facil" {{ request('dificuldade') == 'facil' ? 'selected' : '' }}>Fácil</option>
                             <option value="moderada" {{ request('dificuldade') == 'moderada' ? 'selected' : '' }}>Moderada
                             </option>
                             <option value="dificil" {{ request('dificuldade') == 'dificil' ? 'selected' : '' }}>Difícil

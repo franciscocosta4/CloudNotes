@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 class AdminController extends Controller
 {
 
-    
+
     public function dashboard()
     {
         //*  ESTÁ ASSIM PARA QUE O PAGINATE DE CADA TABELA SEJA INDIVIDUAL, E DÊ SCROLL AUTOMATICAMENTE
@@ -30,7 +30,7 @@ class AdminController extends Controller
         $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->with('user')->get();
         // $adminActions= AdminLog::all();
         // $userName = User::table('users')->where('id', $ficheiro->user_id)->value('name');; 
-        return view('admin.dashboard', compact('users', 'notes', 'logs','subjects', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points','totalSubjects'));
+        return view('admin.dashboard', compact('users', 'notes', 'logs', 'subjects', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points', 'totalSubjects'));
     }
 
 
@@ -46,6 +46,7 @@ class AdminController extends Controller
         // Validação dos dados 
         $request->validate([
             'name' => 'required|string|max:255',
+            'username' => ['required', 'string', 'max:20', 'unique:users', 'regex:/^[a-zA-Z0-9_-]+$/'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'school_year' => ['nullable', 'integer', 'between:7,12'], //  número inteiro entre 7 e 12
@@ -55,6 +56,7 @@ class AdminController extends Controller
         ]);
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'school_year' => $request->school_year, // Novo campo
@@ -100,7 +102,7 @@ class AdminController extends Controller
         if ($request->has('subjects_of_interest')) {
             $user->subjects()->sync($request->subjects_of_interest); //? USAMOS  O SYNC POIS QUEREMOS ATUALIZAR
         }
-        
+
         return redirect()->route('admin.dashboard')->with('success', 'utilizador atualizado com sucesso!');
     }
 

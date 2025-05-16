@@ -71,6 +71,14 @@
             margin-left: 20px;
         }
 
+        .note-meta a {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 1%;
+            margin-bottom: 0.5rem;
+            margin-left: 20px;
+        }
+
         .note-actions {
             display: flex;
             gap: 0.5rem;
@@ -140,108 +148,115 @@
 
         <div class="note-meta">
             <p><strong>Disciplina:</strong> {{ $note->subject }}</p>
-            <p><strong>Utilizador:</strong> {{ $result->user?->name ?? 'Utilizador não encontrado' }}</p>
+            @if ($note->user)
+                <a href="{{ route('users.profile', $note->user->username) }}">
+                    <strong>Utilizador:</strong> {{ $note->user->name }}
+                </a>
+            @else
+                <strong>Utilizador:</strong> Utilizador não encontrado
+            @endif
+
             <p><strong>Dificuldade:</strong> {{ $note->topic_difficulty }}</p>
         </div>
         <h1>{{ $note->title }}</h1>
         @if (!empty($note->content))
-        <p>Conteúdo da anotação: </p>
-        <div class="note-content-div">
+            <p>Conteúdo da anotação: </p>
+            <div class="note-content-div">
                 <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
                 <div id="note-content">{!! $note->content !!}</div>
-            @else
-            <p>ver em outra pagina: <a href="{{ asset('storage/' . $note->file_path) }}"
-target="_blank">Visualizar</a></p>
-            <div class="note-content-div">
-                <!-- <iframe src="{{ Storage::url($note->file_path) }}" width="100%" height="600px"></iframe> -->
-                <div id="pdf-container">
-                    <canvas id="pdf-canvas"></canvas>
-                </div>
-
-                <!-- PDF.js via CDN -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
-                <script>
-                    const url = "{{ Storage::url($note->file_path) }}";
-
-                    const pdfContainer = document.getElementById('pdf-container');
-
-                    pdfjsLib.getDocument(url).promise.then(pdf => {
-                        const totalPages = pdf.numPages;
-                        const scale = 1.4;
-
-                        // Loop por todas as páginas
-                        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-                            pdf.getPage(pageNum).then(page => {
-                                const viewport = page.getViewport({ scale: scale });
-
-                                const canvas = document.createElement('canvas');
-                                const context = canvas.getContext('2d');
-                                canvas.height = viewport.height;
-                                canvas.width = viewport.width;
-                                canvas.style.marginTop = '0px';
-                                canvas.style.marginBottom = '210px';
-
-                                const renderContext = {
-                                    canvasContext: context,
-                                    viewport: viewport
-                                };
-
-                                // Adiciona o canvas ao container
-                                pdfContainer.appendChild(canvas);
-
-                                // Renderiza a página
-                                page.render(renderContext);
-                            });
-                        }
-                    });
-                </script>
-
-            @endif
-        </div>
-        @if (!empty($note->file_path))
-            <p>O utilizador submeteu um ficheiro, caso queira transferir clique em 'transferir' </p>
         @else
-            <p>Não existe ficheiro disponível para esta anotação.</p>
-        @endif
-        <div class="note-actions">
-            @if ($note->file_path)
-                <div class="note-actions">
-                    <a id="button-down" href="{{ Storage::url($note->file_path) }}"
-                        download="{{ $note->title }}.{{ pathinfo($note->file_path, PATHINFO_EXTENSION) }}"
-                        style="display: flex; align-items: center; gap: 5px;">
-                        <span class="material-icons">download</span>
-                        Transferir
-                    </a>
+                <p>ver documento em em detalhe: <a href="{{ asset('storage/' . $note->file_path) }}"
+                        target="_blank">Visualizar</a></p>
+                <div class="note-content-div">
+                    <!-- <iframe src="{{ Storage::url($note->file_path) }}" width="100%" height="600px"></iframe> -->
+                    <div id="pdf-container">
+                        <canvas id="pdf-canvas"></canvas>
+                    </div>
+
+                    <!-- PDF.js via CDN -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+                    <script>
+                        const url = "{{ Storage::url($note->file_path) }}";
+
+                        const pdfContainer = document.getElementById('pdf-container');
+
+                        pdfjsLib.getDocument(url).promise.then(pdf => {
+                            const totalPages = pdf.numPages;
+                            const scale = 1.4;
+
+                            // Loop por todas as páginas
+                            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                                pdf.getPage(pageNum).then(page => {
+                                    const viewport = page.getViewport({ scale: scale });
+
+                                    const canvas = document.createElement('canvas');
+                                    const context = canvas.getContext('2d');
+                                    canvas.height = viewport.height;
+                                    canvas.width = viewport.width;
+                                    canvas.style.marginTop = '0px';
+                                    canvas.style.marginBottom = '210px';
+
+                                    const renderContext = {
+                                        canvasContext: context,
+                                        viewport: viewport
+                                    };
+
+                                    // Adiciona o canvas ao container
+                                    pdfContainer.appendChild(canvas);
+
+                                    // Renderiza a página
+                                    page.render(renderContext);
+                                });
+                            }
+                        });
+                    </script>
+
             @endif
-                <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.like', $note->id) }}" method="POST"
-                    style="display: inline;">
-                    @csrf
-                    <button type="submit" id="likesbutton">
-                        <!-- Imagem do Like/Dislike -->
-                        <img src="{{ asset('images/' . ($hasLiked ? 'thumb_down.png' : 'thumb_up.png')) }}"
-                            alt="{{ $hasLiked ? 'Remover Like' : 'Dar Like' }}"
-                            style="width: 24px; height: 24px; cursor: pointer;  padding:9px 9px ; ">
-
-                        <!-- Contagem de Likes -->
-                        <span id="likescounter">gostos: {{ $likesCount }}</span>
-                    </button>
-
-                </form>
-                <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.save', $note->id) }}" method="POST"
-                    style="display: inline;">
-                    @csrf
-                    <button type="submit" id="likesbutton">
-                        <!-- Imagem do Like/Dislike -->
-                        <img src="{{ asset('images/' . ($hasSaved ? 'bookmarkFILL.png' : 'bookmark.png')) }}"
-                            alt="{{ $hasSaved ? 'Remover ' : 'guardar' }}"
-                            style="width: 24px; height: 24px; cursor: pointer; padding:9px 9px ; margin-right: 10%;">
-                    </button>
-                </form>
-                <button id="backbutton" onclick="window.location.href='{{ route('dashboard') }}'">Voltar</button>
-
             </div>
-        </div>
+            @if (!empty($note->file_path))
+                <p>O utilizador submeteu um ficheiro, caso queira transferir clique em 'transferir' </p>
+            @else
+                <p>Não existe ficheiro disponível para esta anotação.</p>
+            @endif
+            <div class="note-actions">
+                @if ($note->file_path)
+                    <div class="note-actions">
+                        <a id="button-down" href="{{ Storage::url($note->file_path) }}"
+                            download="{{ $note->title }}.{{ pathinfo($note->file_path, PATHINFO_EXTENSION) }}"
+                            style="display: flex; align-items: center; gap: 5px;">
+                            <span class="material-icons">download</span>
+                            Transferir
+                        </a>
+                @endif
+                    <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.like', $note->id) }}"
+                        method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" id="likesbutton">
+                            <!-- Imagem do Like/Dislike -->
+                            <img src="{{ asset('images/' . ($hasLiked ? 'thumb_down.png' : 'thumb_up.png')) }}"
+                                alt="{{ $hasLiked ? 'Remover Like' : 'Dar Like' }}"
+                                style="width: 24px; height: 24px; cursor: pointer;  padding:9px 9px ; ">
+
+                            <!-- Contagem de Likes -->
+                            <span id="likescounter">gostos: {{ $likesCount }}</span>
+                        </button>
+
+                    </form>
+                    <form id="note-actions-form-{{ $note->id }}" action="{{ route('notes.save', $note->id) }}"
+                        method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" id="likesbutton">
+                            <!-- Imagem do Like/Dislike -->
+                            <img src="{{ asset('images/' . ($hasSaved ? 'bookmarkFILL.png' : 'bookmark.png')) }}"
+                                alt="{{ $hasSaved ? 'Remover ' : 'guardar' }}"
+                                style="width: 24px; height: 24px; cursor: pointer; padding:9px 9px ; margin-right: 10%;">
+                        </button>
+                    </form>
+                    <button id="backbutton" onclick="window.location.href='{{ route('dashboard') }}'">Voltar</button>
+
+                </div>
+            </div>
 </body>
 
 </html>

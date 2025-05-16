@@ -112,7 +112,7 @@
                 </div>
 
                 <!-- Profile Info -->
-                <button aria-label="profile" class="profile-info" onclick="location.href='/profile'">
+                <button aria-label="profile" class="profile-info" onclick="location.href='{{route('profile.show')}}'">
                     <span id="username">{{ Auth::user()->name }}</span>
                     <span class="material-icons">person</span>
         </div>
@@ -193,10 +193,10 @@
 
     .saved-notes-container {
         width: 700px;
-        margin: 2rem auto;
+        margin: 0rem auto;
         padding: 2rem;
         background-color: #fff;
-        border-radius: 12px;
+        border-radius: 12px; 
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         font-family: 'Poppins', sans-serif;
     }
@@ -214,7 +214,7 @@
     }
 
     .saved-note-item {
-        border: 2px solid rgb(200, 200, 200);
+        border: 1px solid rgb(200, 200, 200);
         border-radius: 14px;
         display: flex;
         justify-content: space-between;
@@ -266,7 +266,7 @@
 
     .remove-btn {
         margin-left: 14px;
-        border: 2px solid #DDD;
+        border: 1px solid #DDD;
         color: gray;
         padding: 0.5rem 1rem;
         border-radius: 6px;

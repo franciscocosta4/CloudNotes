@@ -41,7 +41,7 @@ class SearchController extends Controller
         }
 
         //! METODO orderBy() VAI SER USADO QUANDO FOR PARA ORDENAR POR LIKES
-        $results = Note::withCount('likes')->orderBy('likes_count', 'desc')->get();
+$results = $results->withCount('likes')->orderBy('likes_count', 'desc')->get();
 
 
         //* Executa a consulta e obtém os resultados

@@ -40,14 +40,14 @@
         </script>
         <ul class="navbar-nav ms-auto d-flex align-items-center">
             <!-- Ícone de Mensagens -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="{{ url('admin/notifications') }}">
                     <i class="fas fa-envelope text-muted"></i>
                 </a>
-            </li>
+            </li> -->
             <!-- Ícone de Notificações -->
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#" id="notifDropdown" data-bs-toggle="dropdown"
+                <a class="nav-link" href="{{ url('admin/notifications') }}" id="notifDropdown" data-bs-toggle="dropdown"
                     onclick="markNotificationsAsSeen(event)">
                     <i class="fas fa-bell text-muted"></i>
                     @php
@@ -110,7 +110,7 @@
                                     <!-- a barrinha fica vazia -->
                                 @else
                                      @foreach($adminActions as $adminAction)
-                                    <a href="#">
+                                    <a href="{{ url('admin/notifications') }}">
                                         <div
                                             class="notif-icon {{ str_contains(strtolower($adminAction->message), 'criado') ? 'notif-success' : 'notif-primary' }}">
                                             <i class="fa fa-user-plus"></i>
@@ -172,11 +172,11 @@
             </li>
 
             <!-- Ícone de Configurações -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fas fa-layer-group text-muted"></i>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Perfil do Usuário -->
             <li class="nav-item dropdown">
@@ -186,8 +186,7 @@
                     <span class="fw-bold text-dark">Olá, {{ Auth::user()->name ?? 'Admin' }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}">Meu Perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Definições</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}"> Meu Perfil</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf

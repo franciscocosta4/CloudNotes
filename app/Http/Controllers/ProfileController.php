@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Subject;
+use App\Models\User;
+use App\Models\Note;
+use App\Models\NoteLike;
+use App\Models\SavedNote;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +19,32 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+    public function public($username): View
+    {
+        // Busca o usuário pelo campo 'username'
+        $user = User::where('username', $username)->firstOrFail();
+        $notes = Note::where('user_id', $user->id)->get();
+        $notesByLikes = Note::where('user_id', $user->id)
+    ->withCount('likes')
+    ->orderBy('likes_count', 'desc')
+    ->take(6)
+    ->get();
+
+
+        return view('profile.public', compact('user', 'notes', 'notesByLikes'));
+    }
+
+
+    public function show(Request $request): View
+    {
+        $user = $request->user();
+        $notes = Note::where('user_id', Auth::id())->get();
+        $savedNoteIds = SavedNote::where('user_id', $user->id)->pluck('note_id');
+
+        $SavedNotes = Note::whereIn('id', $savedNoteIds)->get();
+
+        return view('profile.show', compact('user', 'notes', 'SavedNotes'));
+    }
     public function edit(Request $request)
     {
         $user = Auth::user(); // Recupera o usuário autenticado
@@ -59,6 +89,17 @@ class ProfileController extends Controller
         }
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+
+    public function removeSubjectsOfInterest()
+    {
+        $user = auth()->user();
+
+        // Remove todas as associações na tabela pivot
+        $user->subjects()->detach();
+
+        return redirect()->back()->with('success', 'Disciplinas de interesse removidas com sucesso.');
     }
 
 

@@ -18,6 +18,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'school_year',
@@ -36,6 +37,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 
     /**
      * Get the attributes that should be cast.

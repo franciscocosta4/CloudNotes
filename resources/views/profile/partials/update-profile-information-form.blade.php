@@ -8,9 +8,9 @@
             {{ __("Atualize os seus dados.") }}
         </p>
         <br>
-        <a href="{{ route('dashboard') }}"
+        <a href="{{ route('profile.show') }}"
             style="border-radius:6.5px; padding:8px 6px; background-color: #0F044C; color: white; border: none;">
-            {{ __('Voltar à dashboard') }}
+            {{ __('Voltar ao perfil') }}
         </a>
     </header>
 
@@ -88,7 +88,7 @@
 
         <div class="flex items-center gap-4">
             <x-primary-button
-                style="background-color: #0F044C; color: white; border: none;">{{ __('Guardar') }}</x-primary-button>
+                style="margin-top:3%; background-color: #0F044C; color: white; border: none;">{{ __('Guardar Alterações') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
@@ -96,6 +96,15 @@
             @endif
         </div>
     </form>
+                   <form action="{{ route('user.subjects.remove') }}" method="POST"
+            onsubmit="return confirm('Tem a certeza que quer remover todas as disciplinas de interesse?');">
+            @csrf
+            @method('DELETE')
+            <x-primary-button style="background-color: #0F044C; color: white; border: none;" type="submit"
+                class="btn btn-danger mt-4">
+                Remover Disciplinas de Interesse
+            </x-primary-button>
+        </form>
 </section>
 
 <style>

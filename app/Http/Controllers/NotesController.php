@@ -184,9 +184,9 @@ class NotesController extends Controller
                 'points' => $pointsEarned,
                 'type' => 'like',
             ]);
+            $user->increment('points', $pointsEarned);
 
             return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId); //* dá scroll automatico outravez para o botao de like
-
         }
     }
 

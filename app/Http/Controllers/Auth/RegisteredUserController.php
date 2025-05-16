@@ -33,37 +33,39 @@ class RegisteredUserController extends Controller
 
     //* ESTA É A FUNÇAO QUE REGISTA O UTILIZADOR E OS SEUS DADOS
     public function store(Request $request): RedirectResponse
-{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'school_year' => ['nullable', 'integer', 'between:7,12'], 
-        'subjects_of_interest' => ['nullable', 'array'], 
-        'subjects_of_interest.*' => ['integer', 'exists:subjects,id'], // Agora usa IDs da tabela `subjects`
-    ]);
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:20', 'unique:users', 'regex:/^[a-zA-Z0-9_-]+$/'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'school_year' => ['nullable', 'integer', 'between:7,12'],
+            'subjects_of_interest' => ['nullable', 'array'],
+            'subjects_of_interest.*' => ['integer', 'exists:subjects,id'], // Agora usa IDs da tabela `subjects`
+        ]);
 
 
-    // Criar o utilizador
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'school_year' => $request->school_year,
-        'points' => 0,
-    ]);
+        // Criar o utilizador
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'school_year' => $request->school_year,
+            'points' => 0,
+        ]);
 
-    // Associar disciplinas de interesse na tabela pivô
-    if ($request->has('subjects_of_interest')) {
-        $user->subjects()->attach($request->subjects_of_interest);
+        // Associar disciplinas de interesse na tabela pivô
+        if ($request->has('subjects_of_interest')) {
+            $user->subjects()->attach($request->subjects_of_interest);
+        }
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect(route('dashboard', absolute: false));
     }
 
-    event(new Registered($user));
 
-    Auth::login($user);
-
-    return redirect(route('dashboard', absolute: false));
-}
-
-    
 }
