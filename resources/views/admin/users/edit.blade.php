@@ -13,9 +13,13 @@
                 <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
-
                     <div class="form-group">
-                        <label for="name">Nome</label>
+                        <label for="name">Nome de Utilizador:</label>
+                        <input type="text" name="username" id="name" class="form-control"
+                            value="{{ old('username', $user->username) }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nome Pessoal:</label>
                         <input type="text" name="name" id="name" class="form-control"
                             value="{{ old('name', $user->name) }}" required>
                     </div>
@@ -99,6 +103,11 @@
                     <br>
                     <button type="submit" class="btn btn-primary">Guardar Alterações</button>
                     <button type="button" class="btn btn-black" onclick="window.history.back()">Voltar</button>
+                </form>
+                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger ">Excluir Utilizador</button>
                 </form>
             </div>
         </div>

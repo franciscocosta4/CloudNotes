@@ -126,6 +126,8 @@
             border-left: 1px solid rgb(198, 198, 198);
         }
 
+
+
         #pdf-container {
             max-width: 1200px;
             overflow-x: auto;

@@ -426,8 +426,9 @@
                             </div>
                         </div>
                     </div>
-                    <p>Como aumentar o nível? O seu nível aumenta à medida que partilha anotações com outras pessoas.
-                        Para alcançar o próximo nível, continue a compartilhar as suas anotações!</p>
+                    <p>O seu nível aumenta à medida que partilha anotações com outras pessoas e gosta de outras publicações. <br>Para alcançar o próximo
+                nível, continue a partilhar e a interagir com a comunidade!</p>
+                        
                 </div>
 
                 <!-- Matérias de interesse -->

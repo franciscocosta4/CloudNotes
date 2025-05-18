@@ -25,13 +25,14 @@ class ProfileController extends Controller
         $user = User::where('username', $username)->firstOrFail();
         $notes = Note::where('user_id', $user->id)->get();
         $notesByLikes = Note::where('user_id', $user->id)
-    ->withCount('likes')
-    ->orderBy('likes_count', 'desc')
-    ->take(6)
-    ->get();
+            ->withCount('likes')
+            ->orderBy('likes_count', 'desc')
+            ->take(6)
+            ->get();
+        $totalLikes = $notesByLikes->sum('likes_count');
 
 
-        return view('profile.public', compact('user', 'notes', 'notesByLikes'));
+return view('profile.public', compact('user', 'notes', 'notesByLikes', 'totalLikes'));
     }
 
 

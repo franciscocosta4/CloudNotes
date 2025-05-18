@@ -29,7 +29,7 @@
                         <select name="topic_difficulty" id="topic_difficulty" class="form-control" required>
                             <option value="Fácil" {{ old('topic_difficulty', $note->topic_difficulty) == 'Fácil' ? 'selected' : '' }}>Fácil
                             </option>
-                            <option value="Médio" {{ old('topic_difficulty', $note->topic_difficulty) == 'Médio' ? 'selected' : '' }}>Médio
+                            <option value="Moderada" {{ old('topic_difficulty', $note->topic_difficulty) == 'Moderada' ? 'selected' : '' }}>Moderada
                             </option>
                             <option value="Difícil" {{ old('topic_difficulty', $note->topic_difficulty) == 'Difícil' ? 'selected' : '' }}>
                                 Difícil</option>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="form-group">
                         <label for="content">Conteúdo:</label>
-                        <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>   
+                        <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
                         <textarea name="content" id="content" class="form-control" rows="15"
                             required>{{ old('content', $note->content) }}</textarea>
                         <script>
@@ -61,6 +61,12 @@
                     <button type="submit" class="btn btn-primary">Guardar Alterações</button>
                     <button type="button" class="btn btn-black" onclick="window.history.back()">Voltar</button>
                 </form>
+                <br>
+                                                <form action="{{ route('admin.notes.destroy', $note->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                       <button type="submit" class="btn btn-danger ">Excluir Utilizador</button>
+                                                </form>
             </div>
         </div>
     </div>

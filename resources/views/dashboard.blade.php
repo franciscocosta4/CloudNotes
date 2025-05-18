@@ -38,8 +38,10 @@
                 <p>{{ __('Faltam ') . $pointsForNextLevel . __(' pontos para o próximo nível.') }}</p>
             </div>
             <h3>Como aumentar o nível?</h3>
-            <p>O seu nível aumenta à medida que partilha anotações com outras pessoas e gosta de outras publicações. <br>Para alcançar o próximo
-                nível, continue a partilhar e a interagir com a comunidade!</p>
+            <p>O seu nível aumenta à medida que partilha anotações com outras pessoas e gosta de outras publicações.
+                <br>Para alcançar o próximo
+                nível, continue a partilhar e a interagir com a comunidade!
+            </p>
         </div>
         <div class="published-notes-container">
             <h3>Anotações Publicadas Por Você</h3>
@@ -93,7 +95,7 @@
                 <div class="saved-notes">
                     <p>Ver anotações guardadas:</p>
                     <button onclick="location.href='{{ route('saved.notes.index') }}'"
-                        style="font-family: 'Poppins', sans-serif;">Anotações Guardadas</button>
+                        style="font-family: 'Poppins', sans-serif;">Notas Guardadas</button>
                 </div>
                 <!-- Profile Actions -->
                 <div class="profile-actions">
@@ -105,10 +107,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                    <button class="action-btn" onclick="location.href='https://github.com/franciscocosta4/CloudNotes'">
-                        <span class="material-icons" style="margin-right: 5px;">info</span>
-                        <span> Ajuda</span>
-                    </button>
+                    
                 </div>
 
                 <!-- Profile Info -->
@@ -122,7 +121,7 @@
         <!-- Main Content -->
         <main class="main">
             <div class="main-content" id="search-container">
-                <h2 id="search-title">Procurar por uma Anotação</h2>
+                <h2 id="search-title">Pesquisar por Anotações</h2>
                 <!-- Formulário de pesquisa -->
                 <form action="{{ route('search') }}" method="GET" id="search-form">
                     <div class="search-container" id="input-search-container">
@@ -137,6 +136,9 @@
                         <!-- <label for="subjects_of_interest">Disciplinas de Interesse</label> -->
                         <select name="disciplina" id="disciplina-select" aria-label="select-subject">
                             <option value="">Todas as disciplinas</option>
+                            @if(auth()->user()->subjects->isNotEmpty())
+                                <option value="me">Disciplinas do meu Interesse</option>
+                            @endif
                             @foreach(\App\Models\Subject::all() as $subject)
                                 <option value="{{ $subject->name }}">{{ $subject->name }}</option>
                             @endforeach

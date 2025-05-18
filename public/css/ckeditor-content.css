@@ -1,69 +1,85 @@
-/* ckeditor-content.css */
-
-.ck-content h1,
-.ck-content h2,
-.ck-content h3,
-.ck-content h4,
-.ck-content h5,
-.ck-content h6 {
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    font-weight: bold;
-    color: #0F044C;
+/* Reset completo para o conteúdo do CKEditor */
+.ck-content {
+    all: initial;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    color: #333 !important;
+    line-height: 1.6 !important;
+    font-size: 16px !important;
+    padding: 15px;
 }
 
+/* Títulos */
+.ck-content h1 {
+    font-size: 2rem !important;
+    color: #0F044C !important;
+    margin: 1.5rem 0 1rem !important;
+    font-weight: bold !important;
+}
+
+.ck-content h2 {
+    font-size: 1.75rem !important;
+    color: #222 !important;
+    margin: 1.3rem 0 0.8rem !important;
+}
+
+.ck-content h3 {
+    font-size: 1.5rem !important;
+    color: #444 !important;
+    margin: 1.1rem 0 0.7rem !important;
+}
+
+/* Parágrafos e texto */
 .ck-content p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
-    color: #444;
+    margin-bottom: 1.2rem !important;
+    font-size: 1rem !important;
+    color: #555 !important;
 }
 
-.ck-content ul,
-.ck-content ol {
-    margin: 1rem 0 1rem 2rem;
-    padding-left: 1rem;
+/* Imagens - mantendo a liberdade do CKEditor */
+.ck-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: inline-block !important;
+    margin: 0 !important;
 }
 
-.ck-content li {
-    margin-bottom: 0.5rem;
+/* Classes de alinhamento do CKEditor */
+.ck-content .image-style-align-left {
+    float: left !important;
+    margin-right: 1.5rem !important;
 }
 
-.ck-content blockquote {
-    margin: 1.5rem 0;
-    padding: 1rem 1.5rem;
-    background-color: #f2f2f2;
-    border-left: 5px solid #ccc;
-    font-style: italic;
-    color: #555;
+.ck-content .image-style-align-right {
+    float: right !important;
+    margin-left: 1.5rem !important;
 }
 
-.ck-content pre {
-    background-color: #f8f8f8;
-    padding: 1rem;
-    overflow-x: auto;
-    font-family: monospace;
-    border-radius: 6px;
-    margin: 1rem 0;
+.ck-content .image-style-align-center {
+    display: block !important;
+    margin: 0 auto !important;
 }
 
-.ck-content code {
-    background-color: #eee;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    font-family: monospace;
-}
-
+/* Elementos especiais */
 .ck-content strong {
-    font-weight: bold;
+    font-weight: bold !important;
+    color: #000 !important;
 }
 
 .ck-content em {
-    font-style: italic;
+    font-style: italic !important;
 }
 
-.ck-content img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 1rem auto;
+.ck-content blockquote {
+    border-left: 4px solid #0F044C !important;
+    padding-left: 1rem !important;
+    margin: 1.5rem 0 !important;
+    color: #666 !important;
+    font-style: italic !important;
+}
+
+.ck-content hr {
+    border: 0 !important;
+    height: 1px !important;
+    background: #ddd !important;
+    margin: 2rem 0 !important;
 }

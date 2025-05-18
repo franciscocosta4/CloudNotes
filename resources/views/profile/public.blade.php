@@ -473,7 +473,7 @@
                 <!-- Anotações públicas -->
                 <div class="notes-section">
                     <div class="section-header">
-                        <h2>Anotações Públicas</h2>
+                        <h2>Anotações Públicadas</h2>
                     </div>
 
                     @if($user->notes()->count() > 0)
@@ -495,14 +495,14 @@
                             @endforeach
                         </div>
                     @else
-                        <p>Este usuário ainda não publicou nenhuma anotação pública.</p>
+                        <p>Este utilizador ainda não publicou nenhuma anotação pública.</p>
                     @endif
                 </div>
 
                 <!-- Anotações mais populares -->
                 <div class="notes-section">
                     <div class="section-header">
-                        <h2>Anotações Populares</h2>
+                        <h2>Anotações Mais Populares</h2>
                     </div>
                     <div class="notes-grid">
                         @foreach($notesByLikes as $note)

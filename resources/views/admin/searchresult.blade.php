@@ -62,7 +62,7 @@
                                         <span style="margin-right: 5px;"></span>
                                         dificuldade: {{ $note->topic_difficulty }}
                                         <span style="margin-right: 5px;"></span>
-                                        utilizador: {{ $note->user?->name ?? 'Utilizador não encontrado' }}</p>
+                                        Autor: {{ $note->user?->name ?? 'Utilizador não encontrado' }}</p>
                                     </small>
                                 </div>
                             </div>

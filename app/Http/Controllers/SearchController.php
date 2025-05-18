@@ -32,16 +32,21 @@ class SearchController extends Controller
                     ->orWhere('content', 'like', "%{$query}%");
             });
         }
-
         if (!empty($disciplina)) {
-            $results->where('subject', $disciplina);
+            if ($disciplina === 'me') {
+                $userSubjects = Auth::user()->subjects->pluck('name')->toArray();
+                $results->whereIn('subject', $userSubjects);
+            } else {
+                $results->where('subject', $disciplina);
+            }
         }
+
         if (!empty($dificuldade)) {
             $results->where('topic_difficulty', $dificuldade);
         }
 
         //! METODO orderBy() VAI SER USADO QUANDO FOR PARA ORDENAR POR LIKES
-$results = $results->withCount('likes')->orderBy('likes_count', 'desc')->get();
+        $results = $results->withCount('likes')->orderBy('likes_count', 'desc')->get();
 
 
         //* Executa a consulta e obtém os resultados
@@ -50,9 +55,9 @@ $results = $results->withCount('likes')->orderBy('likes_count', 'desc')->get();
         //? Recupera as anotações publicadas pelo user e o histórico de acesso (PARA GARANTIR QUE AS ANOTAÇÕES DA SIDEBAR AINDA FICAM LÁ ) 
         $notes = Note::where('user_id', Auth::id())->get();
         $accessLogs = NotesAccessLog::where('user_id', auth()->id())
-        ->with('note')
-        ->orderBy('updated_at', 'desc') //* ORDENAR POR ULTIMA DATA DE ACESSO MAS POR ORDEM DECRESCENTE
-        ->get();
+            ->with('note')
+            ->orderBy('updated_at', 'desc') //* ORDENAR POR ULTIMA DATA DE ACESSO MAS POR ORDEM DECRESCENTE
+            ->get();
 
         return view('dashboard', [
             'results' => $results,
@@ -80,7 +85,8 @@ $results = $results->withCount('likes')->orderBy('likes_count', 'desc')->get();
                 })->get(),
 
             'users' => User::where('name', 'like', "%$query%")
-                ->orWhere('email', 'like', "%{$query}%")    
+                ->orWhere('username', 'like', "%{$query}%")
+                ->orWhere('email', 'like', "%{$query}%")
                 ->orWhere('id', 'like', "%{$query}%")->get(),
         ];
 

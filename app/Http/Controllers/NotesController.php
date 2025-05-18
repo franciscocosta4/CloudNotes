@@ -152,43 +152,57 @@ class NotesController extends Controller
             'url' => $url
         ]);
     }
-
     public function likeNote($noteId)
     {
+        $user = Auth::user(); // utilizador que está a dar o like
 
-
-        $user = Auth::user();
-        //verifica se o user já deu like 
+        // Verifica se o user já deu like
         $existing = NoteLike::where('user_id', $user->id)
             ->where('note_id', $noteId)
             ->first();
 
-        //caso tenha dado remove o like 
         if ($existing) {
-
+            // Remove o like (se já existia)
             $existing->delete();
 
-            return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId);
+            // Opcional: aqui podes implementar a remoção dos pontos, se quiseres
 
+            return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId);
         } else {
+            // Cria o like
             NoteLike::create([
                 'user_id' => $user->id,
                 'note_id' => $noteId,
             ]);
 
-            $pointsEarned = 100; //* pontos pelo like  
-
-            //* Registra os pontos na tabela 'points'
+            // Dá 100 pontos ao user que deu like
+            $pointsForLiker = 100;
             Point::create([
                 'user_id' => $user->id,
-                'points' => $pointsEarned,
+                'points' => $pointsForLiker,
                 'type' => 'like',
             ]);
-            $user->increment('points', $pointsEarned);
+            $user->increment('points', $pointsForLiker);
 
-            return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId); //* dá scroll automatico outravez para o botao de like
+            // Obtém a nota e o dono da nota
+            $note = Note::findOrFail($noteId);
+            $noteOwner = User::find($note->user_id);
+
+            // Dá 250 pontos ao dono da nota, se for diferente do user que deu like
+            if ($noteOwner->id !== $user->id) {
+                $pointsForOwner = 250;
+                Point::create([
+                    'user_id' => $noteOwner->id,
+                    'points' => $pointsForOwner,
+                    'type' => 'like_received',
+                ]);
+                $noteOwner->increment('points', $pointsForOwner);
+            }
+
+            return redirect()->to(url()->previous() . '#note-actions-form-' . $noteId);
         }
     }
+
 
     public function saveNote($noteId)
     {

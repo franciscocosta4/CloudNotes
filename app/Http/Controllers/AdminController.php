@@ -82,6 +82,7 @@ class AdminController extends Controller
         // Validação dos dados de entrada
         $request->validate([
             'name' => 'required|string|max:255',
+            'username' => ['required', 'string', 'max:20', 'unique:users', 'regex:/^[a-zA-Z0-9_-]+$/'],
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'school_year' => ['nullable', 'integer', 'between:7,12'], //  número inteiro entre 7 e 12
@@ -92,6 +93,7 @@ class AdminController extends Controller
 
         $user->update([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => $request->password ? bcrypt($request->password) : $user->password,
             'role' => $request->input('role'),

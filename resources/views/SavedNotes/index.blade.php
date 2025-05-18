@@ -105,10 +105,6 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                    <button class="action-btn" onclick="location.href='https://github.com/franciscocosta4/CloudNotes'">
-                        <span class="material-icons" style="margin-right: 5px;">info</span>
-                        <span> Ajuda</span>
-                    </button>
                 </div>
 
                 <!-- Profile Info -->

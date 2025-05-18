@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preload" as="image" href="/images/dashboard.jpg" >
+    <link rel="preload" as="image" href="/images/dashboard.png" >
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <title>CloudNotes - Bem-vindo</title>
 </head>
@@ -38,7 +38,7 @@
 
         <!-- Dashboard Preview -->
         <div class="dashboard-preview">
-            <img  loading="lazy" src="/images/dashboard.jpg" alt="Pré-visualização da Dashboard do CloudNotes">
+            <img  loading="lazy" src="/images/dashboard.png" alt="Pré-visualização da Dashboard do CloudNotes">
         </div>
     </main>
 
