@@ -51,7 +51,7 @@
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
                                     <p class="card-category">Visitas</p>
-                                    <h4 class="class-title"> muitas mesmo </h4>
+                                    <h4 class="class-title"> {{ $totalVisits }} </h4>
                                 </div>
                             </div>
                         </div>

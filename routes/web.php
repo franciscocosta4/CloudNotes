@@ -4,14 +4,14 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\NotesAccessLogController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [WelcomeController::class, 'show'])->name('welcome.show');
 
 
 

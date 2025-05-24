@@ -7,7 +7,7 @@ use App\Models\AdminLog;
 use App\Models\Subject;
 use App\Models\NotesAccessLog;
 use App\Models\Point;
-
+use App\Models\Visit;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -18,6 +18,7 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+
         //*  ESTÁ ASSIM PARA QUE O PAGINATE DE CADA TABELA SEJA INDIVIDUAL, E DÊ SCROLL AUTOMATICAMENTE
         $users = User::orderBy('created_at', 'DESC')->paginate(4, ['*'], 'users_page')->withQueryString()->fragment('users'); //adiciona um fragmento à URL da paginação.em vez de ?users_page=2 fica: ?users_page=2#users. (o que faz o browser dar scroll automaticamente )
         $notes = Note::orderBy('created_at', 'DESC')->paginate(5, ['*'], 'notes_page')->withQueryString()->fragment('anotacoes');
@@ -25,12 +26,13 @@ class AdminController extends Controller
         $logs = NotesAccessLog::orderBy('updated_at', 'DESC')->paginate(10, ['*'], 'logs_page')->withQueryString()->fragment('logs');
         $subjects = Subject::all();
         $totalSubjects = Subject::count();
+        $totalVisits = Visit::count();
         $totalUsers = User::count();
         $PublishedNotes = Note::count();
         $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->with('user')->get();
         // $adminActions= AdminLog::all();
         // $userName = User::table('users')->where('id', $ficheiro->user_id)->value('name');; 
-        return view('admin.dashboard', compact('users', 'notes', 'logs', 'subjects', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points', 'totalSubjects'));
+        return view('admin.dashboard', compact('users', 'notes', 'logs', 'subjects', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points', 'totalSubjects','totalVisits'));
     }
 
 
@@ -190,6 +192,7 @@ class AdminController extends Controller
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Disciplina criada com sucesso!');
     }
+
 
     //* Excluir Disciplina
     public function destroySubject(Subject $subject)
