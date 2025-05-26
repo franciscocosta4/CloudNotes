@@ -39,6 +39,9 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT'),
     ],
+    'ipgeolocation' => [
+        'key' => env('IPGEOLOCATION_API_KEY'),
+    ],
 
 
 

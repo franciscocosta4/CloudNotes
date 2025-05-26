@@ -90,8 +90,8 @@
   <!-- <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>  -->
 
   <!-- jQuery Vector Maps -->
-  <!-- <script src="{{ asset('admin/assets/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/plugin/jsvectormap/world.js') }}"></script> -->
+ <script src="{{ asset('admin/assets/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script> 
+  <script src="{{ asset('admin/assets/js/plugin/jsvectormap/world.js') }}"></script> 
 
   <!-- Sweet Alert -->
   <script src="{{ asset('admin/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>  <!--  está a ser usado, nao tirar-->

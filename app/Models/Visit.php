@@ -8,5 +8,6 @@ class Visit extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['ip_address', 'visited_at'];
+protected $fillable = ['ip_address', 'latitude', 'longitude', 'city', 'country', 'visited_at'];
+
 }

@@ -187,6 +187,109 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="{{ asset('admin/assets/js/plugin/jsvectormap/css/jsvectormap.min.css') }}">
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="card card-round">
+                <div class="card-header">
+                    <div class="card-head-row card-tools-still-right">
+                        <h4 class="card-title">Localização geográfica dos utilizadores</h4>
+                        <!-- <div class="card-tools">
+                            <button class="btn btn-icon btn-link btn-primary btn-xs">
+                                <span class="fa fa-angle-down"></span>
+                            </button>
+                            <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card">
+                                <span class="fa fa-sync-alt"></span>
+                            </button>
+                            <button class="btn btn-icon btn-link btn-primary btn-xs">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </div> -->
+                    </div>
+                    <p class="card-category">
+                        Mapa da distribuição dos utilizadores ao redor do mundo
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-responsive table-hover table-sales">
+                                <table class="table">
+                                    <tbody>
+                                        @foreach ($visitsByCountry as $visit)
+                                            <tr>
+
+                                                <td>{{ $visit->country ?? 'Unknown' }}</td>
+                                                <td class="text-end">{{ number_format($visit->total) }}</td>
+                                                <td class="text-end">{{ $visit->percentage ?? '0.00' }}%</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <script>
+                                const visitMarkers = @json($visits);
+                                console.log("Dados recebidos:", visitMarkers);
+                            </script>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    const visitMarkers = @json($visits);
+
+                                    // Processar os marcadores
+                                    const markers = visitMarkers
+                                        .filter(v => v.latitude && v.longitude)
+                                        .map(v => ({
+                                            name: `${v.city}, ${v.country}`,  // Texto que será exibido no hover
+                                            country: v.country,              // Apenas o país (opcional)
+                                            coords: [parseFloat(v.latitude), parseFloat(v.longitude)]
+                                        }));
+
+                                    // Configuração do mapa
+                                    new jsVectorMap({
+                                        selector: "#world-map",
+                                        map: "world",
+                                        markers: markers,
+                                        markerStyle: {
+                                            initial: { fill: '#007bff', r: 5 }, // Tamanho e cor do marcador
+                                            hover: { fill: '#ff0000' }          // Cor ao passar o mouse
+                                        },
+                                        onMarkerOver: function (event, index) {
+                                            // Exibe o nome do país ou cidade + país
+                                            const marker = markers[index];
+                                            console.log("Mouse sobre:", marker.name); // Debug (opcional)
+                                        },
+                                        onMarkerOut: function (event, index) {
+                                            // Ação quando o mouse sai (opcional)
+                                        },
+                                        markerLabel: {
+                                            // Configuração do rótulo
+                                            show: true,
+                                            commonClass: "custom-marker-label", // Classe CSS personalizada (opcional)
+                                            render: function (marker) {
+                                                return marker.name; // Exibe "Cidade, País"
+                                                // OU return marker.country; // Exibe apenas o país
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <div class="mapcontainer">
+                                <div id="world-map" style=" height: 400px;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- TABELA DE DISCIPLINAS -->
     <div class="container">
@@ -401,12 +504,12 @@
                             <tbody>
                                 @foreach($points as $point)
                                     <tr>
-                                    <td>
-                                        @if ($point->user)
-                                            {{ $point->user->name }}
-                                        @else
-                                            utilizador não encontrado
-                                        @endif
+                                        <td>
+                                            @if ($point->user)
+                                                {{ $point->user->name }}
+                                            @else
+                                                utilizador não encontrado
+                                            @endif
                                         </td>
                                         <td>{{ $point->points }}</td>
                                         <td>{{ $point->type }}</td>

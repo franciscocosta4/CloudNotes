@@ -27,12 +27,21 @@ class AdminController extends Controller
         $subjects = Subject::all();
         $totalSubjects = Subject::count();
         $totalVisits = Visit::count();
+        $visits = Visit::select('ip_address', 'latitude', 'longitude', 'city', 'country', 'visited_at')->get();
+        $visitsByCountry = Visit::selectRaw('country, COUNT(*) as total')
+            ->groupBy('country')
+            ->orderByDesc('total')
+            ->get()
+            ->map(function ($item) use ($totalVisits) {
+                $item->percentage = round(($item->total / $totalVisits) * 100, 2);
+                return $item;
+            });
         $totalUsers = User::count();
         $PublishedNotes = Note::count();
         $ficheiros = Note::whereNotNull('file_path')->latest()->take(5)->with('user')->get();
         // $adminActions= AdminLog::all();
         // $userName = User::table('users')->where('id', $ficheiro->user_id)->value('name');; 
-        return view('admin.dashboard', compact('users', 'notes', 'logs', 'subjects', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points', 'totalSubjects','totalVisits'));
+        return view('admin.dashboard', compact('users', 'notes', 'logs', 'subjects', 'totalUsers', 'PublishedNotes', 'ficheiros', 'points', 'totalSubjects', 'visits','visitsByCountry', 'totalVisits'));
     }
 
 
