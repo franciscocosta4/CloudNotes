@@ -18,7 +18,7 @@ class NotesAccessLogController extends Controller
     //* AS ACCESSLOGS SAO REGISTADAS NO NotesController nao aqui
 
     //* isto é para mostrar na pagina do user, nao na tabela do admin, as accessLogs para a do admin estao declaradas no adminController
-    //? a var $accessLogs também é declarada no SearchController por isso sempre que se mudar aqui algo tb tem de se mudar lá
+
     $accessLogs = NotesAccessLog::where('user_id', auth()->id()) 
     ->with('note')
     ->orderBy('updated_at', 'desc') //* ORDENAR POR ULTIMA DATA DE ACESSO MAS POR ORDEM DECRESCENTE

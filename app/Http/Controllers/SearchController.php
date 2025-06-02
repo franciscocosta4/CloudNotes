@@ -45,7 +45,6 @@ class SearchController extends Controller
             $results->where('topic_difficulty', $dificuldade);
         }
 
-        //! METODO orderBy() VAI SER USADO QUANDO FOR PARA ORDENAR POR LIKES
         $results = $results->withCount('likes')->orderBy('likes_count', 'desc')->get();
 
 
